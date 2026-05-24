@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>مُحاسِبة 🌸</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<style>
+:root {
+  --rose:       #e8678a;
+  --rose-light: #f2a0b8;
+  --rose-pale:  #fdf0f4;
+  --rose-soft:  #fce8ef;
+  --lilac:      #b48fce;
+  --lilac-light:#d4b8e8;
+  --lilac-pale: #f5eefb;
+  --blush:      #f9d4e2;
+  --peach:      #fde8d8;
+  --mint:       #a8d8c8;
+  --mint-pale:  #eaf6f1;
+  --gold:       #d4956a;
+  --gold-pale:  #fdf0e6;
+  --bg:         #fdf7fa;
+  --bg2:        #f9f0f5;
+  --white:      #ffffff;
+  --ink:        #3a2535;
+  --ink-soft:   #6b4d5e;
+  --ink-muted:  #9e7a8e;
+  --ink-faint:  #c9adb9;
+  --red:        #e05577;
+  --red-pale:   #fdeef2;
+  --shadow:     0 4px 20px rgba(180,100,140,0.10);
+  --shadow-lg:  0 8px 40px rgba(180,100,140,0.16);
+  --radius:     18px;
+  --radius-sm:  12px;
+  --radius-xs:  8px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: 'Tajawal', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  direction: rtl;
+  padding-bottom: 80px;
+}
+
+/* ===== HEADER ===== */
+.header {
+  background: linear-gradient(135deg, #f7d6e8 0%, #e8d0f5 50%, #d0e8f5 100%);
+  padding: 20px 20px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid rgba(228,150,180,0.2);
+}
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.brand {
+  font-family: 'Amiri', serif;
+  font-size: 24px;
+  color: var(--rose);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.brand .dot { color: var(--lilac); }
+.header-date {
+  font-size: 12px;
+  color: var(--ink-muted);
+  background: rgba(255,255,255,0.6);
+  padding: 4px 10px;
+  border-radius: 20px;
+  backdrop-filter: blur(4px);
+}
+
+/* ===== BOTTOM NAV ===== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(16px);
+  border-top: 1px solid var(--blush);
+  display: flex;
+  z-index: 200;
+  padding: 6px 0 env(safe-area-inset-bottom, 6px);
+  box-shadow: 0 -4px 20px rgba(180,100,140,0.10);
+}
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 6px 4px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 10px;
+  color: var(--ink-faint);
+  transition: all 0.2s;
+  border-radius: var(--radius-xs);
+}
+.nav-item .nav-icon { font-size: 20px; line-height: 1; transition: transform 0.2s; }
+.nav-item.active { color: var(--rose); }
+.nav-item.active .nav-icon { transform: scale(1.15); }
+.nav-item:active { transform: scale(0.95); }
+
+/* ===== PAGES ===== */
+.page { display: none; padding: 16px; max-width: 700px; margin: 0 auto; }
+.page.active { display: block; animation: slideUp 0.3s ease; }
+@keyframes slideUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+/* ===== SECTION TITLE ===== */
+.sec-title {
+  font-family: 'Amiri', serif;
+  font-size: 19px;
+  color: var(--rose);
+  margin: 20px 0 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sec-title::before { content: '✦'; font-size: 14px; color: var(--lilac-light); }
+
+/* ===== STATS ===== */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.stat-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 14px 10px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(228,150,180,0.15);
+  transition: transform 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--rose-light), var(--lilac-light));
+}
+.stat-card.s2::before { background: linear-gradient(90deg, var(--lilac), #a0c4e8); }
+.stat-card.s3::before { background: linear-gradient(90deg, var(--mint), var(--lilac-light)); }
+.stat-card.s4::before { background: linear-gradient(90deg, var(--gold), var(--rose-light)); }
+.stat-card.s5::before { background: linear-gradient(90deg, #f0a0b0, #e06080); }
+.stat-card:hover { transform: translateY(-2px); }
+.stat-card .val { font-size: 26px; font-weight: 700; color: var(--ink); line-height: 1.1; }
+.stat-card .lbl { font-size: 11px; color: var(--ink-muted); margin-top: 3px; }
+
+/* ===== CHARTS ===== */
+.charts-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+@media(max-width:500px){.charts-row{grid-template-columns:1fr;}}
+.chart-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 14px;
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(228,150,180,0.12);
+}
+.chart-card h4 { font-size: 13px; color: var(--ink-muted); margin-bottom: 10px; }
+
+/* ===== HABIT CARDS (mobile friendly) ===== */
+.habits-wrap {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  margin-bottom: 16px;
+  border: 1px solid rgba(228,150,180,0.12);
+}
+.habits-header {
+  padding: 14px 16px;
+  background: linear-gradient(135deg, var(--rose-soft), var(--lilac-pale));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-bottom: 1px solid var(--blush);
+}
+.habits-header h3 { font-size: 14px; color: var(--rose); font-weight: 600; }
+.filter-chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.chip {
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--blush);
+  background: white;
+  font-family: 'Tajawal', sans-serif;
+  font-size: 12px;
+  color: var(--ink-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.chip:hover, .chip.active { background: var(--rose); color: white; border-color: var(--rose); }
+.chip.lilac:hover, .chip.lilac.active { background: var(--lilac); border-color: var(--lilac); color: white; }
+
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table { width: 100%; border-collapse: collapse; min-width: 420px; }
+thead th {
+  padding: 9px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-muted);
+  text-align: center;
+  background: #fdf8fb;
+  border-bottom: 1px solid var(--blush);
+  white-space: nowrap;
+}
+thead th.name-th { text-align: right; min-width: 160px; }
+.day-th { position: relative; }
+.del-day {
+  position: absolute; top: 2px; left: 3px;
+  font-size: 8px; color: var(--ink-faint);
+  cursor: pointer; opacity: 0; transition: opacity 0.2s;
+  background: none; border: none; padding: 2px;
+}
+.day-th:hover .del-day { opacity: 1; }
+
+tbody tr { border-bottom: 1px solid #fdf0f5; transition: background 0.12s; }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: #fdf8fb; }
+td { padding: 8px 12px; text-align: center; vertical-align: middle; }
+td.name-td { text-align: right; }
+.habit-row-name { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+.name-text { font-size: 13px; cursor: text; color: var(--ink-soft); }
+.name-text:hover { color: var(--rose); }
+.cat-badge {
+  font-size: 10px; padding: 2px 7px; border-radius: 10px;
+  background: var(--rose-pale); color: var(--rose); white-space: nowrap; flex-shrink: 0;
+}
+.cat-badge.ذكر    { background: var(--gold-pale);   color: var(--gold); }
+.cat-badge.دروس   { background: #eef0fe;             color: #5a6bd4; }
+.cat-badge.برمجة  { background: var(--lilac-pale);   color: var(--lilac); }
+.cat-badge.ذنوب   { background: var(--red-pale);     color: var(--red); }
+.cat-badge.أخرى   { background: var(--mint-pale);    color: #5aaa90; }
+.row-del-btn {
+  opacity: 0; border: none; background: none; cursor: pointer;
+  color: var(--ink-faint); font-size: 12px; padding: 2px 4px; transition: all 0.15s;
+}
+tr:hover .row-del-btn { opacity: 1; }
+.row-del-btn:hover { color: var(--red); }
+
+/* check buttons */
+.chk {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1.5px solid var(--blush); background: transparent;
+  cursor: pointer; font-size: 15px; transition: all 0.18s;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.chk:hover { border-color: var(--rose-light); background: var(--rose-pale); }
+.chk.done { background: linear-gradient(135deg, var(--rose), var(--rose-light)); border-color: var(--rose); color: white; box-shadow: 0 2px 8px rgba(232,103,138,0.35); }
+.chk.skip { background: var(--bg2); border-color: var(--blush); color: var(--ink-faint); font-size: 17px; }
+
+.pct-badge {
+  display: inline-block; font-size: 11px; font-weight: 700;
+  padding: 3px 8px; border-radius: 10px;
+  background: var(--mint-pale); color: #4a9a7a;
+}
+.pct-badge.mid { background: var(--peach); color: var(--gold); }
+.pct-badge.low { background: var(--red-pale); color: var(--red); }
+
+/* ===== ADD BAR ===== */
+.add-bar {
+  display: flex; gap: 8px; padding: 12px 14px;
+  background: #fdf8fb; border-top: 1px solid var(--blush); flex-wrap: wrap; align-items: center;
+}
+.add-bar input, .add-bar select {
+  flex: 1; min-width: 100px; padding: 8px 12px;
+  border-radius: var(--radius-xs); border: 1.5px solid var(--blush);
+  background: white; font-family: 'Tajawal', sans-serif; font-size: 13px;
+  color: var(--ink); outline: none; transition: border-color 0.2s;
+}
+.add-bar input:focus, .add-bar select:focus { border-color: var(--rose-light); }
+.btn-add {
+  padding: 8px 18px; border-radius: var(--radius-xs);
+  border: none; background: linear-gradient(135deg, var(--rose), var(--rose-light));
+  color: white; font-family: 'Tajawal', sans-serif; font-size: 13px;
+  cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 8px rgba(232,103,138,0.3);
+  white-space: nowrap; font-weight: 600;
+}
+.btn-add:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(232,103,138,0.4); }
+.btn-add:active { transform: scale(0.97); }
+.btn-add.lilac-btn { background: linear-gradient(135deg, var(--lilac), var(--lilac-light)); box-shadow: 0 2px 8px rgba(180,143,206,0.3); }
+
+/* ===== DHIKR ===== */
+.dhikr-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px; margin-bottom: 16px;
+}
+.dhikr-slot {
+  background: var(--white); border-radius: var(--radius); padding: 14px 16px;
+  box-shadow: var(--shadow); border: 1px solid rgba(228,150,180,0.12);
+  border-top: 3px solid var(--rose-light);
+}
+.dhikr-slot.s-morning { border-top-color: #f5c84a; }
+.dhikr-slot.s-fajr    { border-top-color: var(--mint); }
+.dhikr-slot.s-eve     { border-top-color: var(--lilac-light); }
+.dhikr-slot.s-night   { border-top-color: #8090d0; }
+.dhikr-slot h4 { font-size: 13px; color: var(--ink-soft); font-weight: 700; margin-bottom: 10px; }
+.dhikr-item {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 0; border-bottom: 1px solid var(--rose-soft); gap: 8px;
+}
+.dhikr-item:last-child { border-bottom: none; }
+.dhikr-text { font-size: 13px; color: var(--ink-soft); flex: 1; }
+.dhikr-counter { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.cnt-btn {
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 1.5px solid var(--blush); background: var(--rose-pale);
+  color: var(--rose); font-size: 15px; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; transition: all 0.15s;
+}
+.cnt-btn:hover:not(:disabled) { background: var(--rose); color: white; }
+.cnt-btn:disabled { opacity: 0.35; cursor: default; }
+.cnt-num { font-size: 14px; font-weight: 700; min-width: 26px; text-align: center; color: var(--ink); }
+.cnt-target { font-size: 10px; color: var(--ink-faint); }
+.done-pill {
+  font-size: 10px; padding: 2px 7px; border-radius: 10px;
+  background: var(--mint-pale); color: #4a9a7a; font-weight: 600;
+}
+
+/* ===== SINS ===== */
+.sins-wrap {
+  background: var(--white); border-radius: var(--radius);
+  box-shadow: var(--shadow); overflow: hidden; margin-bottom: 16px;
+  border: 1px solid rgba(224,85,119,0.12);
+}
+.sins-header {
+  padding: 14px 16px;
+  background: linear-gradient(135deg, #fdeef2, #fdf5f8);
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid #fde0e8;
+}
+.sins-header h3 { font-size: 14px; color: var(--red); font-weight: 600; }
+.sin-row {
+  display: flex; align-items: center; padding: 10px 16px;
+  border-bottom: 1px solid #fdeef2; gap: 12px;
+}
+.sin-row:last-child { border-bottom: none; }
+.sin-name { flex: 1; font-size: 13px; color: var(--ink-soft); }
+.sin-tally { display: flex; align-items: center; gap: 8px; }
+.tally-marks { font-size: 15px; color: var(--red); min-width: 50px; letter-spacing: 2px; }
+.sin-del { border: none; background: none; cursor: pointer; color: var(--ink-faint); font-size: 13px; }
+.sin-del:hover { color: var(--red); }
+
+/* ===== COURSES ===== */
+.courses-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+  gap: 12px; margin-bottom: 16px;
+}
+.course-card {
+  background: var(--white); border-radius: var(--radius); padding: 16px;
+  box-shadow: var(--shadow); border: 1px solid rgba(228,150,180,0.12);
+  border-top: 3px solid var(--rose-light); transition: transform 0.2s;
+}
+.course-card:hover { transform: translateY(-2px); }
+.course-card.برمجة { border-top-color: var(--lilac); }
+.course-card.ديني  { border-top-color: var(--mint); }
+.course-card h4 { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 3px; }
+.course-type-lbl { font-size: 12px; color: var(--ink-muted); margin-bottom: 10px; }
+.prog-wrap { background: var(--bg2); border-radius: 10px; height: 7px; margin-bottom: 6px; }
+.prog-fill { height: 7px; border-radius: 10px; background: linear-gradient(90deg, var(--rose), var(--rose-light)); transition: width 0.4s ease; }
+.course-card.برمجة .prog-fill { background: linear-gradient(90deg, var(--lilac), var(--lilac-light)); }
+.course-card.ديني  .prog-fill { background: linear-gradient(90deg, var(--mint), #c8eee0); }
+.prog-label { font-size: 11px; color: var(--ink-muted); display: flex; justify-content: space-between; margin-bottom: 10px; }
+.course-controls { display: flex; gap: 6px; align-items: center; }
+.course-controls input {
+  width: 60px; padding: 5px 8px; border-radius: var(--radius-xs);
+  border: 1.5px solid var(--blush); font-size: 12px; font-family: 'Tajawal',sans-serif;
+  text-align: center; outline: none;
+}
+.course-controls input:focus { border-color: var(--rose-light); }
+.course-controls .cc-btn {
+  padding: 5px 12px; border-radius: var(--radius-xs); font-size: 12px;
+  font-family: 'Tajawal',sans-serif; cursor: pointer; transition: all 0.15s;
+  border: 1.5px solid var(--rose-light); color: var(--rose); background: white;
+}
+.course-controls .cc-btn:hover { background: var(--rose); color: white; }
+.course-card.برمجة .cc-btn { border-color: var(--lilac); color: var(--lilac); }
+.course-card.برمجة .cc-btn:hover { background: var(--lilac); color: white; }
+.cc-del { margin-right: auto; border-color: var(--blush) !important; color: var(--ink-faint) !important; }
+.cc-del:hover { border-color: var(--red) !important; color: var(--red) !important; background: var(--red-pale) !important; }
+
+/* ===== TEMPLATE PAGE ===== */
+.hero-card {
+  border-radius: var(--radius);
+  background: linear-gradient(135deg, #f5c8dc 0%, #e8c8f0 50%, #c8d8f5 100%);
+  padding: 36px 24px;
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-card::before {
+  content: '✿ ✦ ✿';
+  position: absolute; top: 10px; right: 16px;
+  font-size: 14px; color: rgba(255,255,255,0.5); letter-spacing: 8px;
+}
+.hero-card h1 { font-family: 'Amiri',serif; font-size: 30px; color: var(--rose); margin-bottom: 8px; }
+.hero-card p { font-size: 14px; color: var(--ink-soft); margin-bottom: 20px; line-height: 1.7; }
+.btn-hero {
+  display: inline-block; padding: 12px 32px;
+  background: linear-gradient(135deg, var(--rose), var(--lilac));
+  color: white; border-radius: 30px; font-size: 15px;
+  cursor: pointer; border: none; font-family: 'Tajawal',sans-serif;
+  font-weight: 700; transition: all 0.2s;
+  box-shadow: 0 4px 16px rgba(180,100,160,0.35);
+}
+.btn-hero:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(180,100,160,0.45); }
+
+.tmpl-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
+  gap: 12px; margin-bottom: 20px;
+}
+.tmpl-opt {
+  background: var(--white); border-radius: var(--radius); padding: 18px;
+  box-shadow: var(--shadow); text-align: center; cursor: pointer;
+  border: 2px solid transparent; transition: all 0.2s;
+}
+.tmpl-opt:hover { border-color: var(--rose-light); transform: translateY(-2px); }
+.tmpl-opt .t-icon { font-size: 26px; margin-bottom: 8px; }
+.tmpl-opt h4 { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.tmpl-opt p { font-size: 11px; color: var(--ink-muted); line-height: 1.5; }
+
+.settings-card {
+  background: var(--white); border-radius: var(--radius);
+  padding: 16px; box-shadow: var(--shadow); margin-bottom: 16px;
+}
+.settings-card .s-title { font-size: 13px; color: var(--ink-muted); font-weight: 600; margin-bottom: 12px; }
+.settings-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.s-btn {
+  padding: 7px 14px; border-radius: var(--radius-xs);
+  border: 1.5px solid var(--blush); background: white;
+  font-family: 'Tajawal',sans-serif; font-size: 12px;
+  color: var(--ink-muted); cursor: pointer; transition: all 0.2s;
+}
+.s-btn:hover { border-color: var(--rose-light); color: var(--rose); }
+.s-btn.danger { border-color: #fcc; color: var(--red); }
+.s-btn.danger:hover { background: var(--red-pale); }
+
+/* ===== MODAL ===== */
+.modal-bg {
+  display: none; position: fixed; inset: 0;
+  background: rgba(60,20,40,0.35); z-index: 300;
+  align-items: flex-end; justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.modal-bg.open { display: flex; }
+.modal {
+  background: white; border-radius: var(--radius) var(--radius) 0 0;
+  padding: 24px 20px 32px; width: 100%; max-width: 480px;
+  box-shadow: var(--shadow-lg); animation: slideUp 0.25s ease;
+}
+.modal-handle {
+  width: 40px; height: 4px; background: var(--blush);
+  border-radius: 4px; margin: 0 auto 20px;
+}
+.modal h3 {
+  font-family: 'Amiri',serif; font-size: 20px;
+  color: var(--rose); margin-bottom: 16px; text-align: center;
+}
+.modal label { font-size: 13px; color: var(--ink-muted); display: block; margin-bottom: 5px; }
+.modal input, .modal select {
+  width: 100%; padding: 10px 14px; border-radius: var(--radius-xs);
+  border: 1.5px solid var(--blush); font-family: 'Tajawal',sans-serif;
+  font-size: 14px; color: var(--ink); margin-bottom: 14px; outline: none;
+  transition: border-color 0.2s;
+}
+.modal input:focus, .modal select:focus { border-color: var(--rose-light); }
+.modal-actions { display: flex; gap: 10px; }
+.btn-confirm {
+  flex: 1; padding: 11px; border-radius: var(--radius-xs);
+  border: none; background: linear-gradient(135deg, var(--rose), var(--rose-light));
+  color: white; font-family: 'Tajawal',sans-serif; font-size: 15px;
+  cursor: pointer; font-weight: 700; box-shadow: 0 3px 10px rgba(232,103,138,0.3);
+}
+.btn-cancel {
+  padding: 11px 18px; border-radius: var(--radius-xs);
+  border: 1.5px solid var(--blush); background: transparent;
+  font-family: 'Tajawal',sans-serif; font-size: 14px; cursor: pointer; color: var(--ink-muted);
+}
+
+/* ===== MISC ===== */
+.empty-state { text-align: center; padding: 28px; color: var(--ink-faint); font-size: 14px; }
+.quote-card {
+  background: linear-gradient(135deg, var(--lilac-pale), var(--rose-pale));
+  border-radius: var(--radius); padding: 16px 20px; margin-top: 16px;
+  border: 1px solid var(--blush);
+}
+.quote-card .q-head { font-size: 13px; color: var(--lilac); font-weight: 700; margin-bottom: 8px; }
+.quote-card p { font-size: 13px; color: var(--ink-soft); line-height: 1.9; }
+
+.btn-sm-outline {
+  padding: 5px 12px; border-radius: 20px;
+  border: 1.5px solid var(--blush); background: white;
+  font-family: 'Tajawal',sans-serif; font-size: 12px;
+  color: var(--ink-muted); cursor: pointer; transition: all 0.2s;
+}
+.btn-sm-outline:hover { border-color: var(--rose); color: var(--rose); }
+.btn-sm-outline.red-outline:hover { border-color: var(--red); color: var(--red); }
+
+@media(max-width:400px){
+  .stats-grid { grid-template-columns: repeat(2,1fr); }
+  .brand { font-size: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div class="brand">مُحاسِبة <span class="dot">🌸</span></div>
+    <div class="header-date" id="nav-date"></div>
+  </div>
+</div>
+
+<!-- PAGES -->
+<div class="page active" id="page-dashboard">
+  <div class="stats-grid" id="stats-grid"></div>
+  <div class="charts-row">
+    <div class="chart-card"><h4>📊 إنجاز الأسبوع</h4><canvas id="weekChart" height="140"></canvas></div>
+    <div class="chart-card"><h4>🌸 توزيع الفئات</h4><canvas id="catChart" height="140"></canvas></div>
+  </div>
+  <div class="habits-wrap">
+    <div class="habits-header">
+      <h3>✨ عاداتي</h3>
+      <div class="filter-chips">
+        <button class="chip active" onclick="filterCat(this,'')">الكل</button>
+        <button class="chip" onclick="filterCat(this,'عبادة')">عبادة</button>
+        <button class="chip" onclick="filterCat(this,'ذكر')">ذكر</button>
+        <button class="chip lilac" onclick="filterCat(this,'دروس')">دروس</button>
+        <button class="chip lilac" onclick="filterCat(this,'برمجة')">برمجة</button>
+        <button class="chip" onclick="openAddDay()" style="border-color:var(--rose-light);color:var(--rose)">+ يوم</button>
+      </div>
+    </div>
+    <div class="table-scroll">
+      <table><thead id="table-head"></thead><tbody id="table-body"></tbody></table>
+    </div>
+    <div class="add-bar">
+      <input type="text" id="new-habit-name" placeholder="اسم العادة..." />
+      <select id="new-habit-cat">
+        <option value="عبادة">🕌 عبادة</option>
+        <option value="ذكر">📿 ذكر</option>
+        <option value="دروس">📖 دروس دينية</option>
+        <option value="برمجة">💻 برمجة</option>
+        <option value="أخرى">✨ أخرى</option>
+      </select>
+      <button class="btn-add" onclick="addHabit()">+ إضافة</button>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="page-dhikr">
+  <div class="sec-title">ورد الأذكار اليومي</div>
+  <div class="dhikr-grid" id="dhikr-grid"></div>
+  <div class="habits-wrap">
+    <div class="habits-header"><h3>📿 إضافة ذكر مخصص</h3></div>
+    <div class="add-bar">
+      <input type="text" id="new-dhikr-text" placeholder="نص الذكر..." style="flex:2"/>
+      <input type="number" id="new-dhikr-target" placeholder="العدد" value="33" style="width:75px;flex:0"/>
+      <select id="new-dhikr-slot">
+        <option>الصباح</option><option>بعد الفجر</option>
+        <option>الضهر</option><option>المساء</option><option>قبل النوم</option>
+      </select>
+      <button class="btn-add lilac-btn" onclick="addDhikr()">+ إضافة</button>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="page-sins">
+  <div class="sec-title">محاسبة النفس</div>
+  <div class="sins-wrap">
+    <div class="sins-header">
+      <h3>🔴 ذنوب اليوم</h3>
+      <button class="btn-sm-outline red-outline" onclick="clearSins()">مسح اليوم</button>
+    </div>
+    <div id="sins-list"></div>
+    <div class="add-bar">
+      <input type="text" id="new-sin-name" placeholder="سجل الذنب / المعصية..." />
+      <button class="btn-add" style="background:linear-gradient(135deg,#e05577,#f08090)" onclick="addSin()">+ تسجيل</button>
+    </div>
+  </div>
+  <div class="quote-card">
+    <div class="q-head">💭 تذكير</div>
+    <p>"حاسبوا أنفسكم قبل أن تُحاسَبوا" — التسجيل مش ضعف، ده خطوة للاستغفار والتوبة 🌿<br>كل ما وقعتِ في ذنب قولي: <strong>أستغفر الله وأتوب إليه</strong></p>
+  </div>
+</div>
+
+<div class="page" id="page-courses">
+  <div class="sec-title">الدروس والكورسات</div>
+  <div class="courses-grid" id="courses-grid"></div>
+  <div class="habits-wrap">
+    <div class="habits-header"><h3>📚 إضافة كورس جديد</h3></div>
+    <div class="add-bar">
+      <input type="text" id="new-course-name" placeholder="اسم الكورس أو الدرس..." style="flex:2"/>
+      <select id="new-course-type">
+        <option value="ديني">🌿 ديني</option>
+        <option value="برمجة">💻 برمجة</option>
+        <option value="أخرى">✨ أخرى</option>
+      </select>
+      <input type="number" id="new-course-total" placeholder="الدروس" value="30" style="width:80px;flex:0"/>
+      <button class="btn-add lilac-btn" onclick="addCourse()">+ إضافة</button>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="page-template">
+  <div class="hero-card">
+    <h1>✦ مُحاسِبة ✦</h1>
+    <p>جدول محاسبة يومي إسلامي<br>خصصيه لعاداتك وعبادتك 🌸</p>
+    <button class="btn-hero" onclick="showPage('dashboard')">ابدأي الآن ✨</button>
+  </div>
+  <div class="sec-title">اختاري نموذج</div>
+  <div class="tmpl-grid">
+    <div class="tmpl-opt" onclick="loadTemplate('salah')">
+      <div class="t-icon">🕌</div>
+      <h4>الصلوات والأذكار</h4>
+      <p>نموذج كامل للصلوات اليومية والأذكار</p>
+    </div>
+    <div class="tmpl-opt" onclick="loadTemplate('full')">
+      <div class="t-icon">📋</div>
+      <h4>نموذج مريم الكامل</h4>
+      <p>كل العبادات من الفجر للعشاء مع الأذكار</p>
+    </div>
+    <div class="tmpl-opt" onclick="loadTemplate('student')">
+      <div class="t-icon">📚</div>
+      <h4>طالبة</h4>
+      <p>عبادات + مذاكرة + برمجة + عادات صحية</p>
+    </div>
+    <div class="tmpl-opt" onclick="loadTemplate('empty')">
+      <div class="t-icon">✏️</div>
+      <h4>فاضي تماماً</h4>
+      <p>ابدأي من الصفر بعاداتك الخاصة</p>
+    </div>
+  </div>
+  <div class="settings-card">
+    <div class="s-title">⚙️ إعدادات</div>
+    <div class="settings-btns">
+      <button class="s-btn" onclick="exportData()">📥 تصدير بياناتي</button>
+      <button class="s-btn" onclick="document.getElementById('import-file').click()">📤 استيراد</button>
+      <button class="s-btn danger" onclick="if(confirm('مسح كل شيء؟')){clearAll();}">🗑️ مسح كل شيء</button>
+      <input type="file" id="import-file" style="display:none" accept=".json" onchange="importData(event)"/>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="nav-item active" id="tab-dashboard" onclick="showPage('dashboard')">
+    <span class="nav-icon">🏠</span><span>لوحتي</span>
+  </button>
+  <button class="nav-item" id="tab-dhikr" onclick="showPage('dhikr')">
+    <span class="nav-icon">📿</span><span>الأذكار</span>
+  </button>
+  <button class="nav-item" id="tab-sins" onclick="showPage('sins')">
+    <span class="nav-icon">🔴</span><span>محاسبة</span>
+  </button>
+  <button class="nav-item" id="tab-courses" onclick="showPage('courses')">
+    <span class="nav-icon">📚</span><span>الدروس</span>
+  </button>
+  <button class="nav-item" id="tab-template" onclick="showPage('template')">
+    <span class="nav-icon">⚙️</span><span>إعدادات</span>
+  </button>
+</nav>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modal-day">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <h3>إضافة يوم جديد 📅</h3>
+    <label>اسم اليوم</label>
+    <input type="text" id="modal-day-input" placeholder="مثال: الأحد 25/5" />
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal('modal-day')">إلغاء</button>
+      <button class="btn-confirm" onclick="confirmAddDay()">إضافة ✨</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const DAYS_AR=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+const MONTHS_AR=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+function todayLabel(){const d=new Date();return DAYS_AR[d.getDay()]+' '+d.getDate()+'/'+(d.getMonth()+1);}
+function formatDate(d){return DAYS_AR[d.getDay()]+' '+d.getDate()+' '+MONTHS_AR[d.getMonth()];}
+
+const DEFAULT_STATE={
+  habits:[
+    {id:'h1',name:'اذكار الاستيقاظ',cat:'ذكر'},
+    {id:'h2',name:'سنة الفجر',cat:'عبادة'},
+    {id:'h3',name:'الفجر',cat:'عبادة'},
+    {id:'h4',name:'اذكار الصباح',cat:'ذكر'},
+    {id:'h5',name:'الورد اليومي (ربعين)',cat:'ذكر'},
+    {id:'h6',name:'سنة الضهر القبلية',cat:'عبادة'},
+    {id:'h7',name:'الضهر في معادها',cat:'عبادة'},
+    {id:'h8',name:'السنة البعدية',cat:'عبادة'},
+    {id:'h9',name:'اذكار الصلاة',cat:'ذكر'},
+    {id:'h10',name:'العصر في معادها',cat:'عبادة'},
+    {id:'h11',name:'اذكار المساء',cat:'ذكر'},
+    {id:'h12',name:'صلاة المغرب في معادها',cat:'عبادة'},
+    {id:'h13',name:'صلاة العشاء',cat:'عبادة'},
+    {id:'h14',name:'السنة البعدية (العشاء)',cat:'عبادة'},
+    {id:'h15',name:'درس ديني',cat:'دروس'},
+    {id:'h16',name:'كورس برمجة',cat:'برمجة'},
+  ],
+  days:[todayLabel()],
+  checks:{},
+  dhikr:[
+    {id:'d1',slot:'الصباح',text:'سبحان الله',target:33,counts:{}},
+    {id:'d2',slot:'الصباح',text:'الحمد لله',target:33,counts:{}},
+    {id:'d3',slot:'الصباح',text:'الله أكبر',target:34,counts:{}},
+    {id:'d4',slot:'بعد الفجر',text:'لا إله إلا الله وحده لا شريك له',target:10,counts:{}},
+    {id:'d5',slot:'المساء',text:'سبحان الله وبحمده',target:100,counts:{}},
+    {id:'d6',slot:'المساء',text:'لا حول ولا قوة إلا بالله',target:100,counts:{}},
+    {id:'d7',slot:'قبل النوم',text:'آية الكرسي',target:1,counts:{}},
+    {id:'d8',slot:'قبل النوم',text:'سورة الإخلاص والمعوذتين',target:3,counts:{}},
+  ],
+  sins:[],
+  courses:[
+    {id:'c1',name:'درس السيرة النبوية',type:'ديني',total:60,done:0},
+    {id:'c2',name:'Laravel للمتقدمين',type:'برمجة',total:40,done:0},
+    {id:'c3',name:'تفسير القرآن الكريم',type:'ديني',total:114,done:0},
+  ]
+};
+
+let S=JSON.parse(localStorage.getItem('muhassib_v3')||'null')||JSON.parse(JSON.stringify(DEFAULT_STATE));
+let currentCat='';
+let weekChart,catChart;
+function save(){localStorage.setItem('muhassib_v3',JSON.stringify(S));}
+
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(t=>t.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.getElementById('tab-'+id).classList.add('active');
+  if(id==='dashboard')renderDashboard();
+  if(id==='dhikr')renderDhikr();
+  if(id==='sins')renderSins();
+  if(id==='courses')renderCourses();
+}
+
+function hKey(hid,day){return hid+'::'+day;}
+function getCheck(hid,day){return S.checks[hKey(hid,day)]||0;}
+function cycleCheck(hid,day){
+  S.checks[hKey(hid,day)]=(getCheck(hid,day)+1)%3;
+  save();renderTable();renderStats();renderCharts();
+}
+
+function filterCat(el,cat){
+  currentCat=cat;
+  document.querySelectorAll('.filter-chips .chip').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  renderTable();
+}
+
+function renderTable(){
+  const habits=currentCat?S.habits.filter(h=>h.cat===currentCat):S.habits;
+  const head=document.getElementById('table-head');
+  const body=document.getElementById('table-body');
+  let h='<tr><th class="name-th">العادة</th>';
+  S.days.forEach((d,di)=>{
+    h+=`<th class="day-th">${d}<button class="del-day" onclick="removeDay(${di})">✕</button></th>`;
+  });
+  h+='<th>%</th></tr>';
+  head.innerHTML=h;
+  if(!habits.length){body.innerHTML='<tr><td colspan="'+(S.days.length+2)+'" class="empty-state">لا توجد عادات في هذه الفئة 🌸</td></tr>';return;}
+  let b='';
+  habits.forEach(habit=>{
+    let done=0;
+    S.days.forEach(d=>{if(getCheck(habit.id,d)===1)done++;});
+    const pct=S.days.length?Math.round(done/S.days.length*100):0;
+    const pc=pct>=70?'':'pct-badge '+(pct>=40?'mid':'low');
+    b+=`<tr><td class="name-td"><div class="habit-row-name">
+      <span class="name-text" onclick="editHabit('${habit.id}')">${habit.name}</span>
+      <span class="cat-badge ${habit.cat}">${habit.cat}</span>
+      <button class="row-del-btn" onclick="removeHabit('${habit.id}')">✕</button>
+    </div></td>`;
+    S.days.forEach(d=>{
+      const s=getCheck(habit.id,d);
+      const cls=s===1?'done':s===2?'skip':'';
+      const icon=s===1?'✓':s===2?'—':'';
+      b+=`<td><button class="chk ${cls}" onclick="cycleCheck('${habit.id}','${d.replace(/'/g,"\\'")}')"><span>${icon}</span></button></td>`;
+    });
+    b+=`<td><span class="pct-badge ${pc}">${pct}%</span></td></tr>`;
+  });
+  body.innerHTML=b;
+}
+
+function addHabit(){
+  const name=document.getElementById('new-habit-name').value.trim();
+  const cat=document.getElementById('new-habit-cat').value;
+  if(!name)return;
+  S.habits.push({id:'h'+Date.now(),name,cat});
+  document.getElementById('new-habit-name').value='';
+  save();renderTable();renderStats();renderCharts();
+}
+function removeHabit(id){if(!confirm('حذف هذه العادة؟'))return;S.habits=S.habits.filter(h=>h.id!==id);save();renderTable();renderStats();renderCharts();}
+function editHabit(id){const h=S.habits.find(x=>x.id===id);if(!h)return;const v=prompt('اسم العادة:',h.name);if(v&&v.trim()){h.name=v.trim();save();renderTable();}}
+function openAddDay(){document.getElementById('modal-day-input').value='';document.getElementById('modal-day').classList.add('open');setTimeout(()=>document.getElementById('modal-day-input').focus(),100);}
+function confirmAddDay(){const v=document.getElementById('modal-day-input').value.trim();if(v){S.days.push(v);save();renderTable();renderStats();renderCharts();}closeModal('modal-day');}
+function removeDay(i){if(!confirm('حذف اليوم "'+S.days[i]+'"؟'))return;S.days.splice(i,1);save();renderTable();renderStats();renderCharts();}
+
+function renderStats(){
+  let total=0,done=0,perfect=0;
+  S.days.forEach(d=>{let dd=0;S.habits.forEach(h=>{total++;if(getCheck(h.id,d)===1){done++;dd++;}});if(S.habits.length&&dd===S.habits.length)perfect++;});
+  const pct=total?Math.round(done/total*100):0;
+  const streak=calcStreak();
+  const sinTotal=S.sins.reduce((a,s)=>a+(s.count||0),0);
+  document.getElementById('stats-grid').innerHTML=`
+    <div class="stat-card"><div class="val">${pct}%</div><div class="lbl">الإنجاز الكلي</div></div>
+    <div class="stat-card s2"><div class="val">${streak}🔥</div><div class="lbl">السلسلة</div></div>
+    <div class="stat-card s3"><div class="val">${perfect}</div><div class="lbl">أيام مثالية</div></div>
+    <div class="stat-card s4"><div class="val">${S.habits.length}</div><div class="lbl">عدد العادات</div></div>
+    <div class="stat-card s5"><div class="val">${sinTotal}</div><div class="lbl">ذنوب اليوم</div></div>`;
+}
+
+function calcStreak(){let s=0;for(let i=S.days.length-1;i>=0;i--){const d=S.days[i];if(!S.habits.length)break;let all=true;S.habits.forEach(h=>{if(getCheck(h.id,d)!==1)all=false;});if(all)s++;else break;}return s;}
+
+function renderCharts(){
+  const wl=S.days.slice(-7);
+  const wd=wl.map(d=>{if(!S.habits.length)return 0;let dn=0;S.habits.forEach(h=>{if(getCheck(h.id,d)===1)dn++;});return Math.round(dn/S.habits.length*100);});
+  const ctx1=document.getElementById('weekChart').getContext('2d');
+  if(weekChart)weekChart.destroy();
+  weekChart=new Chart(ctx1,{type:'bar',data:{labels:wl,datasets:[{data:wd,backgroundColor:wd.map(v=>v>=70?'#e8678a':v>=40?'#b48fce':'#f0a0b0'),borderRadius:8,borderSkipped:false}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{max:100,ticks:{callback:v=>v+'%'},grid:{color:'#fde8f0'}},x:{grid:{display:false},ticks:{font:{size:10}}}}}});
+  const cats=['عبادة','ذكر','دروس','برمجة','أخرى'];
+  const catColors=['#e8678a','#d4956a','#5a6bd4','#b48fce','#a8d8c8'];
+  const catData=cats.map(cat=>{let dn=0;S.habits.filter(h=>h.cat===cat).forEach(h=>{S.days.forEach(d=>{if(getCheck(h.id,d)===1)dn++;});});return dn;});
+  const ctx2=document.getElementById('catChart').getContext('2d');
+  if(catChart)catChart.destroy();
+  catChart=new Chart(ctx2,{type:'doughnut',data:{labels:cats,datasets:[{data:catData,backgroundColor:catColors,borderWidth:2,borderColor:'#fdf7fa'}]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{family:'Tajawal',size:11},boxWidth:12}}}}});
+}
+
+function dhikrCount(id){const d=new Date();const k=d.toDateString();const item=S.dhikr.find(x=>x.id===id);return item?(item.counts[k]||0):0;}
+function incDhikr(id){const d=new Date();const k=d.toDateString();const item=S.dhikr.find(x=>x.id===id);if(!item)return;if(!item.counts)item.counts={};item.counts[k]=(item.counts[k]||0)+1;save();renderDhikr();}
+function resetDhikr(id){const d=new Date();const k=d.toDateString();const item=S.dhikr.find(x=>x.id===id);if(item){item.counts[k]=0;save();renderDhikr();}}
+function removeDhikr(id){if(!confirm('حذف هذا الذكر؟'))return;S.dhikr=S.dhikr.filter(d=>d.id!==id);save();renderDhikr();}
+
+function renderDhikr(){
+  const slots=[...new Set(S.dhikr.map(d=>d.slot))];
+  const slotClass={'الصباح':'s-morning','بعد الفجر':'s-fajr','المساء':'s-eve','قبل النوم':'s-night'};
+  const slotIcon={'الصباح':'🌅','بعد الفجر':'🌄','الضهر':'☀️','المساء':'🌇','قبل النوم':'🌙'};
+  document.getElementById('dhikr-grid').innerHTML=slots.map(slot=>{
+    const items=S.dhikr.filter(d=>d.slot===slot);
+    return `<div class="dhikr-slot ${slotClass[slot]||''}">
+      <h4>${slotIcon[slot]||'🕌'} ${slot}</h4>
+      ${items.map(item=>{
+        const cnt=dhikrCount(item.id);const done=cnt>=item.target;
+        return `<div class="dhikr-item">
+          <span class="dhikr-text">${item.text}</span>
+          <div class="dhikr-counter">
+            ${done?'<span class="done-pill">✓ تم</span>':''}
+            <button class="cnt-btn" onclick="resetDhikr('${item.id}')" title="إعادة">↺</button>
+            <span class="cnt-num">${cnt}</span>
+            <span class="cnt-target">/${item.target}</span>
+            <button class="cnt-btn" onclick="incDhikr('${item.id}')" ${done?'disabled':''}>+</button>
+            <button class="cnt-btn" onclick="removeDhikr('${item.id}')" style="font-size:11px;color:var(--ink-faint)">✕</button>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`;
+  }).join('');
+}
+
+function addDhikr(){
+  const text=document.getElementById('new-dhikr-text').value.trim();
+  const target=parseInt(document.getElementById('new-dhikr-target').value)||33;
+  const slot=document.getElementById('new-dhikr-slot').value;
+  if(!text)return;
+  S.dhikr.push({id:'d'+Date.now(),slot,text,target,counts:{}});
+  document.getElementById('new-dhikr-text').value='';
+  save();renderDhikr();
+}
+
+function renderSins(){
+  const list=document.getElementById('sins-list');
+  if(!S.sins.length){list.innerHTML='<div class="empty-state">ما في ذنوب مسجلة — حافظي على ذلك 🌿</div>';return;}
+  list.innerHTML=S.sins.map((sin,i)=>{
+    const marks='|'.repeat(Math.min(sin.count,20))+(sin.count>20?'...':'');
+    return `<div class="sin-row">
+      <span class="sin-name">${sin.name}</span>
+      <div class="sin-tally">
+        <span class="tally-marks">${marks}</span>
+        <span style="font-size:12px;color:var(--ink-muted)">${sin.count}×</span>
+        <button class="cnt-btn" style="border-color:#f0a0b0;background:var(--red-pale);color:var(--red)" onclick="incSin(${i})">+</button>
+        <button class="sin-del" onclick="removeSin(${i})">✕</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function addSin(){const name=document.getElementById('new-sin-name').value.trim();if(!name)return;const ex=S.sins.find(s=>s.name===name);if(ex)ex.count++;else S.sins.push({name,count:1});document.getElementById('new-sin-name').value='';save();renderSins();renderStats();}
+function incSin(i){S.sins[i].count++;save();renderSins();renderStats();}
+function removeSin(i){S.sins.splice(i,1);save();renderSins();renderStats();}
+function clearSins(){if(confirm('مسح كل ذنوب اليوم؟')){S.sins=[];save();renderSins();renderStats();}}
+
+function renderCourses(){
+  const grid=document.getElementById('courses-grid');
+  if(!S.courses.length){grid.innerHTML='<div class="empty-state">لا توجد كورسات بعد 📚</div>';return;}
+  grid.innerHTML=S.courses.map((c,i)=>{
+    const pct=c.total?Math.round(c.done/c.total*100):0;
+    const rem=c.total-c.done;
+    return `<div class="course-card ${c.type}">
+      <h4>${c.name}</h4>
+      <div class="course-type-lbl">${c.type} • ${c.done}/${c.total} درس</div>
+      <div class="prog-wrap"><div class="prog-fill" style="width:${pct}%"></div></div>
+      <div class="prog-label"><span>${pct}% مكتمل</span><span>${rem} متبقي</span></div>
+      <div class="course-controls">
+        <input type="number" id="cs${i}" value="1" min="1" max="${rem||1}"/>
+        <button class="cc-btn" onclick="advanceCourse(${i})">+ تقدم</button>
+        <button class="cc-btn cc-del" onclick="removeCourse(${i})">حذف</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+function advanceCourse(i){const step=parseInt(document.getElementById('cs'+i).value)||1;S.courses[i].done=Math.min(S.courses[i].done+step,S.courses[i].total);save();renderCourses();}
+function removeCourse(i){if(confirm('حذف هذا الكورس؟')){S.courses.splice(i,1);save();renderCourses();}}
+function addCourse(){
+  const name=document.getElementById('new-course-name').value.trim();
+  const type=document.getElementById('new-course-type').value;
+  const total=parseInt(document.getElementById('new-course-total').value)||30;
+  if(!name)return;
+  S.courses.push({id:'c'+Date.now(),name,type,total,done:0});
+  document.getElementById('new-course-name').value='';
+  save();renderCourses();
+}
+
+function loadTemplate(type){
+  if(!confirm('ده هيمسح العادات الحالية. متأكدة؟'))return;
+  S.habits=[];S.checks={};
+  if(type==='salah'){S.habits=[{id:'t1',name:'صلاة الفجر',cat:'عبادة'},{id:'t2',name:'سنة الفجر',cat:'عبادة'},{id:'t3',name:'صلاة الضهر',cat:'عبادة'},{id:'t4',name:'صلاة العصر',cat:'عبادة'},{id:'t5',name:'صلاة المغرب',cat:'عبادة'},{id:'t6',name:'صلاة العشاء',cat:'عبادة'},{id:'t7',name:'اذكار الصباح',cat:'ذكر'},{id:'t8',name:'اذكار المساء',cat:'ذكر'}];}
+  else if(type==='full'){S.habits=DEFAULT_STATE.habits.map(h=>({...h}));}
+  else if(type==='student'){S.habits=[{id:'s1',name:'الفجر في وقته',cat:'عبادة'},{id:'s2',name:'اذكار الصباح',cat:'ذكر'},{id:'s3',name:'صلاة الضهر',cat:'عبادة'},{id:'s4',name:'صلاة العصر',cat:'عبادة'},{id:'s5',name:'اذكار المساء',cat:'ذكر'},{id:'s6',name:'صلاة المغرب',cat:'عبادة'},{id:'s7',name:'صلاة العشاء',cat:'عبادة'},{id:'s8',name:'مذاكرة',cat:'دروس'},{id:'s9',name:'كورس برمجة',cat:'برمجة'},{id:'s10',name:'رياضة',cat:'أخرى'},{id:'s11',name:'نوم مبكر',cat:'أخرى'}];}
+  save();renderDashboard();showPage('dashboard');
+}
+
+function exportData(){const blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='muhassib_backup.json';a.click();}
+function importData(e){const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=ev=>{try{const data=JSON.parse(ev.target.result);if(!confirm('استيراد البيانات؟'))return;S=data;save();renderDashboard();}catch{alert('ملف غلط!');}};reader.readAsText(file);}
+function clearAll(){S=JSON.parse(JSON.stringify(DEFAULT_STATE));save();renderDashboard();}
+
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+document.querySelectorAll('.modal-bg').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');});});
+document.getElementById('modal-day-input').addEventListener('keydown',e=>{if(e.key==='Enter')confirmAddDay();});
+
+function renderDashboard(){renderStats();renderTable();renderCharts();}
+document.getElementById('nav-date').textContent=formatDate(new Date());
+renderDashboard();
+</script>
+</body>
+</html>
