@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -23,8 +24,6 @@
   --red:         #f87171;
   --red-glow:    rgba(248,113,113,0.15);
   --blue:        #60a5fa;
-
-  /* DARK surfaces */
   --bg:          #0d0d14;
   --bg2:         #12121e;
   --surface:     #181828;
@@ -32,13 +31,10 @@
   --surface3:    #242438;
   --border:      rgba(255,255,255,0.07);
   --border2:     rgba(255,255,255,0.12);
-
-  /* Text */
   --ink:         #f0eaf6;
   --ink-soft:    #c4b8d4;
   --ink-muted:   #8a7a9e;
   --ink-faint:   #4a3f5a;
-
   --radius:      20px;
   --radius-sm:   14px;
   --radius-xs:   10px;
@@ -46,7 +42,6 @@
   --shadow-lg:   0 8px 48px rgba(0,0,0,0.6);
   --glow-rose:   0 0 20px rgba(255,107,157,0.25);
 }
-
 [data-theme="light"] {
   --bg:          #faf5ff;
   --bg2:         #f3eeff;
@@ -63,11 +58,8 @@
   --shadow-lg:   0 8px 48px rgba(120,60,180,0.16);
   --glow-rose:   0 0 20px rgba(255,107,157,0.12);
 }
-
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
 html { scroll-behavior: smooth; }
-
 body {
   font-family: 'Tajawal', sans-serif;
   background: var(--bg);
@@ -77,8 +69,6 @@ body {
   padding-bottom: 80px;
   transition: background 0.3s, color 0.3s;
 }
-
-/* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--rose-dim); border-radius: 4px; }
@@ -92,79 +82,30 @@ body {
   z-index: 100;
   border-bottom: 1px solid var(--border);
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
 }
-.header-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.brand {
-  font-family: 'Amiri', serif;
-  font-size: 22px;
-  color: var(--rose);
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-shadow: var(--glow-rose);
-}
+.header-top { display: flex; align-items: center; justify-content: space-between; }
+.brand { font-family: 'Amiri', serif; font-size: 22px; color: var(--rose); font-weight: 700; letter-spacing: 1px; text-shadow: var(--glow-rose); }
 .brand .dot { color: var(--lilac); }
 .header-right { display: flex; align-items: center; gap: 10px; }
-.header-date {
-  font-size: 11px;
-  color: var(--ink-muted);
-  background: var(--surface2);
-  padding: 5px 12px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-}
-.theme-toggle {
-  width: 34px; height: 34px; border-radius: 50%;
-  border: 1px solid var(--border2);
-  background: var(--surface2);
-  color: var(--ink-soft);
-  font-size: 16px; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.2s;
-}
+.header-date { font-size: 11px; color: var(--ink-muted); background: var(--surface2); padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border); }
+.theme-toggle { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border2); background: var(--surface2); color: var(--ink-soft); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
 .theme-toggle:hover { border-color: var(--rose-border); color: var(--rose); }
 
 /* ===== BOTTOM NAV ===== */
 .bottom-nav {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  background: var(--surface);
-  border-top: 1px solid var(--border);
-  display: flex;
-  z-index: 200;
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: var(--surface); border-top: 1px solid var(--border);
+  display: flex; z-index: 200;
   padding: 6px 0 env(safe-area-inset-bottom, 6px);
   box-shadow: 0 -4px 30px rgba(0,0,0,0.3);
   backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
 }
-.nav-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
-  padding: 6px 4px;
-  cursor: pointer;
-  border: none;
-  background: transparent;
-  font-family: 'Tajawal', sans-serif;
-  font-size: 10px;
-  color: var(--ink-faint);
-  transition: all 0.2s;
-}
+.nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 4px; cursor: pointer; border: none; background: transparent; font-family: 'Tajawal', sans-serif; font-size: 10px; color: var(--ink-faint); transition: all 0.2s; }
 .nav-item .nav-icon { font-size: 20px; line-height: 1; transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1); }
 .nav-item.active { color: var(--rose); }
 .nav-item.active .nav-icon { transform: scale(1.2) translateY(-2px); }
 .nav-item:active { transform: scale(0.93); }
-.nav-dot {
-  width: 4px; height: 4px; border-radius: 50%;
-  background: var(--rose); margin: 0 auto;
-  opacity: 0; transition: opacity 0.2s;
-}
+.nav-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--rose); margin: 0 auto; opacity: 0; transition: opacity 0.2s; }
 .nav-item.active .nav-dot { opacity: 1; }
 
 /* ===== PAGES ===== */
@@ -172,53 +113,38 @@ body {
 .page.active { display: block; animation: fadeUp 0.3s ease; }
 @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
 
-/* ===== SECTION TITLE ===== */
-.sec-title {
-  font-family: 'Amiri', serif;
-  font-size: 20px;
-  color: var(--rose);
-  margin: 20px 0 14px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-shadow: var(--glow-rose);
-}
+.sec-title { font-family: 'Amiri', serif; font-size: 20px; color: var(--rose); margin: 20px 0 14px; display: flex; align-items: center; gap: 10px; text-shadow: var(--glow-rose); }
 .sec-title::before { content: '✦'; font-size: 13px; color: var(--lilac); }
 
-/* ===== STATS ===== */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 10px;
-  margin-bottom: 18px;
+/* ===== HIJRI DATE BANNER ===== */
+.hijri-banner {
+  background: linear-gradient(135deg, rgba(255,107,157,0.08), rgba(192,132,252,0.06));
+  border: 1px solid var(--rose-border);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
 }
+.hijri-banner .h-date { font-family: 'Amiri', serif; font-size: 16px; color: var(--rose); }
+.hijri-banner .h-gregorian { font-size: 12px; color: var(--ink-muted); }
+.hijri-banner .h-day-num {
+  font-size: 32px; font-weight: 800; color: var(--rose);
+  line-height: 1; opacity: 0.15; font-family: 'Amiri', serif;
+}
+
+/* ===== STATS ===== */
+.stats-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 18px; }
 @media(max-width:600px){ .stats-grid { grid-template-columns: repeat(3,1fr); } }
 @media(max-width:360px){ .stats-grid { grid-template-columns: repeat(2,1fr); } }
-
-.stat-card {
-  background: var(--surface);
-  border-radius: var(--radius-sm);
-  padding: 14px 8px;
-  text-align: center;
-  border: 1px solid var(--border);
-  transition: transform 0.2s, box-shadow 0.2s;
-  position: relative;
-  overflow: hidden;
-}
-.stat-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, var(--rose-glow), transparent);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
+.stat-card { background: var(--surface); border-radius: var(--radius-sm); padding: 14px 8px; text-align: center; border: 1px solid var(--border); transition: transform 0.2s, box-shadow 0.2s; position: relative; overflow: hidden; }
+.stat-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, var(--rose-glow), transparent); opacity: 0; transition: opacity 0.3s; }
 .stat-card:hover { transform: translateY(-3px); box-shadow: var(--glow-rose); }
 .stat-card:hover::after { opacity: 1; }
-.stat-card .accent-line {
-  position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, var(--rose), var(--lilac));
-}
+.stat-card .accent-line { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--rose), var(--lilac)); }
 .stat-card.s2 .accent-line { background: linear-gradient(90deg, var(--lilac), var(--blue)); }
 .stat-card.s3 .accent-line { background: linear-gradient(90deg, var(--mint), var(--lilac)); }
 .stat-card.s4 .accent-line { background: linear-gradient(90deg, var(--gold), var(--rose)); }
@@ -227,77 +153,26 @@ body {
 .stat-card .lbl { font-size: 10px; color: var(--ink-muted); margin-top: 4px; position: relative; z-index: 1; }
 
 /* ===== CHARTS ===== */
-.charts-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 18px;
-}
+.charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
 @media(max-width:500px){ .charts-row { grid-template-columns: 1fr; } }
-.chart-card {
-  background: var(--surface);
-  border-radius: var(--radius-sm);
-  padding: 16px;
-  border: 1px solid var(--border);
-}
+.chart-card { background: var(--surface); border-radius: var(--radius-sm); padding: 16px; border: 1px solid var(--border); }
 .chart-card h4 { font-size: 12px; color: var(--ink-muted); margin-bottom: 12px; font-weight: 600; }
 
 /* ===== HABITS TABLE ===== */
-.habits-wrap {
-  background: var(--surface);
-  border-radius: var(--radius);
-  overflow: hidden;
-  margin-bottom: 16px;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-}
-.habits-header {
-  padding: 14px 16px;
-  background: var(--surface2);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px;
-  border-bottom: 1px solid var(--border);
-}
+.habits-wrap { background: var(--surface); border-radius: var(--radius); overflow: hidden; margin-bottom: 16px; border: 1px solid var(--border); box-shadow: var(--shadow); }
+.habits-header { padding: 14px 16px; background: var(--surface2); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; border-bottom: 1px solid var(--border); }
 .habits-header h3 { font-size: 14px; color: var(--rose); font-weight: 700; }
 .filter-chips { display: flex; gap: 6px; flex-wrap: wrap; }
-.chip {
-  padding: 5px 13px;
-  border-radius: 20px;
-  border: 1px solid var(--border2);
-  background: var(--surface3);
-  font-family: 'Tajawal', sans-serif;
-  font-size: 12px;
-  color: var(--ink-muted);
-  cursor: pointer;
-  transition: all 0.2s;
-}
+.chip { padding: 5px 13px; border-radius: 20px; border: 1px solid var(--border2); background: var(--surface3); font-family: 'Tajawal', sans-serif; font-size: 12px; color: var(--ink-muted); cursor: pointer; transition: all 0.2s; }
 .chip:hover { border-color: var(--rose-border); color: var(--rose); }
 .chip.active { background: var(--rose); color: white; border-color: var(--rose); }
 .chip.lilac.active { background: var(--lilac); border-color: var(--lilac); color: white; }
-
 .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 table { width: 100%; border-collapse: collapse; min-width: 400px; }
-thead th {
-  padding: 10px 12px;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--ink-muted);
-  text-align: center;
-  background: var(--surface2);
-  border-bottom: 1px solid var(--border);
-  white-space: nowrap;
-}
+thead th { padding: 10px 12px; font-size: 11px; font-weight: 600; color: var(--ink-muted); text-align: center; background: var(--surface2); border-bottom: 1px solid var(--border); white-space: nowrap; }
 thead th.name-th { text-align: right; min-width: 160px; }
 .day-th { position: relative; }
-.del-day {
-  position: absolute; top: 2px; left: 3px;
-  font-size: 8px; color: var(--ink-faint);
-  cursor: pointer; opacity: 0; transition: opacity 0.2s;
-  background: none; border: none; padding: 2px;
-}
+.del-day { position: absolute; top: 2px; left: 3px; font-size: 8px; color: var(--ink-faint); cursor: pointer; opacity: 0; transition: opacity 0.2s; background: none; border: none; padding: 2px; }
 .day-th:hover .del-day { opacity: 1; }
 tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
 tbody tr:last-child { border-bottom: none; }
@@ -307,129 +182,64 @@ td.name-td { text-align: right; }
 .habit-row-name { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
 .name-text { font-size: 13px; cursor: text; color: var(--ink-soft); transition: color 0.15s; }
 .name-text:hover { color: var(--rose); }
-.cat-badge {
-  font-size: 10px; padding: 3px 8px; border-radius: 10px;
-  background: var(--rose-glow); color: var(--rose); white-space: nowrap; flex-shrink: 0;
-  border: 1px solid var(--rose-border);
-}
+.cat-badge { font-size: 10px; padding: 3px 8px; border-radius: 10px; background: var(--rose-glow); color: var(--rose); white-space: nowrap; flex-shrink: 0; border: 1px solid var(--rose-border); }
 .cat-badge.ذكر    { background: var(--gold-glow);   color: var(--gold);   border-color: rgba(251,191,36,0.3); }
 .cat-badge.دروس   { background: rgba(96,165,250,0.12); color: var(--blue);  border-color: rgba(96,165,250,0.3); }
 .cat-badge.برمجة  { background: var(--lilac-glow);  color: var(--lilac);  border-color: rgba(192,132,252,0.3); }
 .cat-badge.ذنوب   { background: var(--red-glow);    color: var(--red);    border-color: rgba(248,113,113,0.3); }
 .cat-badge.أخرى   { background: var(--mint-glow);   color: var(--mint);   border-color: rgba(52,211,153,0.3); }
-.row-del-btn {
-  opacity: 0; border: none; background: none; cursor: pointer;
-  color: var(--ink-faint); font-size: 13px; padding: 2px 4px; transition: all 0.15s;
-}
+.row-del-btn { opacity: 0; border: none; background: none; cursor: pointer; color: var(--ink-faint); font-size: 13px; padding: 2px 4px; transition: all 0.15s; }
 tr:hover .row-del-btn { opacity: 1; }
 .row-del-btn:hover { color: var(--red); }
-
-/* CHECK BUTTONS */
-.chk {
-  width: 36px; height: 36px; border-radius: 50%;
-  border: 1.5px solid var(--border2); background: transparent;
-  cursor: pointer; font-size: 15px; transition: all 0.2s;
-  display: inline-flex; align-items: center; justify-content: center;
-  color: var(--ink-muted);
-}
+.chk { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid var(--border2); background: transparent; cursor: pointer; font-size: 15px; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; color: var(--ink-muted); }
 .chk:hover { border-color: var(--rose); background: var(--rose-glow); color: var(--rose); }
-.chk.done {
-  background: linear-gradient(135deg, var(--rose), var(--rose-dim));
-  border-color: var(--rose); color: white;
-  box-shadow: 0 0 12px rgba(255,107,157,0.4);
-}
+.chk.done { background: linear-gradient(135deg, var(--rose), var(--rose-dim)); border-color: var(--rose); color: white; box-shadow: 0 0 12px rgba(255,107,157,0.4); }
 .chk.skip { background: var(--surface3); border-color: var(--border2); color: var(--ink-faint); }
-.pct-badge {
-  display: inline-block; font-size: 11px; font-weight: 700;
-  padding: 3px 9px; border-radius: 10px;
-  background: var(--mint-glow); color: var(--mint);
-  border: 1px solid rgba(52,211,153,0.3);
-}
+.pct-badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 10px; background: var(--mint-glow); color: var(--mint); border: 1px solid rgba(52,211,153,0.3); }
 .pct-badge.mid { background: var(--gold-glow); color: var(--gold); border-color: rgba(251,191,36,0.3); }
 .pct-badge.low { background: var(--red-glow); color: var(--red); border-color: rgba(248,113,113,0.3); }
 
 /* ===== ADD BAR ===== */
-.add-bar {
-  display: flex; gap: 8px; padding: 12px 14px;
-  background: var(--surface2); border-top: 1px solid var(--border);
-  flex-wrap: wrap; align-items: center;
-}
-.add-bar input, .add-bar select {
-  flex: 1; min-width: 100px; padding: 9px 13px;
-  border-radius: var(--radius-xs); border: 1px solid var(--border2);
-  background: var(--surface3); font-family: 'Tajawal', sans-serif; font-size: 13px;
-  color: var(--ink); outline: none; transition: border-color 0.2s;
-}
+.add-bar { display: flex; gap: 8px; padding: 12px 14px; background: var(--surface2); border-top: 1px solid var(--border); flex-wrap: wrap; align-items: center; }
+.add-bar input, .add-bar select { flex: 1; min-width: 100px; padding: 9px 13px; border-radius: var(--radius-xs); border: 1px solid var(--border2); background: var(--surface3); font-family: 'Tajawal', sans-serif; font-size: 13px; color: var(--ink); outline: none; transition: border-color 0.2s; }
 .add-bar input:focus, .add-bar select:focus { border-color: var(--rose); box-shadow: 0 0 0 3px var(--rose-glow); }
 .add-bar select option { background: var(--surface3); color: var(--ink); }
-.btn-add {
-  padding: 9px 18px; border-radius: var(--radius-xs);
-  border: none; background: linear-gradient(135deg, var(--rose), var(--rose-dim));
-  color: white; font-family: 'Tajawal', sans-serif; font-size: 13px;
-  cursor: pointer; transition: all 0.2s;
-  box-shadow: 0 2px 12px rgba(255,107,157,0.35);
-  white-space: nowrap; font-weight: 700;
-}
+.btn-add { padding: 9px 18px; border-radius: var(--radius-xs); border: none; background: linear-gradient(135deg, var(--rose), var(--rose-dim)); color: white; font-family: 'Tajawal', sans-serif; font-size: 13px; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 12px rgba(255,107,157,0.35); white-space: nowrap; font-weight: 700; }
 .btn-add:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(255,107,157,0.5); }
 .btn-add:active { transform: scale(0.97); }
 .btn-add.lilac-btn { background: linear-gradient(135deg, var(--lilac), var(--lilac-dim)); box-shadow: 0 2px 12px rgba(192,132,252,0.35); }
 
 /* ===== DHIKR ===== */
-.dhikr-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 12px; margin-bottom: 16px;
-}
-.dhikr-slot {
-  background: var(--surface);
-  border-radius: var(--radius-sm); padding: 16px;
-  border: 1px solid var(--border);
-  border-top: 2px solid var(--rose);
-}
+.dhikr-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.dhikr-slot { background: var(--surface); border-radius: var(--radius-sm); padding: 16px; border: 1px solid var(--border); border-top: 2px solid var(--rose); }
 .dhikr-slot.s-morning { border-top-color: var(--gold); }
 .dhikr-slot.s-fajr    { border-top-color: var(--mint); }
 .dhikr-slot.s-eve     { border-top-color: var(--lilac); }
 .dhikr-slot.s-night   { border-top-color: var(--blue); }
 .dhikr-slot h4 { font-size: 13px; color: var(--ink-soft); font-weight: 700; margin-bottom: 12px; }
-.dhikr-item {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 8px 0; border-bottom: 1px solid var(--border); gap: 8px;
-}
+.dhikr-item { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); gap: 8px; }
 .dhikr-item:last-child { border-bottom: none; }
 .dhikr-text { font-size: 13px; color: var(--ink-soft); flex: 1; line-height: 1.5; }
 .dhikr-counter { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-.cnt-btn {
-  width: 28px; height: 28px; border-radius: 50%;
-  border: 1px solid var(--border2); background: var(--surface2);
-  color: var(--rose); font-size: 16px; cursor: pointer;
-  display: inline-flex; align-items: center; justify-content: center; transition: all 0.15s;
-}
+.cnt-btn { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border2); background: var(--surface2); color: var(--rose); font-size: 16px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: all 0.15s; }
 .cnt-btn:hover:not(:disabled) { background: var(--rose); color: white; box-shadow: 0 0 8px rgba(255,107,157,0.4); }
 .cnt-btn:disabled { opacity: 0.3; cursor: default; }
 .cnt-num { font-size: 14px; font-weight: 800; min-width: 28px; text-align: center; color: var(--ink); }
 .cnt-target { font-size: 10px; color: var(--ink-faint); }
-.done-pill {
-  font-size: 10px; padding: 3px 8px; border-radius: 10px;
-  background: var(--mint-glow); color: var(--mint); font-weight: 700;
-  border: 1px solid rgba(52,211,153,0.3);
-}
+.done-pill { font-size: 10px; padding: 3px 8px; border-radius: 10px; background: var(--mint-glow); color: var(--mint); font-weight: 700; border: 1px solid rgba(52,211,153,0.3); }
+
+/* ===== PROGRESS RING ===== */
+.dhikr-slot-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.slot-progress { display: flex; align-items: center; gap: 6px; }
+.slot-pct { font-size: 11px; color: var(--ink-muted); }
+.slot-bar { width: 60px; height: 4px; background: var(--surface3); border-radius: 4px; overflow: hidden; }
+.slot-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--rose), var(--lilac)); transition: width 0.4s ease; }
 
 /* ===== SINS ===== */
-.sins-wrap {
-  background: var(--surface); border-radius: var(--radius);
-  overflow: hidden; margin-bottom: 16px;
-  border: 1px solid rgba(248,113,113,0.15);
-}
-.sins-header {
-  padding: 14px 16px;
-  background: var(--surface2);
-  display: flex; align-items: center; justify-content: space-between;
-  border-bottom: 1px solid var(--border);
-}
+.sins-wrap { background: var(--surface); border-radius: var(--radius); overflow: hidden; margin-bottom: 16px; border: 1px solid rgba(248,113,113,0.15); }
+.sins-header { padding: 14px 16px; background: var(--surface2); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
 .sins-header h3 { font-size: 14px; color: var(--red); font-weight: 700; }
-.sin-row {
-  display: flex; align-items: center; padding: 11px 16px;
-  border-bottom: 1px solid var(--border); gap: 12px;
-}
+.sin-row { display: flex; align-items: center; padding: 11px 16px; border-bottom: 1px solid var(--border); gap: 12px; }
 .sin-row:last-child { border-bottom: none; }
 .sin-name { flex: 1; font-size: 13px; color: var(--ink-soft); }
 .sin-tally { display: flex; align-items: center; gap: 8px; }
@@ -438,15 +248,8 @@ tr:hover .row-del-btn { opacity: 1; }
 .sin-del:hover { color: var(--red); }
 
 /* ===== COURSES ===== */
-.courses-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
-  gap: 12px; margin-bottom: 16px;
-}
-.course-card {
-  background: var(--surface); border-radius: var(--radius-sm); padding: 18px;
-  border: 1px solid var(--border);
-  border-top: 2px solid var(--rose); transition: transform 0.2s, box-shadow 0.2s;
-}
+.courses-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 12px; margin-bottom: 16px; }
+.course-card { background: var(--surface); border-radius: var(--radius-sm); padding: 18px; border: 1px solid var(--border); border-top: 2px solid var(--rose); transition: transform 0.2s, box-shadow 0.2s; }
 .course-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
 .course-card.برمجة { border-top-color: var(--lilac); }
 .course-card.ديني  { border-top-color: var(--mint); }
@@ -458,242 +261,117 @@ tr:hover .row-del-btn { opacity: 1; }
 .course-card.ديني  .prog-fill { background: linear-gradient(90deg, var(--mint), var(--blue)); }
 .prog-label { font-size: 11px; color: var(--ink-muted); display: flex; justify-content: space-between; margin-bottom: 12px; }
 .course-controls { display: flex; gap: 6px; align-items: center; }
-.course-controls input {
-  width: 60px; padding: 6px 8px; border-radius: var(--radius-xs);
-  border: 1px solid var(--border2); background: var(--surface2);
-  color: var(--ink);
-  font-size: 13px; font-family: 'Tajawal',sans-serif;
-  text-align: center; outline: none;
-}
+.course-controls input { width: 60px; padding: 6px 8px; border-radius: var(--radius-xs); border: 1px solid var(--border2); background: var(--surface2); color: var(--ink); font-size: 13px; font-family: 'Tajawal',sans-serif; text-align: center; outline: none; }
 .course-controls input:focus { border-color: var(--rose); }
-.course-controls .cc-btn {
-  padding: 6px 14px; border-radius: var(--radius-xs); font-size: 12px;
-  font-family: 'Tajawal',sans-serif; cursor: pointer; transition: all 0.15s;
-  border: 1px solid var(--rose-border); color: var(--rose); background: var(--rose-glow);
-}
+.course-controls .cc-btn { padding: 6px 14px; border-radius: var(--radius-xs); font-size: 12px; font-family: 'Tajawal',sans-serif; cursor: pointer; transition: all 0.15s; border: 1px solid var(--rose-border); color: var(--rose); background: var(--rose-glow); }
 .course-controls .cc-btn:hover { background: var(--rose); color: white; }
 .course-card.برمجة .cc-btn { border-color: rgba(192,132,252,0.3); color: var(--lilac); background: var(--lilac-glow); }
 .course-card.برمجة .cc-btn:hover { background: var(--lilac); color: white; }
 .cc-del { margin-right: auto; border-color: var(--border2) !important; color: var(--ink-muted) !important; background: transparent !important; }
 .cc-del:hover { border-color: rgba(248,113,113,0.4) !important; color: var(--red) !important; background: var(--red-glow) !important; }
 
-/* ===== TEMPLATE PAGE ===== */
-.hero-card {
-  border-radius: var(--radius);
-  background: linear-gradient(135deg, #1a0d28 0%, #0d1a2e 50%, #0d1e1a 100%);
-  padding: 40px 24px;
-  text-align: center;
-  margin-bottom: 20px;
-  position: relative;
-  overflow: hidden;
-  border: 1px solid var(--border2);
-}
-[data-theme="light"] .hero-card {
-  background: linear-gradient(135deg, #f5e8ff 0%, #e8f0ff 50%, #e8fff5 100%);
-}
-.hero-card::before {
-  content: '';
-  position: absolute;
-  top: -60px; right: -60px;
-  width: 200px; height: 200px;
-  background: radial-gradient(circle, rgba(255,107,157,0.12), transparent 70%);
-  border-radius: 50%;
-}
-.hero-card::after {
-  content: '';
-  position: absolute;
-  bottom: -40px; left: -40px;
-  width: 160px; height: 160px;
-  background: radial-gradient(circle, rgba(192,132,252,0.10), transparent 70%);
-  border-radius: 50%;
-}
+/* ===== HERO ===== */
+.hero-card { border-radius: var(--radius); background: linear-gradient(135deg, #1a0d28 0%, #0d1a2e 50%, #0d1e1a 100%); padding: 40px 24px; text-align: center; margin-bottom: 20px; position: relative; overflow: hidden; border: 1px solid var(--border2); }
+[data-theme="light"] .hero-card { background: linear-gradient(135deg, #f5e8ff 0%, #e8f0ff 50%, #e8fff5 100%); }
+.hero-card::before { content: ''; position: absolute; top: -60px; right: -60px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(255,107,157,0.12), transparent 70%); border-radius: 50%; }
+.hero-card::after { content: ''; position: absolute; bottom: -40px; left: -40px; width: 160px; height: 160px; background: radial-gradient(circle, rgba(192,132,252,0.10), transparent 70%); border-radius: 50%; }
 .hero-card h1 { font-family: 'Amiri',serif; font-size: 32px; color: var(--rose); margin-bottom: 8px; position: relative; z-index: 1; text-shadow: var(--glow-rose); }
 .hero-card p { font-size: 14px; color: var(--ink-soft); margin-bottom: 24px; line-height: 1.8; position: relative; z-index: 1; }
-.btn-hero {
-  display: inline-block; padding: 13px 36px;
-  background: linear-gradient(135deg, var(--rose), var(--lilac));
-  color: white; border-radius: 30px; font-size: 15px;
-  cursor: pointer; border: none; font-family: 'Tajawal',sans-serif;
-  font-weight: 800; transition: all 0.2s;
-  box-shadow: 0 4px 20px rgba(255,107,157,0.4);
-  position: relative; z-index: 1;
-}
+.btn-hero { display: inline-block; padding: 13px 36px; background: linear-gradient(135deg, var(--rose), var(--lilac)); color: white; border-radius: 30px; font-size: 15px; cursor: pointer; border: none; font-family: 'Tajawal',sans-serif; font-weight: 800; transition: all 0.2s; box-shadow: 0 4px 20px rgba(255,107,157,0.4); position: relative; z-index: 1; }
 .btn-hero:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255,107,157,0.55); }
-
-.tmpl-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
-  gap: 12px; margin-bottom: 20px;
-}
-.tmpl-opt {
-  background: var(--surface); border-radius: var(--radius-sm); padding: 20px;
-  border: 1px solid var(--border); text-align: center; cursor: pointer;
-  transition: all 0.25s;
-}
+.tmpl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 12px; margin-bottom: 20px; }
+.tmpl-opt { background: var(--surface); border-radius: var(--radius-sm); padding: 20px; border: 1px solid var(--border); text-align: center; cursor: pointer; transition: all 0.25s; }
 .tmpl-opt:hover { border-color: var(--rose-border); transform: translateY(-3px); box-shadow: var(--glow-rose); }
 .tmpl-opt .t-icon { font-size: 28px; margin-bottom: 10px; }
 .tmpl-opt h4 { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 5px; }
 .tmpl-opt p { font-size: 11px; color: var(--ink-muted); line-height: 1.6; }
-
-.settings-card {
-  background: var(--surface); border-radius: var(--radius-sm);
-  padding: 16px; border: 1px solid var(--border); margin-bottom: 16px;
-}
+.settings-card { background: var(--surface); border-radius: var(--radius-sm); padding: 16px; border: 1px solid var(--border); margin-bottom: 16px; }
 .settings-card .s-title { font-size: 13px; color: var(--ink-muted); font-weight: 700; margin-bottom: 12px; }
 .settings-btns { display: flex; gap: 8px; flex-wrap: wrap; }
-.s-btn {
-  padding: 8px 16px; border-radius: var(--radius-xs);
-  border: 1px solid var(--border2); background: var(--surface2);
-  font-family: 'Tajawal',sans-serif; font-size: 12px;
-  color: var(--ink-soft); cursor: pointer; transition: all 0.2s;
-}
+.s-btn { padding: 8px 16px; border-radius: var(--radius-xs); border: 1px solid var(--border2); background: var(--surface2); font-family: 'Tajawal',sans-serif; font-size: 12px; color: var(--ink-soft); cursor: pointer; transition: all 0.2s; }
 .s-btn:hover { border-color: var(--rose-border); color: var(--rose); }
 .s-btn.danger { border-color: rgba(248,113,113,0.3); color: var(--red); background: var(--red-glow); }
 .s-btn.danger:hover { background: var(--red); color: white; }
 
 /* ===== QUOTE ===== */
-.quote-card {
-  background: var(--surface);
-  border-radius: var(--radius-sm); padding: 18px 20px; margin-top: 16px;
-  border: 1px solid var(--border);
-  border-right: 3px solid var(--lilac);
-}
+.quote-card { background: var(--surface); border-radius: var(--radius-sm); padding: 18px 20px; margin-top: 16px; border: 1px solid var(--border); border-right: 3px solid var(--lilac); }
 .quote-card .q-head { font-size: 13px; color: var(--lilac); font-weight: 700; margin-bottom: 8px; }
 .quote-card p { font-size: 13px; color: var(--ink-soft); line-height: 2; }
 
 /* ===== MODAL ===== */
-.modal-bg {
-  display: none; position: fixed; inset: 0;
-  background: rgba(0,0,0,0.6); z-index: 300;
-  align-items: flex-end; justify-content: center;
-  backdrop-filter: blur(8px);
-}
+.modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 300; align-items: flex-end; justify-content: center; backdrop-filter: blur(8px); }
 .modal-bg.open { display: flex; }
-.modal {
-  background: var(--surface); border-radius: var(--radius) var(--radius) 0 0;
-  padding: 24px 20px 36px; width: 100%; max-width: 480px;
-  box-shadow: var(--shadow-lg); animation: fadeUp 0.25s ease;
-  border: 1px solid var(--border2); border-bottom: none;
-}
-.modal-handle {
-  width: 40px; height: 4px; background: var(--border2);
-  border-radius: 4px; margin: 0 auto 22px;
-}
-.modal h3 {
-  font-family: 'Amiri',serif; font-size: 20px;
-  color: var(--rose); margin-bottom: 18px; text-align: center;
-  text-shadow: var(--glow-rose);
-}
+.modal { background: var(--surface); border-radius: var(--radius) var(--radius) 0 0; padding: 24px 20px 36px; width: 100%; max-width: 480px; box-shadow: var(--shadow-lg); animation: fadeUp 0.25s ease; border: 1px solid var(--border2); border-bottom: none; }
+.modal-handle { width: 40px; height: 4px; background: var(--border2); border-radius: 4px; margin: 0 auto 22px; }
+.modal h3 { font-family: 'Amiri',serif; font-size: 20px; color: var(--rose); margin-bottom: 18px; text-align: center; text-shadow: var(--glow-rose); }
 .modal label { font-size: 13px; color: var(--ink-muted); display: block; margin-bottom: 6px; }
-.modal input, .modal select {
-  width: 100%; padding: 11px 14px; border-radius: var(--radius-xs);
-  border: 1px solid var(--border2); background: var(--surface2);
-  font-family: 'Tajawal',sans-serif; font-size: 14px;
-  color: var(--ink); margin-bottom: 16px; outline: none;
-  transition: border-color 0.2s;
-}
+.modal input, .modal select { width: 100%; padding: 11px 14px; border-radius: var(--radius-xs); border: 1px solid var(--border2); background: var(--surface2); font-family: 'Tajawal',sans-serif; font-size: 14px; color: var(--ink); margin-bottom: 16px; outline: none; transition: border-color 0.2s; }
 .modal input:focus, .modal select:focus { border-color: var(--rose); box-shadow: 0 0 0 3px var(--rose-glow); }
 .modal-actions { display: flex; gap: 10px; }
-.btn-confirm {
-  flex: 1; padding: 12px; border-radius: var(--radius-xs);
-  border: none; background: linear-gradient(135deg, var(--rose), var(--rose-dim));
-  color: white; font-family: 'Tajawal',sans-serif; font-size: 15px;
-  cursor: pointer; font-weight: 800;
-  box-shadow: 0 3px 14px rgba(255,107,157,0.35);
-}
-.btn-cancel {
-  padding: 12px 20px; border-radius: var(--radius-xs);
-  border: 1px solid var(--border2); background: var(--surface2);
-  font-family: 'Tajawal',sans-serif; font-size: 14px;
-  cursor: pointer; color: var(--ink-muted);
-}
-
-/* ===== MISC ===== */
+.btn-confirm { flex: 1; padding: 12px; border-radius: var(--radius-xs); border: none; background: linear-gradient(135deg, var(--rose), var(--rose-dim)); color: white; font-family: 'Tajawal',sans-serif; font-size: 15px; cursor: pointer; font-weight: 800; box-shadow: 0 3px 14px rgba(255,107,157,0.35); }
+.btn-cancel { padding: 12px 20px; border-radius: var(--radius-xs); border: 1px solid var(--border2); background: var(--surface2); font-family: 'Tajawal',sans-serif; font-size: 14px; cursor: pointer; color: var(--ink-muted); }
 .empty-state { text-align: center; padding: 32px; color: var(--ink-faint); font-size: 14px; }
-.btn-sm-outline {
-  padding: 5px 13px; border-radius: 20px;
-  border: 1px solid var(--border2); background: var(--surface2);
-  font-family: 'Tajawal',sans-serif; font-size: 12px;
-  color: var(--ink-muted); cursor: pointer; transition: all 0.2s;
-}
+.btn-sm-outline { padding: 5px 13px; border-radius: 20px; border: 1px solid var(--border2); background: var(--surface2); font-family: 'Tajawal',sans-serif; font-size: 12px; color: var(--ink-muted); cursor: pointer; transition: all 0.2s; }
 .btn-sm-outline:hover { border-color: var(--rose-border); color: var(--rose); }
 .btn-sm-outline.red-outline:hover { border-color: rgba(248,113,113,0.4); color: var(--red); }
 
+/* ===== DATE PICKER ROW ===== */
+.date-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+.date-row label { font-size: 13px; color: var(--ink-muted); white-space: nowrap; }
+.date-picker-input { padding: 7px 12px; border-radius: var(--radius-xs); border: 1px solid var(--border2); background: var(--surface2); color: var(--ink); font-family: 'Tajawal', sans-serif; font-size: 13px; outline: none; cursor: pointer; transition: border-color 0.2s; }
+.date-picker-input:focus { border-color: var(--rose); }
+.btn-add-date { padding: 7px 16px; border-radius: var(--radius-xs); border: none; background: linear-gradient(135deg, var(--rose), var(--rose-dim)); color: white; font-family: 'Tajawal', sans-serif; font-size: 13px; cursor: pointer; font-weight: 700; white-space: nowrap; box-shadow: 0 2px 10px rgba(255,107,157,0.3); transition: all 0.2s; }
+.btn-add-date:hover { transform: translateY(-1px); }
+
 /* ===== DAILY INSPIRATION ===== */
-.inspiration-section {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  margin-bottom: 18px;
-}
+.inspiration-section { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 18px; }
 @media(min-width:600px){ .inspiration-section { grid-template-columns: 1fr 1fr; } }
 @media(min-width:900px){ .inspiration-section { grid-template-columns: 1fr 1fr 1fr; } }
-
-.inspo-card {
-  border-radius: var(--radius-sm);
-  padding: 16px 18px;
-  border: 1px solid var(--border);
-  position: relative;
-  overflow: hidden;
-  animation: fadeUp 0.4s ease;
-}
-.inspo-card.hadith {
-  background: linear-gradient(135deg, rgba(251,191,36,0.08), rgba(255,107,157,0.05));
-  border-color: rgba(251,191,36,0.2);
-  border-right: 3px solid var(--gold);
-}
-.inspo-card.sin-warn {
-  background: linear-gradient(135deg, rgba(248,113,113,0.08), rgba(192,132,252,0.05));
-  border-color: rgba(248,113,113,0.2);
-  border-right: 3px solid var(--red);
-}
-.inspo-card.salaf {
-  background: linear-gradient(135deg, rgba(52,211,153,0.08), rgba(96,165,250,0.05));
-  border-color: rgba(52,211,153,0.2);
-  border-right: 3px solid var(--mint);
-}
-.inspo-card .i-label {
-  font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
-  margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
-}
+.inspo-card { border-radius: var(--radius-sm); padding: 16px 18px; border: 1px solid var(--border); position: relative; overflow: hidden; animation: fadeUp 0.4s ease; }
+.inspo-card.hadith { background: linear-gradient(135deg, rgba(251,191,36,0.08), rgba(255,107,157,0.05)); border-color: rgba(251,191,36,0.2); border-right: 3px solid var(--gold); }
+.inspo-card.sin-warn { background: linear-gradient(135deg, rgba(248,113,113,0.08), rgba(192,132,252,0.05)); border-color: rgba(248,113,113,0.2); border-right: 3px solid var(--red); }
+.inspo-card.salaf { background: linear-gradient(135deg, rgba(52,211,153,0.08), rgba(96,165,250,0.05)); border-color: rgba(52,211,153,0.2); border-right: 3px solid var(--mint); }
+.inspo-card .i-label { font-size: 11px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
 .inspo-card.hadith  .i-label { color: var(--gold); }
 .inspo-card.sin-warn .i-label { color: var(--red); }
 .inspo-card.salaf   .i-label { color: var(--mint); }
-.inspo-card .i-text {
-  font-size: 13px; color: var(--ink-soft); line-height: 1.9;
-  font-family: 'Amiri', serif;
-}
-.inspo-card .i-source {
-  font-size: 11px; color: var(--ink-faint); margin-top: 8px;
-  font-family: 'Tajawal', sans-serif;
-}
+.inspo-card .i-text { font-size: 13px; color: var(--ink-soft); line-height: 1.9; font-family: 'Amiri', serif; }
+.inspo-card .i-source { font-size: 11px; color: var(--ink-faint); margin-top: 8px; font-family: 'Tajawal', sans-serif; }
 
-/* ===== DATE PICKER ROW ===== */
-.date-row {
-  display: flex; align-items: center; gap: 10px;
-  margin-bottom: 14px; flex-wrap: wrap;
+/* ===== MOOD TRACKER (new) ===== */
+.mood-bar {
+  background: var(--surface); border-radius: var(--radius-sm); padding: 14px 16px;
+  border: 1px solid var(--border); margin-bottom: 14px;
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
 }
-.date-row label { font-size: 13px; color: var(--ink-muted); white-space: nowrap; }
-.date-picker-input {
-  padding: 7px 12px; border-radius: var(--radius-xs);
-  border: 1px solid var(--border2); background: var(--surface2);
-  color: var(--ink); font-family: 'Tajawal', sans-serif; font-size: 13px;
-  outline: none; cursor: pointer; transition: border-color 0.2s;
+.mood-bar .mood-lbl { font-size: 13px; color: var(--ink-muted); white-space: nowrap; }
+.mood-btns { display: flex; gap: 8px; }
+.mood-btn {
+  width: 38px; height: 38px; border-radius: 50%;
+  border: 1.5px solid var(--border2); background: var(--surface2);
+  font-size: 18px; cursor: pointer; transition: all 0.2s;
+  display: inline-flex; align-items: center; justify-content: center;
 }
-.date-picker-input:focus { border-color: var(--rose); }
-.btn-add-date {
-  padding: 7px 16px; border-radius: var(--radius-xs);
-  border: none; background: linear-gradient(135deg, var(--rose), var(--rose-dim));
-  color: white; font-family: 'Tajawal', sans-serif; font-size: 13px;
-  cursor: pointer; font-weight: 700; white-space: nowrap;
-  box-shadow: 0 2px 10px rgba(255,107,157,0.3); transition: all 0.2s;
-}
-.btn-add-date:hover { transform: translateY(-1px); }
+.mood-btn:hover { transform: scale(1.2); border-color: var(--rose-border); }
+.mood-btn.selected { border-color: var(--rose); box-shadow: 0 0 0 3px var(--rose-glow); transform: scale(1.15); background: var(--rose-glow); }
+.mood-note { flex: 1; min-width: 120px; padding: 8px 12px; border-radius: var(--radius-xs); border: 1px solid var(--border2); background: var(--surface3); color: var(--ink); font-family: 'Tajawal', sans-serif; font-size: 12px; outline: none; }
+.mood-note:focus { border-color: var(--rose); }
+.mood-save-btn { padding: 8px 14px; border-radius: var(--radius-xs); border: none; background: var(--rose-glow); color: var(--rose); border: 1px solid var(--rose-border); font-family: 'Tajawal', sans-serif; font-size: 12px; cursor: pointer; font-weight: 700; transition: all 0.2s; white-space: nowrap; }
+.mood-save-btn:hover { background: var(--rose); color: white; }
+.mood-history { font-size: 11px; color: var(--ink-faint); margin-top: 8px; width: 100%; display: flex; gap: 8px; flex-wrap: wrap; }
+.mood-chip { background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: 3px 10px; font-size: 11px; color: var(--ink-muted); }
 
-/* Tablet optimizations */
-@media(min-width:600px) and (max-width:900px) {
-  .stats-grid { grid-template-columns: repeat(5,1fr); }
-  .page { padding: 20px; }
+/* ===== DAILY QUOTE REFRESH ===== */
+.inspo-refresh-btn {
+  position: absolute; top: 10px; left: 10px;
+  background: none; border: none; cursor: pointer;
+  font-size: 13px; color: var(--ink-faint); transition: all 0.2s;
+  padding: 3px;
 }
+.inspo-refresh-btn:hover { color: var(--rose); transform: rotate(180deg); }
+
+/* ===== DESKTOP ===== */
+@media(min-width:600px) and (max-width:900px) { .stats-grid { grid-template-columns: repeat(5,1fr); } .page { padding: 20px; } }
 @media(min-width:900px) {
   body { padding-bottom: 0; }
   .bottom-nav { top: 0; bottom: auto; border-top: none; border-bottom: 1px solid var(--border); flex-direction: row; justify-content: center; gap: 4px; padding: 8px 20px; }
@@ -710,7 +388,6 @@ tr:hover .row-del-btn { opacity: 1; }
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="header">
   <div class="header-top">
     <div class="brand">مُحاسِبة <span class="dot">🌸</span></div>
@@ -721,15 +398,27 @@ tr:hover .row-del-btn { opacity: 1; }
   </div>
 </div>
 
-<!-- PAGES -->
 <div class="page active" id="page-dashboard">
-  <!-- Date picker row -->
+  <div class="hijri-banner" id="hijri-banner"></div>
   <div class="date-row">
     <label>📅 أضيفي يوم:</label>
     <input type="date" class="date-picker-input" id="date-picker-input" />
     <button class="btn-add-date" onclick="addDayFromPicker()">+ أضيفي اليوم</button>
   </div>
-  <!-- Daily inspiration cards -->
+  <!-- Mood tracker -->
+  <div class="mood-bar" id="mood-bar">
+    <span class="mood-lbl">كيف حالك اليوم؟</span>
+    <div class="mood-btns" id="mood-btns">
+      <button class="mood-btn" data-mood="😊" onclick="selectMood(this)">😊</button>
+      <button class="mood-btn" data-mood="😐" onclick="selectMood(this)">😐</button>
+      <button class="mood-btn" data-mood="😔" onclick="selectMood(this)">😔</button>
+      <button class="mood-btn" data-mood="😤" onclick="selectMood(this)">😤</button>
+      <button class="mood-btn" data-mood="🥰" onclick="selectMood(this)">🥰</button>
+    </div>
+    <input class="mood-note" id="mood-note" placeholder="ملاحظة صغيرة... (اختياري)" maxlength="60"/>
+    <button class="mood-save-btn" onclick="saveMood()">حفظ</button>
+    <div class="mood-history" id="mood-history"></div>
+  </div>
   <div class="inspiration-section" id="inspiration-section"></div>
   <div class="stats-grid" id="stats-grid"></div>
   <div class="charts-row">
@@ -827,22 +516,10 @@ tr:hover .row-del-btn { opacity: 1; }
   </div>
   <div class="sec-title">اختاري نموذج</div>
   <div class="tmpl-grid">
-    <div class="tmpl-opt" onclick="loadTemplate('salah')">
-      <div class="t-icon">🕌</div><h4>الصلوات والأذكار</h4>
-      <p>نموذج كامل للصلوات اليومية والأذكار</p>
-    </div>
-    <div class="tmpl-opt" onclick="loadTemplate('full')">
-      <div class="t-icon">📋</div><h4>النموذج الكامل</h4>
-      <p>كل العبادات من الفجر للعشاء مع الأذكار</p>
-    </div>
-    <div class="tmpl-opt" onclick="loadTemplate('student')">
-      <div class="t-icon">📚</div><h4>طالبة</h4>
-      <p>عبادات + مذاكرة + برمجة + عادات صحية</p>
-    </div>
-    <div class="tmpl-opt" onclick="loadTemplate('empty')">
-      <div class="t-icon">✏️</div><h4>فاضي تماماً</h4>
-      <p>ابدأي من الصفر بعاداتك الخاصة</p>
-    </div>
+    <div class="tmpl-opt" onclick="loadTemplate('salah')"><div class="t-icon">🕌</div><h4>الصلوات والأذكار</h4><p>نموذج كامل للصلوات اليومية والأذكار</p></div>
+    <div class="tmpl-opt" onclick="loadTemplate('full')"><div class="t-icon">📋</div><h4>النموذج الكامل</h4><p>كل العبادات من الفجر للعشاء مع الأذكار</p></div>
+    <div class="tmpl-opt" onclick="loadTemplate('student')"><div class="t-icon">📚</div><h4>طالبة</h4><p>عبادات + مذاكرة + برمجة + عادات صحية</p></div>
+    <div class="tmpl-opt" onclick="loadTemplate('empty')"><div class="t-icon">✏️</div><h4>فاضي تماماً</h4><p>ابدأي من الصفر بعاداتك الخاصة</p></div>
   </div>
   <div class="settings-card">
     <div class="s-title">⚙️ إعدادات</div>
@@ -855,26 +532,14 @@ tr:hover .row-del-btn { opacity: 1; }
   </div>
 </div>
 
-<!-- BOTTOM NAV -->
 <nav class="bottom-nav">
-  <button class="nav-item active" id="tab-dashboard" onclick="showPage('dashboard')">
-    <span class="nav-icon">🏠</span><span>لوحتي</span><div class="nav-dot"></div>
-  </button>
-  <button class="nav-item" id="tab-dhikr" onclick="showPage('dhikr')">
-    <span class="nav-icon">📿</span><span>الأذكار</span><div class="nav-dot"></div>
-  </button>
-  <button class="nav-item" id="tab-sins" onclick="showPage('sins')">
-    <span class="nav-icon">🔴</span><span>محاسبة</span><div class="nav-dot"></div>
-  </button>
-  <button class="nav-item" id="tab-courses" onclick="showPage('courses')">
-    <span class="nav-icon">📚</span><span>الدروس</span><div class="nav-dot"></div>
-  </button>
-  <button class="nav-item" id="tab-template" onclick="showPage('template')">
-    <span class="nav-icon">⚙️</span><span>إعدادات</span><div class="nav-dot"></div>
-  </button>
+  <button class="nav-item active" id="tab-dashboard" onclick="showPage('dashboard')"><span class="nav-icon">🏠</span><span>لوحتي</span><div class="nav-dot"></div></button>
+  <button class="nav-item" id="tab-dhikr" onclick="showPage('dhikr')"><span class="nav-icon">📿</span><span>الأذكار</span><div class="nav-dot"></div></button>
+  <button class="nav-item" id="tab-sins" onclick="showPage('sins')"><span class="nav-icon">🔴</span><span>محاسبة</span><div class="nav-dot"></div></button>
+  <button class="nav-item" id="tab-courses" onclick="showPage('courses')"><span class="nav-icon">📚</span><span>الدروس</span><div class="nav-dot"></div></button>
+  <button class="nav-item" id="tab-template" onclick="showPage('template')"><span class="nav-icon">⚙️</span><span>إعدادات</span><div class="nav-dot"></div></button>
 </nav>
 
-<!-- MODAL -->
 <div class="modal-bg" id="modal-day">
   <div class="modal">
     <div class="modal-handle"></div>
@@ -889,10 +554,36 @@ tr:hover .row-del-btn { opacity: 1; }
 </div>
 
 <script>
+// ===== HELPERS =====
 const DAYS_AR=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
 const MONTHS_AR=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
-function todayLabel(){const d=new Date();return DAYS_AR[d.getDay()]+' '+d.getDate()+'/'+(d.getMonth()+1);}
-function formatDate(d){return DAYS_AR[d.getDay()]+' '+d.getDate()+' '+MONTHS_AR[d.getMonth()];}
+
+// FIX #1: Parse date string as LOCAL date (not UTC)
+function parseLocalDate(val){
+  const [y,m,d]=val.split('-').map(Number);
+  return new Date(y, m-1, d);
+}
+
+function todayLabel(){
+  const d=new Date();
+  return DAYS_AR[d.getDay()]+' '+d.getDate()+'/'+(d.getMonth()+1);
+}
+
+function formatDate(d){
+  return DAYS_AR[d.getDay()]+' '+d.getDate()+' '+MONTHS_AR[d.getMonth()];
+}
+
+// FIX #2: Generate a UNIQUE seed per array so each shows different content
+// Uses day-of-year * prime per array
+function pickByDay(arr, salt){
+  const d=new Date();
+  const dayOfYear = Math.floor((d - new Date(d.getFullYear(),0,0))/(1000*60*60*24));
+  const idx = ((dayOfYear * 31 + (salt||0)) * 7) % arr.length;
+  return arr[Math.abs(idx) % arr.length];
+}
+
+// For manual refresh
+let inspoOverride = {};
 
 const DEFAULT_STATE={
   habits:[
@@ -930,21 +621,19 @@ const DEFAULT_STATE={
     {id:'c1',name:'درس السيرة النبوية',type:'ديني',total:60,done:0},
     {id:'c2',name:'Laravel للمتقدمين',type:'برمجة',total:40,done:0},
     {id:'c3',name:'تفسير القرآن الكريم',type:'ديني',total:114,done:0},
-  ]
+  ],
+  moods:[]
 };
 
 let S=JSON.parse(localStorage.getItem('muhassib_v4')||'null')||JSON.parse(JSON.stringify(DEFAULT_STATE));
+if(!S.moods) S.moods=[];
 let currentCat='';
 let weekChart,catChart;
 let isDark=localStorage.getItem('muhassib_theme')!=='light';
 
 function save(){localStorage.setItem('muhassib_v4',JSON.stringify(S));}
 
-function toggleTheme(){
-  isDark=!isDark;
-  applyTheme();
-  localStorage.setItem('muhassib_theme',isDark?'dark':'light');
-}
+function toggleTheme(){isDark=!isDark;applyTheme();localStorage.setItem('muhassib_theme',isDark?'dark':'light');}
 function applyTheme(){
   document.documentElement.setAttribute('data-theme',isDark?'dark':'light');
   document.getElementById('theme-btn').textContent=isDark?'🌙':'☀️';
@@ -964,10 +653,7 @@ function showPage(id){
 
 function hKey(hid,day){return hid+'::'+day;}
 function getCheck(hid,day){return S.checks[hKey(hid,day)]||0;}
-function cycleCheck(hid,day){
-  S.checks[hKey(hid,day)]=(getCheck(hid,day)+1)%3;
-  save();renderTable();renderStats();renderCharts();
-}
+function cycleCheck(hid,day){S.checks[hKey(hid,day)]=(getCheck(hid,day)+1)%3;save();renderTable();renderStats();renderCharts();}
 
 function filterCat(el,cat){
   currentCat=cat;
@@ -1023,6 +709,26 @@ function openAddDay(){document.getElementById('modal-day-input').value='';docume
 function confirmAddDay(){const v=document.getElementById('modal-day-input').value.trim();if(v){S.days.push(v);save();renderTable();renderStats();renderCharts();}closeModal('modal-day');}
 function removeDay(i){if(!confirm('حذف اليوم "'+S.days[i]+'"؟'))return;S.days.splice(i,1);save();renderTable();renderStats();renderCharts();}
 
+// FIX #3: Date picker uses local date parsing
+function addDayFromPicker(){
+  const input=document.getElementById('date-picker-input');
+  const val=input.value;
+  if(!val){input.focus();return;}
+  const d=parseLocalDate(val); // LOCAL not UTC
+  const label=DAYS_AR[d.getDay()]+' '+d.getDate()+'/'+(d.getMonth()+1);
+  if(S.days.includes(label)){alert('هذا اليوم موجود بالفعل!');return;}
+  S.days.push(label);
+  save();renderTable();renderStats();renderCharts();
+  input.value='';
+}
+
+// Set today as default
+(function(){
+  const t=new Date();
+  const pad=n=>String(n).padStart(2,'0');
+  document.getElementById('date-picker-input').value=`${t.getFullYear()}-${pad(t.getMonth()+1)}-${pad(t.getDate())}`;
+})();
+
 function renderStats(){
   let total=0,done=0,perfect=0;
   S.days.forEach(d=>{let dd=0;S.habits.forEach(h=>{total++;if(getCheck(h.id,d)===1){done++;dd++;}});if(S.habits.length&&dd===S.habits.length)perfect++;});
@@ -1056,6 +762,7 @@ function renderCharts(){
   catChart=new Chart(ctx2,{type:'doughnut',data:{labels:cats,datasets:[{data:catData,backgroundColor:catColors,borderWidth:2,borderColor:dark?'#181828':'#ffffff'}]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{color:tickColor,font:{family:'Tajawal',size:11},boxWidth:12}}}}});
 }
 
+// ===== DHIKR =====
 function dhikrCount(id){const k=new Date().toDateString();const item=S.dhikr.find(x=>x.id===id);return item?(item.counts[k]||0):0;}
 function incDhikr(id){const k=new Date().toDateString();const item=S.dhikr.find(x=>x.id===id);if(!item)return;if(!item.counts)item.counts={};item.counts[k]=(item.counts[k]||0)+1;save();renderDhikr();}
 function resetDhikr(id){const k=new Date().toDateString();const item=S.dhikr.find(x=>x.id===id);if(item){item.counts[k]=0;save();renderDhikr();}}
@@ -1067,8 +774,17 @@ function renderDhikr(){
   const slotIcon={'الصباح':'🌅','بعد الفجر':'🌄','الضهر':'☀️','المساء':'🌇','قبل النوم':'🌙'};
   document.getElementById('dhikr-grid').innerHTML=slots.map(slot=>{
     const items=S.dhikr.filter(d=>d.slot===slot);
+    const totalTarget=items.reduce((a,i)=>a+i.target,0);
+    const totalDone=items.reduce((a,i)=>a+Math.min(dhikrCount(i.id),i.target),0);
+    const slotPct=totalTarget?Math.round(totalDone/totalTarget*100):0;
     return `<div class="dhikr-slot ${slotClass[slot]||''}">
-      <h4>${slotIcon[slot]||'🕌'} ${slot}</h4>
+      <div class="dhikr-slot-header">
+        <h4>${slotIcon[slot]||'🕌'} ${slot}</h4>
+        <div class="slot-progress">
+          <span class="slot-pct">${slotPct}%</span>
+          <div class="slot-bar"><div class="slot-fill" style="width:${slotPct}%"></div></div>
+        </div>
+      </div>
       ${items.map(item=>{
         const cnt=dhikrCount(item.id);const done=cnt>=item.target;
         return `<div class="dhikr-item">
@@ -1097,6 +813,7 @@ function addDhikr(){
   save();renderDhikr();
 }
 
+// ===== SINS =====
 function renderSins(){
   const list=document.getElementById('sins-list');
   if(!S.sins.length){list.innerHTML='<div class="empty-state">ما في ذنوب مسجلة — حافظي على ذلك 🌿</div>';return;}
@@ -1118,6 +835,7 @@ function incSin(i){S.sins[i].count++;save();renderSins();renderStats();}
 function removeSin(i){S.sins.splice(i,1);save();renderSins();renderStats();}
 function clearSins(){if(confirm('مسح كل ذنوب اليوم؟')){S.sins=[];save();renderSins();renderStats();}}
 
+// ===== COURSES =====
 function renderCourses(){
   const grid=document.getElementById('courses-grid');
   if(!S.courses.length){grid.innerHTML='<div class="empty-state">لا توجد كورسات بعد 📚</div>';return;}
@@ -1149,6 +867,7 @@ function addCourse(){
   save();renderCourses();
 }
 
+// ===== TEMPLATE =====
 function loadTemplate(type){
   if(!confirm('ده هيمسح العادات الحالية. متأكدة؟'))return;
   S.habits=[];S.checks={};
@@ -1159,136 +878,177 @@ function loadTemplate(type){
 }
 
 function exportData(){const blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='muhassib_backup.json';a.click();}
-function importData(e){const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=ev=>{try{const data=JSON.parse(ev.target.result);if(!confirm('استيراد البيانات؟'))return;S=data;save();renderDashboard();}catch{alert('ملف غلط!');}};reader.readAsText(file);}
+function importData(e){const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=ev=>{try{const data=JSON.parse(ev.target.result);if(!confirm('استيراد البيانات؟'))return;S=data;if(!S.moods)S.moods=[];save();renderDashboard();}catch{alert('ملف غلط!');}};reader.readAsText(file);}
 function clearAll(){S=JSON.parse(JSON.stringify(DEFAULT_STATE));save();renderDashboard();}
-
 function closeModal(id){document.getElementById(id).classList.remove('open');}
 document.querySelectorAll('.modal-bg').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');});});
 document.getElementById('modal-day-input').addEventListener('keydown',e=>{if(e.key==='Enter')confirmAddDay();});
 
-// ===== DAILY INSPIRATION DATA =====
-const HADITHS = [
-  {text:'إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى.', source:'متفق عليه'},
-  {text:'خير الناس أنفعهم للناس.', source:'رواه الطبراني'},
-  {text:'من كان يؤمن بالله واليوم الآخر فليقل خيراً أو ليصمت.', source:'متفق عليه'},
-  {text:'لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه.', source:'متفق عليه'},
-  {text:'أحب الأعمال إلى الله أدومها وإن قل.', source:'متفق عليه'},
-  {text:'من سلك طريقاً يلتمس فيه علماً سهّل الله له به طريقاً إلى الجنة.', source:'رواه مسلم'},
-  {text:'المسلم من سلم المسلمون من لسانه ويده.', source:'متفق عليه'},
-  {text:'اتق الله حيثما كنت، وأتبع السيئة الحسنة تمحها، وخالق الناس بخلق حسن.', source:'رواه الترمذي'},
-  {text:'إن الله يحب إذا عمل أحدكم عملاً أن يتقنه.', source:'رواه البيهقي'},
-  {text:'الطهور شطر الإيمان، والحمد لله تملأ الميزان.', source:'رواه مسلم'},
-  {text:'أفضل الصيام بعد رمضان شهر الله المحرم.', source:'رواه مسلم'},
-  {text:'من قرأ حرفاً من كتاب الله فله به حسنة والحسنة بعشر أمثالها.', source:'رواه الترمذي'},
-  {text:'الدنيا سجن المؤمن وجنة الكافر.', source:'رواه مسلم'},
-  {text:'صلة الرحم تزيد في العمر وتوسع في الرزق.', source:'رواه أحمد'},
-  {text:'من صلى الفجر في جماعة فهو في ذمة الله.', source:'رواه مسلم'},
-  {text:'كلمتان خفيفتان على اللسان ثقيلتان في الميزان: سبحان الله وبحمده سبحان الله العظيم.', source:'متفق عليه'},
-  {text:'ما نقصت صدقة من مال.', source:'رواه مسلم'},
-  {text:'استعينوا على إنجاح الحوائج بالكتمان.', source:'رواه الطبراني'},
-  {text:'من أحب أن يُبسط له في رزقه وأن يُنسأ له في أثره فليصل رحمه.', source:'متفق عليه'},
-  {text:'التائب من الذنب كمن لا ذنب له.', source:'رواه ابن ماجه'},
-  {text:'البر حسن الخلق، والإثم ما حاك في نفسك وكرهت أن يطلع عليه الناس.', source:'رواه مسلم'},
-  {text:'من تواضع لله رفعه الله.', source:'رواه ابن ماجه'},
-  {text:'اللهم لا سهل إلا ما جعلته سهلاً، وأنت تجعل الحزن إذا شئت سهلاً.', source:'رواه ابن حبان'},
-  {text:'أكثروا من ذكر هادم اللذات: الموت.', source:'رواه الترمذي'},
-  {text:'من أصبح منكم آمناً في سربه، معافىً في جسده، عنده قوت يومه، فكأنما حيزت له الدنيا.', source:'رواه الترمذي'},
-  {text:'إن الله جميل يحب الجمال.', source:'رواه مسلم'},
-  {text:'الحياء لا يأتي إلا بخير.', source:'متفق عليه'},
-  {text:'المؤمن القوي خير وأحب إلى الله من المؤمن الضعيف.', source:'رواه مسلم'},
-  {text:'خيركم من تعلم القرآن وعلّمه.', source:'رواه البخاري'},
-  {text:'من حسن إسلام المرء تركه ما لا يعنيه.', source:'رواه الترمذي'},
-];
-
-const SIN_WARNINGS = [
-  {text:'وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ', source:'الطلاق: ٢-٣', type:'آية'},
-  {text:'إِنَّ الَّذِينَ اتَّقَوا إِذَا مَسَّهُمْ طَائِفٌ مِّنَ الشَّيْطَانِ تَذَكَّرُوا فَإِذَا هُم مُّبْصِرُونَ', source:'الأعراف: ٢٠١', type:'آية'},
-  {text:'إن العبد ليذنب الذنب فيُحرم به قيام الليل.', source:'رواه ابن ماجه — الإمام أحمد', type:'حديث'},
-  {text:'وَالَّذِينَ إِذَا فَعَلُوا فَاحِشَةً أَوْ ظَلَمُوا أَنفُسَهُمْ ذَكَرُوا اللَّهَ فَاسْتَغْفَرُوا لِذُنُوبِهِمْ', source:'آل عمران: ١٣٥', type:'آية'},
-  {text:'إن الذنوب إذا تكاثرت على القلب أظلمته.', source:'ابن القيم — الجواب الكافي', type:'أثر'},
-  {text:'مَن يَعْمَلْ سُوءًا يُجْزَ بِهِ وَلَا يَجِدْ لَهُ مِن دُونِ اللَّهِ وَلِيًّا وَلَا نَصِيرًا', source:'النساء: ١٢٣', type:'آية'},
-  {text:'ما أصاب العبدَ قط همٌّ ولا غمٌّ ولا أذى حتى الشوكة يُشاكها إلا كفّر الله بها من خطاياه.', source:'متفق عليه', type:'حديث'},
-  {text:'وَأَقِمِ الصَّلَاةَ إِنَّ الصَّلَاةَ تَنْهَىٰ عَنِ الْفَحْشَاءِ وَالْمُنكَرِ', source:'العنكبوت: ٤٥', type:'آية'},
-  {text:'الذنوب جراحات، وربّ جرح في مقتل.', source:'ابن عطاء الله السكندري', type:'أثر'},
-  {text:'يَا أَيُّهَا الَّذِينَ آمَنُوا تُوبُوا إِلَى اللَّهِ تَوْبَةً نَّصُوحًا', source:'التحريم: ٨', type:'آية'},
-  {text:'ما استُقيت الذنوب بمثل الاستغفار، ولا نُوديت رحمة الله بمثل التوبة.', source:'ابن القيم', type:'أثر'},
-  {text:'وَمَا أَصَابَكُم مِّن مُّصِيبَةٍ فَبِمَا كَسَبَتْ أَيْدِيكُمْ وَيَعْفُو عَن كَثِيرٍ', source:'الشورى: ٣٠', type:'آية'},
-  {text:'إن الإيمان يزيد وينقص؛ يزيد بالطاعة وينقص بالمعصية.', source:'الإمام أحمد', type:'أثر'},
-  {text:'اتقوا الدنيا واتقوا النساء، فإن أول فتنة بني إسرائيل كانت في النساء.', source:'رواه مسلم', type:'حديث'},
-  {text:'قُلْ يَا عِبَادِيَ الَّذِينَ أَسْرَفُوا عَلَىٰ أَنفُسِهِمْ لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ', source:'الزمر: ٥٣', type:'آية'},
-];
-
-const SALAF_QUOTES = [
-  {text:'ازهد في الدنيا يحبك الله، وازهد فيما في أيدي الناس يحبك الناس.', source:'سهل بن سعد — رواه ابن ماجه'},
-  {text:'إذا أردت أن تعرف قدرك عند الله فانظر في ماذا يستعملك.', source:'ابن عطاء الله السكندري'},
-  {text:'ما جلس قوم يذكرون الله إلا حفّتهم الملائكة وغشيتهم الرحمة.', source:'رواه مسلم — عن أبي هريرة'},
-  {text:'علامة المحبة لله: أن تتبع النبي ﷺ في أقواله وأعماله وأحواله.', source:'ابن كثير — تفسير آل عمران ٣١'},
-  {text:'القلوب أوعية، فخيرها أوعاها للخير.', source:'الإمام الشافعي'},
-  {text:'لا تحقرن من المعروف شيئاً، ولو أن تلقى أخاك بوجه طلق.', source:'رواه مسلم'},
-  {text:'من أراد أن يعلم قيمته عند الله فليرَ ماذا يُشغله الله به من عبادته.', source:'ابن القيم — مدارج السالكين'},
-  {text:'إن الله يُحب العبد المؤمن المُفتَّن التواب.', source:'رواه ابن حبان'},
-  {text:'المعرفة بالله هي أصل كل خير، والجهل بالله أصل كل شر.', source:'ابن القيم'},
-  {text:'الأنس بالله لا يحصل إلا بانقطاع القلب عن كل ما سواه.', source:'ابن رجب الحنبلي'},
-  {text:'من كانت له إلى الله حاجة فليُلحّ في الدعاء؛ فإن الله يحب الملحّين في الدعاء.', source:'رواه الطبراني'},
-  {text:'كن لله كما يريد يكن لك فوق ما تريد.', source:'ابن عطاء الله السكندري'},
-  {text:'ما أُعطي عبد عطاءً خير وأوسع من الصبر.', source:'رواه البخاري'},
-  {text:'الله أكبر من كل شيء، وأرحم بعباده من أنفسهم بأنفسهم.', source:'ابن تيمية'},
-  {text:'إذا صح الإخلاص لله، كفاه الله كل شيء من أمر الدنيا والآخرة.', source:'ابن القيم — الفوائد'},
-  {text:'طالما بكيت على ما فاتني من طاعة الله، فلا أبكي على ما فاتني من الدنيا.', source:'الحسن البصري'},
-  {text:'اجعل للمطالعة وقتاً من يومك، فإن الكتاب أفضل مجالس الدنيا.', source:'ابن الجوزي — صيد الخاطر'},
-  {text:'الراحة الحقيقية في ذكر الله؛ فإن الذاكرَ يُحسّ بلذة لا يُحسّها سواه.', source:'ابن القيم'},
-  {text:'ليس للمؤمن أن يذلّ نفسه؛ عليه بالتوكل على الله والثقة بوعده.', source:'الإمام أحمد'},
-  {text:'أصل العبادة الخوف والرجاء والمحبة، وكمالها في الجمع بينها.', source:'ابن القيم — مدارج السالكين'},
-];
-
-function pickByDay(arr) {
-  const d = new Date();
-  const idx = (d.getFullYear()*1000 + d.getMonth()*31 + d.getDate()) % arr.length;
-  return arr[idx];
+// ===== MOOD TRACKER =====
+function selectMood(btn){
+  document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+function saveMood(){
+  const selected=document.querySelector('.mood-btn.selected');
+  if(!selected)return;
+  const mood=selected.dataset.mood;
+  const note=document.getElementById('mood-note').value.trim();
+  const today=new Date().toLocaleDateString('ar');
+  S.moods=S.moods.filter(m=>m.date!==today);
+  S.moods.push({date:today, mood, note});
+  if(S.moods.length>30) S.moods=S.moods.slice(-30);
+  save();
+  document.querySelector('.mood-btn.selected').classList.remove('selected');
+  document.getElementById('mood-note').value='';
+  renderMoodHistory();
+}
+function renderMoodHistory(){
+  const hist=document.getElementById('mood-history');
+  if(!hist)return;
+  const recent=S.moods.slice(-5).reverse();
+  if(!recent.length){hist.innerHTML='';return;}
+  hist.innerHTML=recent.map(m=>`<span class="mood-chip">${m.mood} ${m.date}${m.note?' — '+m.note:''}</span>`).join('');
 }
 
-function renderInspiration() {
-  const hadith   = pickByDay(HADITHS);
-  const sinWarn  = pickByDay(SIN_WARNINGS);
-  const salaf    = pickByDay(SALAF_QUOTES);
-  document.getElementById('inspiration-section').innerHTML = `
+// ===== HIJRI BANNER =====
+function renderHijriBanner(){
+  const d=new Date();
+  const greg=formatDate(d);
+  // Simple Hijri approximation (not exact but close)
+  const hijriDate=new Intl.DateTimeFormat('ar-SA-u-ca-islamic',{day:'numeric',month:'long',year:'numeric'}).format(d);
+  const dayNum=d.getDate();
+  document.getElementById('hijri-banner').innerHTML=`
+    <div>
+      <div class="h-date">${hijriDate}</div>
+      <div class="h-gregorian">${greg}</div>
+    </div>
+    <div class="h-day-num">${dayNum}</div>`;
+}
+
+// ===== INSPIRATION DATA =====
+const HADITHS=[
+  {text:'إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى.',source:'متفق عليه'},
+  {text:'خير الناس أنفعهم للناس.',source:'رواه الطبراني'},
+  {text:'من كان يؤمن بالله واليوم الآخر فليقل خيراً أو ليصمت.',source:'متفق عليه'},
+  {text:'لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه.',source:'متفق عليه'},
+  {text:'أحب الأعمال إلى الله أدومها وإن قل.',source:'متفق عليه'},
+  {text:'من سلك طريقاً يلتمس فيه علماً سهّل الله له به طريقاً إلى الجنة.',source:'رواه مسلم'},
+  {text:'المسلم من سلم المسلمون من لسانه ويده.',source:'متفق عليه'},
+  {text:'اتق الله حيثما كنت، وأتبع السيئة الحسنة تمحها، وخالق الناس بخلق حسن.',source:'رواه الترمذي'},
+  {text:'إن الله يحب إذا عمل أحدكم عملاً أن يتقنه.',source:'رواه البيهقي'},
+  {text:'الطهور شطر الإيمان، والحمد لله تملأ الميزان.',source:'رواه مسلم'},
+  {text:'أفضل الصيام بعد رمضان شهر الله المحرم.',source:'رواه مسلم'},
+  {text:'من قرأ حرفاً من كتاب الله فله به حسنة والحسنة بعشر أمثالها.',source:'رواه الترمذي'},
+  {text:'الدنيا سجن المؤمن وجنة الكافر.',source:'رواه مسلم'},
+  {text:'صلة الرحم تزيد في العمر وتوسع في الرزق.',source:'رواه أحمد'},
+  {text:'من صلى الفجر في جماعة فهو في ذمة الله.',source:'رواه مسلم'},
+  {text:'كلمتان خفيفتان على اللسان ثقيلتان في الميزان: سبحان الله وبحمده سبحان الله العظيم.',source:'متفق عليه'},
+  {text:'ما نقصت صدقة من مال.',source:'رواه مسلم'},
+  {text:'من أحب أن يُبسط له في رزقه وأن يُنسأ له في أثره فليصل رحمه.',source:'متفق عليه'},
+  {text:'التائب من الذنب كمن لا ذنب له.',source:'رواه ابن ماجه'},
+  {text:'البر حسن الخلق، والإثم ما حاك في نفسك وكرهت أن يطلع عليه الناس.',source:'رواه مسلم'},
+  {text:'من تواضع لله رفعه الله.',source:'رواه ابن ماجه'},
+  {text:'أكثروا من ذكر هادم اللذات: الموت.',source:'رواه الترمذي'},
+  {text:'إن الله جميل يحب الجمال.',source:'رواه مسلم'},
+  {text:'الحياء لا يأتي إلا بخير.',source:'متفق عليه'},
+  {text:'المؤمن القوي خير وأحب إلى الله من المؤمن الضعيف.',source:'رواه مسلم'},
+  {text:'خيركم من تعلم القرآن وعلّمه.',source:'رواه البخاري'},
+  {text:'من حسن إسلام المرء تركه ما لا يعنيه.',source:'رواه الترمذي'},
+  {text:'ما أُعطي عبد عطاءً خير وأوسع من الصبر.',source:'رواه البخاري'},
+  {text:'استعينوا على إنجاح الحوائج بالكتمان.',source:'رواه الطبراني'},
+  {text:'من أصبح منكم آمناً في سربه، معافىً في جسده، عنده قوت يومه، فكأنما حيزت له الدنيا.',source:'رواه الترمذي'},
+];
+
+const SIN_WARNINGS=[
+  {text:'وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ',source:'الطلاق: ٢-٣',type:'آية'},
+  {text:'إِنَّ الَّذِينَ اتَّقَوا إِذَا مَسَّهُمْ طَائِفٌ مِّنَ الشَّيْطَانِ تَذَكَّرُوا فَإِذَا هُم مُّبْصِرُونَ',source:'الأعراف: ٢٠١',type:'آية'},
+  {text:'إن العبد ليذنب الذنب فيُحرم به قيام الليل.',source:'رواه ابن ماجه — الإمام أحمد',type:'حديث'},
+  {text:'وَالَّذِينَ إِذَا فَعَلُوا فَاحِشَةً أَوْ ظَلَمُوا أَنفُسَهُمْ ذَكَرُوا اللَّهَ فَاسْتَغْفَرُوا لِذُنُوبِهِمْ',source:'آل عمران: ١٣٥',type:'آية'},
+  {text:'إن الذنوب إذا تكاثرت على القلب أظلمته.',source:'ابن القيم — الجواب الكافي',type:'أثر'},
+  {text:'مَن يَعْمَلْ سُوءًا يُجْزَ بِهِ وَلَا يَجِدْ لَهُ مِن دُونِ اللَّهِ وَلِيًّا وَلَا نَصِيرًا',source:'النساء: ١٢٣',type:'آية'},
+  {text:'ما أصاب العبدَ قط همٌّ ولا غمٌّ ولا أذى حتى الشوكة يُشاكها إلا كفّر الله بها من خطاياه.',source:'متفق عليه',type:'حديث'},
+  {text:'وَأَقِمِ الصَّلَاةَ إِنَّ الصَّلَاةَ تَنْهَىٰ عَنِ الْفَحْشَاءِ وَالْمُنكَرِ',source:'العنكبوت: ٤٥',type:'آية'},
+  {text:'الذنوب جراحات، وربّ جرح في مقتل.',source:'ابن عطاء الله السكندري',type:'أثر'},
+  {text:'يَا أَيُّهَا الَّذِينَ آمَنُوا تُوبُوا إِلَى اللَّهِ تَوْبَةً نَّصُوحًا',source:'التحريم: ٨',type:'آية'},
+  {text:'ما استُقيت الذنوب بمثل الاستغفار، ولا نُوديت رحمة الله بمثل التوبة.',source:'ابن القيم',type:'أثر'},
+  {text:'وَمَا أَصَابَكُم مِّن مُّصِيبَةٍ فَبِمَا كَسَبَتْ أَيْدِيكُمْ وَيَعْفُو عَن كَثِيرٍ',source:'الشورى: ٣٠',type:'آية'},
+  {text:'إن الإيمان يزيد وينقص؛ يزيد بالطاعة وينقص بالمعصية.',source:'الإمام أحمد',type:'أثر'},
+  {text:'قُلْ يَا عِبَادِيَ الَّذِينَ أَسْرَفُوا عَلَىٰ أَنفُسِهِمْ لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ',source:'الزمر: ٥٣',type:'آية'},
+  {text:'اتقوا الدنيا واتقوا النساء، فإن أول فتنة بني إسرائيل كانت في النساء.',source:'رواه مسلم',type:'حديث'},
+];
+
+const SALAF_QUOTES=[
+  {text:'ازهد في الدنيا يحبك الله، وازهد فيما في أيدي الناس يحبك الناس.',source:'سهل بن سعد — رواه ابن ماجه'},
+  {text:'إذا أردت أن تعرف قدرك عند الله فانظر في ماذا يستعملك.',source:'ابن عطاء الله السكندري'},
+  {text:'ما جلس قوم يذكرون الله إلا حفّتهم الملائكة وغشيتهم الرحمة.',source:'رواه مسلم — عن أبي هريرة'},
+  {text:'علامة المحبة لله: أن تتبع النبي ﷺ في أقواله وأعماله وأحواله.',source:'ابن كثير — تفسير آل عمران ٣١'},
+  {text:'القلوب أوعية، فخيرها أوعاها للخير.',source:'الإمام الشافعي'},
+  {text:'لا تحقرن من المعروف شيئاً، ولو أن تلقى أخاك بوجه طلق.',source:'رواه مسلم'},
+  {text:'من أراد أن يعلم قيمته عند الله فليرَ ماذا يُشغله الله به من عبادته.',source:'ابن القيم — مدارج السالكين'},
+  {text:'إن الله يُحب العبد المؤمن المُفتَّن التواب.',source:'رواه ابن حبان'},
+  {text:'المعرفة بالله هي أصل كل خير، والجهل بالله أصل كل شر.',source:'ابن القيم'},
+  {text:'الأنس بالله لا يحصل إلا بانقطاع القلب عن كل ما سواه.',source:'ابن رجب الحنبلي'},
+  {text:'من كانت له إلى الله حاجة فليُلحّ في الدعاء؛ فإن الله يحب الملحّين في الدعاء.',source:'رواه الطبراني'},
+  {text:'كن لله كما يريد يكن لك فوق ما تريد.',source:'ابن عطاء الله السكندري'},
+  {text:'ما أُعطي عبد عطاءً خير وأوسع من الصبر.',source:'رواه البخاري'},
+  {text:'الله أكبر من كل شيء، وأرحم بعباده من أنفسهم بأنفسهم.',source:'ابن تيمية'},
+  {text:'إذا صح الإخلاص لله، كفاه الله كل شيء من أمر الدنيا والآخرة.',source:'ابن القيم — الفوائد'},
+  {text:'طالما بكيت على ما فاتني من طاعة الله، فلا أبكي على ما فاتني من الدنيا.',source:'الحسن البصري'},
+  {text:'اجعل للمطالعة وقتاً من يومك، فإن الكتاب أفضل مجالس الدنيا.',source:'ابن الجوزي — صيد الخاطر'},
+  {text:'الراحة الحقيقية في ذكر الله؛ فإن الذاكرَ يُحسّ بلذة لا يُحسّها سواه.',source:'ابن القيم'},
+  {text:'ليس للمؤمن أن يذلّ نفسه؛ عليه بالتوكل على الله والثقة بوعده.',source:'الإمام أحمد'},
+  {text:'أصل العبادة الخوف والرجاء والمحبة، وكمالها في الجمع بينها.',source:'ابن القيم — مدارج السالكين'},
+];
+
+// FIX #2 APPLIED: each array uses a different salt so content differs
+function renderInspiration(){
+  // Use inspoOverride if manually refreshed, else daily pick with unique salt per array
+  const hadith  = inspoOverride.hadith  !== undefined ? HADITHS[inspoOverride.hadith % HADITHS.length]       : pickByDay(HADITHS, 1);
+  const sinWarn = inspoOverride.sinWarn !== undefined ? SIN_WARNINGS[inspoOverride.sinWarn % SIN_WARNINGS.length] : pickByDay(SIN_WARNINGS, 37);
+  const salaf   = inspoOverride.salaf   !== undefined ? SALAF_QUOTES[inspoOverride.salaf % SALAF_QUOTES.length]  : pickByDay(SALAF_QUOTES, 71);
+
+  document.getElementById('inspiration-section').innerHTML=`
     <div class="inspo-card hadith">
+      <button class="inspo-refresh-btn" onclick="refreshCard('hadith')" title="تغيير">↻</button>
       <div class="i-label">📖 حديث اليوم</div>
       <div class="i-text">"${hadith.text}"</div>
       <div class="i-source">${hadith.source}</div>
     </div>
     <div class="inspo-card sin-warn">
+      <button class="inspo-refresh-btn" onclick="refreshCard('sinWarn')" title="تغيير">↻</button>
       <div class="i-label">⚠️ تحذير من المعصية</div>
       <div class="i-text">${sinWarn.text}</div>
       <div class="i-source">${sinWarn.type} — ${sinWarn.source}</div>
     </div>
     <div class="inspo-card salaf">
+      <button class="inspo-refresh-btn" onclick="refreshCard('salaf')" title="تغيير">↻</button>
       <div class="i-label">🌿 لمحة من السلف</div>
       <div class="i-text">"${salaf.text}"</div>
       <div class="i-source">${salaf.source}</div>
     </div>`;
 }
 
-// ===== DATE PICKER =====
-function addDayFromPicker() {
-  const input = document.getElementById('date-picker-input');
-  const val = input.value;
-  if (!val) { input.focus(); return; }
-  const d = new Date(val);
-  const label = DAYS_AR[d.getDay()] + ' ' + d.getDate() + '/' + (d.getMonth()+1);
-  if (S.days.includes(label)) { alert('هذا اليوم موجود بالفعل!'); return; }
-  S.days.push(label);
-  save(); renderTable(); renderStats(); renderCharts();
-  input.value = '';
+// Manual refresh button for each card
+function refreshCard(type){
+  const arr = type==='hadith'?HADITHS : type==='sinWarn'?SIN_WARNINGS : SALAF_QUOTES;
+  const current = inspoOverride[type] !== undefined ? inspoOverride[type] : 
+    (type==='hadith' ? HADITHS.indexOf(pickByDay(HADITHS,1)) :
+     type==='sinWarn' ? SIN_WARNINGS.indexOf(pickByDay(SIN_WARNINGS,37)) :
+     SALAF_QUOTES.indexOf(pickByDay(SALAF_QUOTES,71)));
+  inspoOverride[type] = (current + 1) % arr.length;
+  renderInspiration();
 }
-// Set today as default in picker
-(function(){
-  const t=new Date();
-  const pad=n=>String(n).padStart(2,'0');
-  document.getElementById('date-picker-input').value=`${t.getFullYear()}-${pad(t.getMonth()+1)}-${pad(t.getDate())}`;
-})();
 
-function renderDashboard(){renderInspiration();renderStats();renderTable();renderCharts();}
+function renderDashboard(){
+  renderHijriBanner();
+  renderInspiration();
+  renderStats();
+  renderTable();
+  renderCharts();
+  renderMoodHistory();
+}
+
 document.getElementById('nav-date').textContent=formatDate(new Date());
 applyTheme();
 renderDashboard();
