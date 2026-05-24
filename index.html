@@ -446,7 +446,7 @@ tr:hover .row-del-btn { opacity: 1; }
 
 <!-- GENDER SELECTOR -->
 <div id="gender-overlay">
-  <div class="gender-title">مرحباً بك في مُحاسِبة 🌸</div>
+  <div class="gender-title">مرحباً بك في مُحاسِب </div>
   <div class="gender-sub">اختر شكل التطبيق المناسب لك</div>
   <div class="gender-cards">
     <div class="gender-card girl-card" onclick="setGender('female')">
@@ -529,23 +529,18 @@ tr:hover .row-del-btn { opacity: 1; }
 </div>
 
 <!-- DHIKR PAGE -->
-<div class="page" id="page-dhikr">
-  <div class="sec-title">ورد الأذكار اليومي</div>
-  <div class="dhikr-grid" id="dhikr-grid"></div>
-  <div class="habits-wrap">
-    <div class="habits-header"><h3>📿 إضافة ذكر مخصص</h3></div>
-    <div class="add-bar">
-      <input type="text" id="new-dhikr-text" placeholder="نص الذكر..." style="flex:2"/>
-      <input type="number" id="new-dhikr-target" placeholder="العدد" value="33" style="width:75px;flex:0"/>
-      <select id="new-dhikr-slot">
-        <option>الصباح</option><option>بعد الفجر</option>
-        <option>الضهر</option><option>المساء</option><option>قبل النوم</option>
-      </select>
-      <button class="btn-add sec-btn" onclick="addDhikr()">+ إضافة</button>
-    </div>
-  </div>
+<div class="add-bar">
+  <input type="text" id="new-dhikr-text" placeholder="نص الذكر..." style="flex:2"/>
+  <input type="number" id="new-dhikr-target" placeholder="العدد" value="33" style="width:70px;flex:0"/>
+  <select id="new-dhikr-slot">
+    <option>الصباح</option><option>بعد الفجر</option>
+    <option>الضهر</option><option>المساء</option><option>قبل النوم</option>
+  </select>
+  <input type="time" id="new-dhikr-start" value="06:00" style="width:90px;flex:0"/>
+  <span style="color:var(--ink-muted);font-size:12px">→</span>
+  <input type="time" id="new-dhikr-end" value="10:00" style="width:90px;flex:0"/>
+  <button class="btn-add sec-btn" onclick="addDhikr()">+ إضافة</button>
 </div>
-
 <!-- SINS PAGE -->
 <div class="page" id="page-sins">
   <div class="sec-title">محاسبة النفس</div>
@@ -661,7 +656,9 @@ function getHijriDate(){
     timeZone: 'Africa/Cairo'
   };
   try {
-    return new Intl.DateTimeFormat('ar-SA-u-ca-islamic', opts).format(d);
+    // إزاحة يوم للأخذ بالرؤية المصرية
+const adjusted = new Date(d.getTime() - 86400000);
+return new Intl.DateTimeFormat('ar-SA-u-ca-islamic', opts).format(adjusted);
   } catch(e) {
     return '';
   }
@@ -859,34 +856,104 @@ function renderCharts(){
 }
 
 // ===== DHIKR =====
-function dhikrCount(id){const k=new Date().toDateString();const item=S.dhikr.find(x=>x.id===id);return item?(item.counts[k]||0):0;}
-function incDhikr(id){const k=new Date().toDateString();const item=S.dhikr.find(x=>x.id===id);if(!item)return;if(!item.counts)item.counts={};item.counts[k]=(item.counts[k]||0)+1;save();renderDhikr();}
-function resetDhikr(id){const k=new Date().toDateString();const item=S.dhikr.find(x=>x.id===id);if(item){item.counts[k]=0;save();renderDhikr();}}
-function removeDhikr(id){if(!confirm('حذف هذا الذكر؟'))return;S.dhikr=S.dhikr.filter(d=>d.id!==id);save();renderDhikr();}
-function renderDhikr(){
-  const slots=[...new Set(S.dhikr.map(d=>d.slot))];
-  const slotClass={'الصباح':'s-morning','بعد الفجر':'s-fajr','المساء':'s-eve','قبل النوم':'s-night'};
-  const slotIcon={'الصباح':'🌅','بعد الفجر':'🌄','الضهر':'☀️','المساء':'🌇','قبل النوم':'🌙'};
-  document.getElementById('dhikr-grid').innerHTML=slots.map(slot=>{
-    const items=S.dhikr.filter(d=>d.slot===slot);
-    const totalTarget=items.reduce((a,i)=>a+i.target,0);
-    const totalDone=items.reduce((a,i)=>a+Math.min(dhikrCount(i.id),i.target),0);
-    const slotPct=totalTarget?Math.round(totalDone/totalTarget*100):0;
-    return `<div class="dhikr-slot ${slotClass[slot]||''}">
+// ===== DHIKR =====
+const DHIKR_SLOTS_TIME = {
+  'بعد الفجر':  { start: '04:00', end: '07:00' },
+  'الصباح':     { start: '06:00', end: '10:00' },
+  'الضهر':      { start: '11:00', end: '14:00' },
+  'المساء':     { start: '15:00', end: '18:00' },
+  'قبل النوم':  { start: '21:00', end: '24:00' },
+};
+
+function getSlotStatus(slot, startOverride, endOverride) {
+  const now = new Date();
+  const cur = now.getHours() * 60 + now.getMinutes();
+  const t = { 
+    start: startOverride || (DHIKR_SLOTS_TIME[slot]||{}).start, 
+    end:   endOverride   || (DHIKR_SLOTS_TIME[slot]||{}).end 
+  };
+  if (!t.start) return 'none';
+  const [sh, sm] = t.start.split(':').map(Number);
+  const [eh, em] = t.end.split(':').map(Number);
+  const start = sh * 60 + sm;
+  const end   = eh * 60 + em;
+  if (cur >= start && cur < end) return 'now';
+  if (cur >= end) return 'late';
+  return 'soon';
+}
+
+function dhikrDone(id) {
+  const k = new Date().toDateString();
+  const item = S.dhikr.find(x => x.id === id);
+  return item ? !!(item.counts && item.counts[k]) : false;
+}
+
+function toggleDhikr(id) {
+  const k = new Date().toDateString();
+  const item = S.dhikr.find(x => x.id === id);
+  if (!item) return;
+  if (!item.counts) item.counts = {};
+  item.counts[k] = item.counts[k] ? 0 : 1;
+  save(); renderDhikr();
+}
+
+function removeDhikr(id) {
+  if (!confirm('حذف هذا الذكر؟')) return;
+  S.dhikr = S.dhikr.filter(d => d.id !== id);
+  save(); renderDhikr();
+}
+
+function renderDhikr() {
+  const slots = [...new Set(S.dhikr.map(d => d.slot))];
+  const slotIcon = { 'الصباح':'🌅', 'بعد الفجر':'🌄', 'الضهر':'☀️', 'المساء':'🌇', 'قبل النوم':'🌙' };
+  const slotClass = { 'الصباح':'s-morning', 'بعد الفجر':'s-fajr', 'المساء':'s-eve', 'قبل النوم':'s-night' };
+
+  const statusStyle = {
+    now:  { border: '#34d399', bg: 'rgba(52,211,153,0.08)',  label: '🟢 وقته الآن',  lclr: '#34d399' },
+    late: { border: '#f87171', bg: 'rgba(248,113,113,0.08)', label: '🔴 فات وقته',   lclr: '#f87171' },
+    soon: { border: '#fbbf24', bg: 'rgba(251,191,36,0.08)',  label: '🟡 لسه وقته',   lclr: '#fbbf24' },
+    none: { border: 'var(--border2)', bg: 'transparent',    label: '',              lclr: '' },
+  };
+
+  document.getElementById('dhikr-grid').innerHTML = slots.map(slot => {
+    const items = S.dhikr.filter(d => d.slot === slot);
+    const total = items.length;
+    const done  = items.filter(i => dhikrDone(i.id)).length;
+    const pct   = total ? Math.round(done / total * 100) : 0;
+   const st = getSlotStatus(slot, items[0]?.start, items[0]?.end);
+    const ss    = statusStyle[st];
+
+    return `<div class="dhikr-slot ${slotClass[slot]||''}" style="border-top-color:${ss.border};background:${ss.bg}">
       <div class="dhikr-slot-header">
         <h4>${slotIcon[slot]||'🕌'} ${slot}</h4>
-        <div class="slot-progress"><span class="slot-pct">${slotPct}%</span><div class="slot-bar"><div class="slot-fill" style="width:${slotPct}%"></div></div></div>
+        <div style="display:flex;align-items:center;gap:8px">
+          ${ss.label ? `<span style="font-size:10px;color:${ss.lclr};font-weight:700">${ss.label}</span>` : ''}
+          <div class="slot-progress">
+            <span class="slot-pct">${pct}%</span>
+            <div class="slot-bar"><div class="slot-fill" style="width:${pct}%"></div></div>
+          </div>
+        </div>
       </div>
-      ${items.map(item=>{
-        const cnt=dhikrCount(item.id);const done=cnt>=item.target;
+      ${items.map(item => {
+        const done = dhikrDone(item.id);
+        const st2 = getSlotStatus(item.slot, item.start, item.end);
+        const chkColor = done ? '#34d399' : st2 === 'late' ? '#f87171' : st2 === 'now' ? '#fbbf24' : 'var(--border2)';
+        const chkBg    = done ? 'rgba(52,211,153,0.15)' : 'transparent';
         return `<div class="dhikr-item">
-          <span class="dhikr-text">${item.text}</span>
+          <div style="flex:1">
+            <div class="dhikr-text">${item.text}</div>
+            <div style="font-size:10px;color:var(--ink-faint);margin-top:2px">${item.target} مرة • ${item.slot}</div>
+          </div>
           <div class="dhikr-counter">
-            ${done?'<span class="done-pill">✓ تم</span>':''}
-            <button class="cnt-btn" onclick="resetDhikr('${item.id}')" title="إعادة">↺</button>
-            <span class="cnt-num">${cnt}</span>
-            <span class="cnt-target">/${item.target}</span>
-            <button class="cnt-btn" onclick="incDhikr('${item.id}')" ${done?'disabled':''}>+</button>
+            <button onclick="toggleDhikr('${item.id}')" style="
+              width:36px;height:36px;border-radius:50%;
+              border:2px solid ${chkColor};
+              background:${chkBg};
+              font-size:16px;cursor:pointer;transition:all 0.2s;
+              display:inline-flex;align-items:center;justify-content:center;
+              color:${done?'#34d399':'var(--ink-faint)'}">
+              ${done ? '✓' : ''}
+            </button>
             <button class="cnt-btn" onclick="removeDhikr('${item.id}')" style="font-size:11px;color:var(--ink-faint)">✕</button>
           </div>
         </div>`;
@@ -894,8 +961,20 @@ function renderDhikr(){
     </div>`;
   }).join('');
 }
-function addDhikr(){const text=document.getElementById('new-dhikr-text').value.trim();const target=parseInt(document.getElementById('new-dhikr-target').value)||33;const slot=document.getElementById('new-dhikr-slot').value;if(!text)return;S.dhikr.push({id:'d'+Date.now(),slot,text,target,counts:{}});document.getElementById('new-dhikr-text').value='';save();renderDhikr();}
 
+function addDhikr() {
+  const text   = document.getElementById('new-dhikr-text').value.trim();
+  const target = parseInt(document.getElementById('new-dhikr-target').value) || 33;
+  const slot   = document.getElementById('new-dhikr-slot').value;
+  const start  = document.getElementById('new-dhikr-start').value || '06:00';
+  const end    = document.getElementById('new-dhikr-end').value   || '10:00';
+  if (!text) return;
+  // حفظ الوقت مع الذكر
+  DHIKR_SLOTS_TIME[slot] = { start, end };
+  S.dhikr.push({ id: 'd' + Date.now(), slot, text, target, counts: {}, start, end });
+  document.getElementById('new-dhikr-text').value = '';
+  save(); renderDhikr();
+}
 // ===== SINS =====
 function renderSins(){
   const list=document.getElementById('sins-list');
@@ -1027,131 +1106,131 @@ const HADITHS=[
   {text:'المسلم من سلم المسلمون من لسانه ويده.',source:'متفق عليه'},
 ];
 
-// ② حديث النهي (نهي عن تصرف + كيف تطبق الاجتناب عملياً)
+// ② حديث النهي (نهي عن تصرف + شرح مستفاض من كلام العلماء والسلف)
 const NAHIY_HADITHS=[
   {
     text:'إياكم والغيبة، فإن الغيبة أشد من الزنا.',
     source:'رواه أبو داود',
-    practical:'🛑 كيف تتجنبها: قبل ما تتكلم عن غائب اسأل نفسك "هل هذا يسعده لو سمعه؟" — إذا لا، توقف فوراً. غيّر الموضوع أو اخرج من المجلس.'
+    practical:'🛑 قال العلماء إن الغيبة من أخطر الذنوب لأنها تجمع بين معصية الله وأذية العباد، والزاني قد يتوب بينه وبين الله أما المغتاب فتعلق حقه بالناس. وكان بعض السلف يقول: "لو كنت مغتاباً أحداً لاغتبت والديّ لأنهما أحق بحسناتي." والغيبة تبدأ غالباً بكلام يراه الإنسان بسيطاً ثم يعتاده قلبه ولسانه. التطبيق العملي: قبل الكلام عن أي شخص غائب اسأل نفسك: هل في هذا الكلام فائدة حقيقية أم مجرد تنفيس أو سخرية؟ فإن لم يكن فيه خير فاصمت أو غيّر الموضوع.'
   },
   {
     text:'لا يحل لمسلم أن يهجر أخاه فوق ثلاث.',
     source:'متفق عليه',
-    practical:'🛑 التطبيق: إذا عندك خلاف مع أحد لأكثر من 3 أيام، ابدأ أنت بالتواصل ولو برسالة قصيرة. البادئ بالسلام أفضل عند الله.'
+    practical:'🛑 قال الإمام النووي رحمه الله إن الهجر فوق ثلاث محرم إذا كان لأمور الدنيا، لأن الإسلام يريد بقاء المحبة والألفة بين المسلمين. وكان السلف يعدّون طول الخصومة من قسوة القلب ومداخل الشيطان. وليس المقصود أن تُنهي المشكلة فوراً، بل ألا تستمر القطيعة والكراهية. التطبيق العملي: حتى لو بقي الخلاف، ابدأ بالسلام أو برسالة بسيطة تكسر الهجر، فخير الناس من يبدأ بالصلح.'
   },
   {
     text:'إياكم والكذب، فإن الكذب يهدي إلى الفجور، والفجور يهدي إلى النار.',
     source:'متفق عليه',
-    practical:'🛑 التطبيق: إذا أغراك الكذب لتفادي موقف — توقف 3 ثوانٍ وقل: "دعني أفكر" بدلاً من الكذب الفوري. الصمت أفضل من الكذب.'
+    practical:'🛑 بيّن ابن القيم رحمه الله أن الكذب يفسد القلب لأن الإنسان يعتاد إظهار غير الحقيقة حتى يصبح ذلك طبعاً فيه. والكذب الصغير يجر إلى الأكبر مع الوقت، لذلك كان السلف يخافون من الكذبات التي يراها الناس "بسيطة". التطبيق العملي: إذا أخطأت فلا تحاول تغطية الخطأ بكذبة أخرى، بل تعوّد قول الحقيقة ولو كانت محرجة، فالصدق راحة والكذب تعب دائم.'
   },
   {
     text:'اتقوا الظلم، فإن الظلم ظلمات يوم القيامة.',
     source:'رواه مسلم',
-    practical:'🛑 التطبيق: راجع تعاملاتك المالية اليوم — هل فيها حق لأحد؟ الظلم لا يقتصر على الضرب، يشمل الغبن والتأخير في الحقوق.'
+    practical:'🛑 قال ابن تيمية رحمه الله: "إن الله يقيم الدولة العادلة وإن كانت كافرة، ولا يقيم الظالمة وإن كانت مسلمة." لأن الظلم يهدم القلوب والمجتمعات. والظلم لا يكون فقط بالضرب أو الأذى الظاهر، بل بالكلمة الجارحة وأكل الحقوق والتكبر على الناس وتأخير حقهم. التطبيق العملي: راجع تعاملاتك اليومية، خصوصاً مع من لا يستطيعون أخذ حقهم منك، كالأصغر منك أو الأضعف أو من يحتاج إليك.'
   },
   {
     text:'لا تحاسدوا، ولا تناجشوا، ولا تباغضوا، ولا تدابروا.',
     source:'متفق عليه',
-    practical:'🛑 التطبيق: إذا رأيت نعمة عند أحد فقل: "اللهم بارك له وارزقني من فضلك." الحسد يُحرق الحسنات كما تحرق النار الحطب.'
+    practical:'🛑 الحسد يدل على عدم رضا القلب بقسمة الله، لذلك كان السلف يكثرون الدعاء بالبركة لمن رأوا عنده نعمة. وقال بعضهم: "ما رأيت ظالماً أشبه بمظلوم من الحاسد." لأنه يعيش متعب القلب دائماً. التطبيق العملي: كلما رأيت نعمة عند أحد فقل فوراً: "اللهم بارك له وارزقني من فضلك" حتى تطفئ نار المقارنة والحسد.'
   },
   {
     text:'إياكم وكثرة الضحك، فإن كثرة الضحك تميت القلب.',
     source:'رواه ابن ماجه',
-    practical:'🛑 التطبيق: خصص وقت محدد للترفيه ولا تجعل يومك كله مزاحاً. القلب الحي يحتاج توازناً بين الجد والترويح عن النفس.'
+    practical:'🛑 لم ينهَ الإسلام عن الفرح والابتسام، فقد كان النبي ﷺ يتبسم كثيراً، لكن المقصود الانشغال الدائم باللهو حتى يغفل القلب عن ذكر الله والآخرة. وكان بعض السلف يقول: "من كثر ضحكه قلت هيبته." التطبيق العملي: اجعل في يومك توازناً بين الترفيه والعبادة والتفكر، ولا تجعل الهروب بالضحك عادة دائمة.'
   },
   {
     text:'لا يشير أحدكم على أخيه بالسلاح، فإنه لا يدري لعل الشيطان ينزع في يده.',
     source:'متفق عليه',
-    practical:'🛑 التطبيق: تجنب كل فعل قد يؤذي أحداً حتى لو مازحاً. الأذى المقصود والغير مقصود كلاهما يضر بالعلاقات والنفس.'
+    practical:'🛑 هذا الحديث أصل في منع كل مزاح أو تصرف قد يؤدي إلى أذى الناس أو إخافتهم ولو بغير قصد. فالإسلام يريد حفظ النفوس والمشاعر معاً. التطبيق العملي: لا تمزح بطريقة تخيف أو تؤذي غيرك، وانتبه أن بعض التصرفات التي تراها بسيطة قد تترك أثراً سيئاً في قلب غيرك.'
   },
   {
     text:'من غش فليس منا.',
     source:'رواه مسلم',
-    practical:'🛑 التطبيق: في كل معاملة اليوم — بيع، شراء، عمل، دراسة — كن شفافاً وصادقاً. الرزق الحلال يبارك فيه حتى لو قل.'
+    practical:'🛑 قال العلماء إن هذا من أشد الوعيد في المعاملات، لأن الغش يخالف الأمانة التي بُني عليها الإسلام. وكان السلف يعدّون إخفاء العيوب في التجارة أو العمل من أكل المال بالباطل. التطبيق العملي: كن واضحاً وصادقاً في البيع والعمل والدراسة، ولا تجعل المكسب السريع أهم من رضا الله وبركة الرزق.'
   },
   {
     text:'إياكم والجلوس في الطرقات. قالوا: ما لنا بد، إنما هي مجالسنا. قال: فأدوا الطريق حقه.',
     source:'متفق عليه',
-    practical:'🛑 التطبيق: في الأماكن العامة — غض البصر، تجنب إيذاء المارة، وكن قدوة في التصرف الحضاري لأن المسلم مرآة دينه.'
+    practical:'🛑 علّم النبي ﷺ المسلمين أن الطريق له حقوق، منها غض البصر وكف الأذى ورد السلام. فالمسلم لا يؤذي الناس بنظرة أو كلمة أو تصرف. التطبيق العملي: في الأماكن العامة كن محترماً وهادئاً، ولا تجعل وجودك سبباً في أذى أو إزعاج أحد.'
   },
   {
     text:'لا يبع أحدكم على بيع أخيه.',
     source:'متفق عليه',
-    practical:'🛑 التطبيق: في المنافسة المهنية أو التجارية — لا تضر منافسك بأساليب ملتوية. المنافسة الشريفة مقبولة، التعدي على حق الغير محرم.'
+    practical:'🛑 نهى الإسلام عن إفساد معاملات الناس لأن ذلك يزرع العداوة والطمع بين المسلمين. والمنافسة المباحة تكون بالشرف والأخلاق لا بإفساد رزق الآخرين. التطبيق العملي: لا تحاول كسب مصلحة عن طريق تخريب اتفاق شخص آخر أو استغلال ضعفه.'
   },
   {
     text:'إياكم والدخول على النساء. قالوا: أفرأيت الحمو؟ قال: الحمو الموت.',
     source:'متفق عليه',
-    practical:'🛑 التطبيق: الخلوة بأجنبية (أو أجنبي) ممنوعة حتى مع أقارب الزوج/الزوجة. الحشمة في التعامل حماية لك ولأسرتك.'
+    practical:'🛑 شدد النبي ﷺ في هذا الباب لأن الفتنة تبدأ غالباً بالاستهانة والاعتياد. والمقصود حماية القلوب والبيوت من أسباب الفساد وسوء الظن. التطبيق العملي: حافظ على الحدود الشرعية والاحترام في التعامل، وتجنب أي خلوة أو علاقة تفتح باباً للفتنة.'
   },
   {
     text:'لا يمنع جار جاره أن يغرز خشبه في جداره.',
     source:'متفق عليه',
-    practical:'🛑 التطبيق: لا تمنع أحداً حقه بحجة ملكيتك الشخصية. حقوق الجوار والشراكة من أخلاق الإسلام الراسخة.'
+    practical:'🛑 هذا الحديث يدل على عظمة حقوق الجار في الإسلام، وأن المسلم لا يكون أنانياً متشدداً في حقوقه إذا كان يستطيع التيسير على غيره. وكان السلف يتفقدون جيرانهم ويصبرون على أذاهم طلباً للأجر. التطبيق العملي: حاول أن تكون ليناً ومتعاوناً مع من حولك، ولا تجعل التمسك بحقك سبباً لإيذاء الآخرين.'
   },
 ];
 
-// ③ حديث الحث (حث على فعل + كيف تطبقه عملياً اليوم)
+// ③ حديث الحث (حث على فعل + شرح مستفاض من كلام العلماء والسلف)
 const HATH_HADITHS=[
   {
     text:'ازهد في الدنيا يحبك الله، وازهد فيما في أيدي الناس يحبك الناس.',
     source:'رواه ابن ماجه',
-    practical:'✅ التطبيق: اليوم تخلص من شيء لا تحتاجه — تبرع به أو أعطه لمحتاج. وعندما تتمنى ما عند غيرك، ذكّر نفسك بنعم تملكها.'
+    practical:'✅ قال الإمام أحمد رحمه الله: "الزهد ليس بتحريم الحلال، وإنما أن تكون بما في يد الله أوثق منك بما في يدك." فليس المطلوب ترك الدنيا تماماً، بل ألا يتعلق القلب بها. والناس يحبون من لا يطمع فيما عندهم. التطبيق العملي: درّب نفسك على القناعة وعدم مقارنة حياتك بما عند الآخرين.'
   },
   {
     text:'اتق الله حيثما كنت، وأتبع السيئة الحسنة تمحها، وخالق الناس بخلق حسن.',
     source:'رواه الترمذي',
-    practical:'✅ التطبيق: اليوم ابحث عن شخص تحتاج أن تحسن معاملته — أهل، زميل، جار. ابدأ بابتسامة أو كلمة طيبة. الحسنة تمحو السيئة.'
+    practical:'✅ جمع هذا الحديث حقوق الله وحقوق العباد. فالتقوى تكون في السر والعلن، والحسنة بعد الذنب من علامات صدق التوبة، وحسن الخلق من أثقل الأعمال في الميزان. التطبيق العملي: إذا أخطأت اليوم فبادر بعدها بحسنة كاستغفار أو صدقة أو اعتذار أو إحسان.'
   },
   {
     text:'من صلى على واحدة صلى الله عليه عشراً.',
     source:'رواه مسلم',
-    practical:'✅ التطبيق: اجعل ورد الصلاة على النبي ﷺ 100 مرة يومياً. يمكن تقسيمها: 10 بعد كل صلاة. جربها لأسبوع وانظر أثرها.'
+    practical:'✅ قال العلماء إن صلاة الله على عبده تعني رحمته وثناءه عليه في الملأ الأعلى. لذلك كان السلف يكثرون الصلاة على النبي ﷺ خاصة في أوقات الهم والضيق. التطبيق العملي: اجعل لك ورداً ثابتاً من الصلاة على النبي ﷺ خلال يومك ولو كان قليلاً لكنه دائم.'
   },
   {
     text:'من قام رمضان إيماناً واحتساباً غُفر له ما تقدم من ذنبه.',
     source:'متفق عليه',
-    practical:'✅ التطبيق: لا تنتظر رمضان — صلِّ ولو ركعتين بعد العشاء كل ليلة. القيام عادة تُبنى شيئاً فشيئاً وتُغير حال القلب.'
+    practical:'✅ المقصود أن يقوم العبد رمضان إيماناً بوعد الله واحتساباً للأجر لا رياءً ولا عادة. وكان السلف يفرحون بقيام الليل لأنه يلين القلب ويقوي الصلة بالله. التطبيق العملي: عوّد نفسك على القيام تدريجياً ولو بركعتين خفيفتين بعد العشاء أو قبل النوم.'
   },
   {
     text:'من كان يؤمن بالله واليوم الآخر فليكرم ضيفه.',
     source:'متفق عليه',
-    practical:'✅ التطبيق: اليوم استقبل أحداً في بيتك أو ادعه للطعام. كرم الضيافة سنة نبوية وصلة للأرحام في آنٍ واحد.'
+    practical:'✅ إكرام الضيف من أخلاق الأنبياء والصالحين، وهو دليل على الكرم وحسن المعاملة. وليس المقصود التكلف أو المشقة، بل حسن الاستقبال والبشاشة. التطبيق العملي: استقبل الناس بوجه طيب وكلمة لطيفة، فالكلمة الحسنة نوع من الكرم.'
   },
   {
     text:'لا يزال لسان العبد رطباً من ذكر الله.',
     source:'رواه الترمذي',
-    practical:'✅ التطبيق: اجعل ذكر الله طباقاً للأنشطة اليومية: سبح خلال انتظار الكتلة، اذكر الله أثناء المشي، أدعُ في السيارة. لا يتطلب وقتاً إضافياً.'
+    practical:'✅ كان ابن تيمية رحمه الله يقول: "الذكر للقلب مثل الماء للسمك." فالقلب يضعف بالغفلة ويقوى بالذكر. والسلف كانوا يجدون في الذكر راحة وطمأنينة لا يجدونها في شيء آخر. التطبيق العملي: اربط الأذكار بعاداتك اليومية مثل المشي أو الانتظار حتى يصبح الذكر جزءاً طبيعياً من يومك.'
   },
   {
     text:'عليكم بالصدق، فإن الصدق يهدي إلى البر، والبر يهدي إلى الجنة.',
     source:'متفق عليه',
-    practical:'✅ التطبيق: اليوم التزم بوعد قطعته على نفسك — ولو صغيراً. الصدق مع النفس أساس الصدق مع الناس.'
+    practical:'✅ الصدق ليس بالكلام فقط، بل في النية والعمل والوعود. وكان السلف يعدّون مخالفة الظاهر للباطن نوعاً من الكذب. والصدق سبب لطمأنينة القلب ومحبة الناس. التطبيق العملي: عوّد نفسك على الوضوح حتى في الأمور الصغيرة، ولا تختلق الأعذار لتجميل صورتك.'
   },
   {
     text:'من نفّس عن مؤمن كربةً من كرب الدنيا نفّس الله عنه كربةً من كرب يوم القيامة.',
     source:'رواه مسلم',
-    practical:'✅ التطبيق: ابحث اليوم عن شخص يمر بضائقة — استمع إليه، ساعده بما تستطيع أو ادعُ له. هذا من أعظم ما يخفف الهموم.'
+    practical:'✅ هذا الحديث يدل على أن الجزاء من جنس العمل، فمن خفف عن الناس خفف الله عنه. وكان بعض السلف يفرح بقضاء حاجة أخيه أكثر من فرحه ببعض النوافل. التطبيق العملي: لا تحتقر أي مساعدة مهما كانت بسيطة، فقد تكون كلمة أو دعاء أو استماعاً سبباً في تفريج همّ مسلم.'
   },
   {
     text:'الدال على الخير كفاعله.',
     source:'رواه الترمذي',
-    practical:'✅ التطبيق: شارك اليوم مقالاً نافعاً، أو أحل أحداً على عالم أو كتاب. نشر العلم الشرعي صدقة جارية تمتد بعد الموت.'
+    practical:'✅ من رحمة الله أن من دلّ غيره على الخير نال مثل أجره ولو لم يفعل العمل بنفسه. لذلك كان السلف يحرصون على نشر العلم والنصيحة النافعة. التطبيق العملي: شارك شيئاً نافعاً اليوم كآية أو حديث أو معلومة تفيد الناس، فربما يهدي الله بها شخصاً.'
   },
   {
     text:'خيركم من تعلم القرآن وعلّمه.',
     source:'رواه البخاري',
-    practical:'✅ التطبيق: خصص 15 دقيقة يومياً للقرآن — حفظاً أو مراجعة أو تفسيراً. ابدأ بآية واحدة إذا لم يكن عندك وقت. المداومة هي السر.'
+    practical:'✅ جعل النبي ﷺ أهل القرآن خير الناس لأن القرآن يصلح القلب والعمل والأخلاق. وكان السلف يقضون أعمارهم في حفظه وفهمه والعمل به. التطبيق العملي: اجعل لك وقتاً ثابتاً يومياً مع القرآن ولو كان قليلاً، فالثبات هو سر الانتفاع الحقيقي.'
   },
   {
     text:'أحب الأعمال إلى الله أدومها وإن قل.',
     source:'متفق عليه',
-    practical:'✅ التطبيق: اختر عادة واحدة فقط تريد ترسيخها هذا الأسبوع وطبقها كل يوم بلا استثناء. الانتظام يغلب الكثرة المتقطعة.'
+    practical:'✅ كان أحب العمل عند النبي ﷺ ما استمر عليه صاحبه، لأن النفس تمل من الأعمال الكبيرة المفاجئة. والسلف كانوا يحبون الثبات أكثر من كثرة العمل المنقطع. التطبيق العملي: اختر عبادة صغيرة تستطيع المداومة عليها يومياً مثل ورد قرآن أو أذكار أو ركعتين.'
   },
   {
     text:'من توضأ فأحسن الوضوء خرجت خطاياه من جسده.',
     source:'رواه مسلم',
-    practical:'✅ التطبيق: في كل وضوء — تأكد من إتمام الأعضاء وادعُ بعد الانتهاء: "اللهم اجعلني من التوابين واجعلني من المتطهرين."'
+    practical:'✅ الوضوء ليس مجرد تنظيف للأعضاء، بل عبادة تطهر الظاهر والباطن. وكان السلف يستشعرون مع كل وضوء مغفرة الذنوب وتجدد الصلة بالله. التطبيق العملي: توضأ بهدوء وتأنٍ واستحضر أن كل قطرة ماء تُسقط ذنباً بإذن الله.'
   },
 ];
 
