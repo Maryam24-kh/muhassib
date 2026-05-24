@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -6,23 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>مُحاسِبة 🌸</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Amiri:wght@400;700&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
+/* ===== GENDER THEMES ===== */
 :root {
-  --rose:        #ff6b9d;
-  --rose-dim:    #c94f7a;
-  --rose-glow:   rgba(255,107,157,0.18);
-  --rose-border: rgba(255,107,157,0.28);
-  --lilac:       #c084fc;
-  --lilac-dim:   #9b59c7;
-  --lilac-glow:  rgba(192,132,252,0.15);
-  --mint:        #34d399;
-  --mint-glow:   rgba(52,211,153,0.15);
-  --gold:        #fbbf24;
-  --gold-glow:   rgba(251,191,36,0.15);
-  --red:         #f87171;
-  --red-glow:    rgba(248,113,113,0.15);
+  /* --- GIRL THEME (rose/lilac) --- */
+  --primary:     #ff6b9d;
+  --primary-dim: #c94f7a;
+  --primary-glow:rgba(255,107,157,0.18);
+  --primary-border:rgba(255,107,157,0.28);
+  --secondary:   #c084fc;
+  --secondary-dim:#9b59c7;
+  --secondary-glow:rgba(192,132,252,0.15);
+  --accent1:     #34d399;
+  --accent1-glow:rgba(52,211,153,0.15);
+  --accent2:     #fbbf24;
+  --accent2-glow:rgba(251,191,36,0.15);
+  --danger:      #f87171;
+  --danger-glow: rgba(248,113,113,0.15);
   --blue:        #60a5fa;
   --bg:          #0d0d14;
   --bg2:         #12121e;
@@ -40,8 +41,41 @@
   --radius-xs:   10px;
   --shadow:      0 4px 24px rgba(0,0,0,0.4);
   --shadow-lg:   0 8px 48px rgba(0,0,0,0.6);
-  --glow-rose:   0 0 20px rgba(255,107,157,0.25);
+  --glow-primary:0 0 20px rgba(255,107,157,0.25);
+  --brand-font:  'Amiri', serif;
 }
+
+[data-gender="male"] {
+  /* --- BOY THEME (deep navy/gold) --- */
+  --primary:     #d4af37;
+  --primary-dim: #a8892a;
+  --primary-glow:rgba(212,175,55,0.15);
+  --primary-border:rgba(212,175,55,0.30);
+  --secondary:   #7ec8e3;
+  --secondary-dim:#4a9ab5;
+  --secondary-glow:rgba(126,200,227,0.12);
+  --accent1:     #34d399;
+  --accent1-glow:rgba(52,211,153,0.12);
+  --accent2:     #e07b4f;
+  --accent2-glow:rgba(224,123,79,0.12);
+  --danger:      #e05c5c;
+  --danger-glow: rgba(224,92,92,0.12);
+  --blue:        #7ec8e3;
+  --bg:          #08090f;
+  --bg2:         #0d0f1a;
+  --surface:     #111422;
+  --surface2:    #171a2e;
+  --surface3:    #1d2038;
+  --border:      rgba(212,175,55,0.08);
+  --border2:     rgba(212,175,55,0.16);
+  --ink:         #eee8d5;
+  --ink-soft:    #c8bfa0;
+  --ink-muted:   #7a7060;
+  --ink-faint:   #3a342a;
+  --glow-primary:0 0 20px rgba(212,175,55,0.20);
+  --brand-font:  'Cinzel', serif;
+}
+
 [data-theme="light"] {
   --bg:          #faf5ff;
   --bg2:         #f3eeff;
@@ -56,8 +90,24 @@
   --ink-faint:   #bba8d4;
   --shadow:      0 4px 24px rgba(120,60,180,0.10);
   --shadow-lg:   0 8px 48px rgba(120,60,180,0.16);
-  --glow-rose:   0 0 20px rgba(255,107,157,0.12);
+  --glow-primary:0 0 20px rgba(255,107,157,0.12);
 }
+
+[data-gender="male"][data-theme="light"] {
+  --bg:          #f5f0e8;
+  --bg2:         #ede7d5;
+  --surface:     #ffffff;
+  --surface2:    #faf8f2;
+  --surface3:    #f0ede0;
+  --border:      rgba(140,110,40,0.14);
+  --border2:     rgba(140,110,40,0.24);
+  --ink:         #1a1508;
+  --ink-soft:    #3a2e10;
+  --ink-muted:   #7a6a40;
+  --ink-faint:   #c0b080;
+  --glow-primary:0 0 20px rgba(212,175,55,0.15);
+}
+
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 html { scroll-behavior: smooth; }
 body {
@@ -67,29 +117,66 @@ body {
   min-height: 100dvh;
   direction: rtl;
   padding-bottom: 80px;
-  transition: background 0.3s, color 0.3s;
+  transition: background 0.4s, color 0.3s;
 }
 ::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--rose-dim); border-radius: 4px; }
+::-webkit-scrollbar-thumb { background: var(--primary-dim); border-radius: 4px; }
+
+/* ===== GENDER SELECTOR OVERLAY ===== */
+#gender-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; padding: 24px;
+  transition: opacity 0.4s;
+}
+#gender-overlay.hidden { opacity:0; pointer-events:none; }
+.gender-title {
+  font-family: 'Amiri', serif;
+  font-size: 26px; color: #c084fc;
+  text-align: center; margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+.gender-sub { font-size: 13px; color: #8a7a9e; text-align: center; margin-bottom: 36px; }
+.gender-cards { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+.gender-card {
+  width: 160px; padding: 32px 20px;
+  border-radius: 24px; border: 1.5px solid rgba(255,255,255,0.1);
+  background: #181828;
+  cursor: pointer; text-align: center;
+  transition: all 0.25s;
+  display: flex; flex-direction: column; align-items: center; gap: 14px;
+}
+.gender-card:hover { transform: translateY(-6px); }
+.gender-card.girl-card:hover { border-color: rgba(255,107,157,0.5); box-shadow: 0 8px 30px rgba(255,107,157,0.2); }
+.gender-card.boy-card:hover  { border-color: rgba(212,175,55,0.5); box-shadow: 0 8px 30px rgba(212,175,55,0.2); }
+.gender-card .g-icon { font-size: 44px; line-height: 1; }
+.gender-card h3 { font-size: 16px; font-weight: 700; color: #f0eaf6; }
+.gender-card p  { font-size: 11px; color: #8a7a9e; line-height: 1.6; }
 
 /* ===== HEADER ===== */
 .header {
   background: var(--surface);
   padding: 14px 20px 12px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  position: sticky; top: 0; z-index: 100;
   border-bottom: 1px solid var(--border);
   backdrop-filter: blur(20px);
 }
 .header-top { display: flex; align-items: center; justify-content: space-between; }
-.brand { font-family: 'Amiri', serif; font-size: 22px; color: var(--rose); font-weight: 700; letter-spacing: 1px; text-shadow: var(--glow-rose); }
-.brand .dot { color: var(--lilac); }
-.header-right { display: flex; align-items: center; gap: 10px; }
+.brand {
+  font-family: var(--brand-font);
+  font-size: 22px; color: var(--primary); font-weight: 700;
+  letter-spacing: 1px; text-shadow: var(--glow-primary);
+  transition: all 0.4s;
+}
+.brand .dot { color: var(--secondary); }
+.header-right { display: flex; align-items: center; gap: 8px; }
 .header-date { font-size: 11px; color: var(--ink-muted); background: var(--surface2); padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border); }
 .theme-toggle { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border2); background: var(--surface2); color: var(--ink-soft); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
-.theme-toggle:hover { border-color: var(--rose-border); color: var(--rose); }
+.theme-toggle:hover { border-color: var(--primary-border); color: var(--primary); }
+.gender-switch { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--border2); background: var(--surface2); color: var(--ink-soft); font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.gender-switch:hover { border-color: var(--primary-border); color: var(--primary); }
 
 /* ===== BOTTOM NAV ===== */
 .bottom-nav {
@@ -102,10 +189,10 @@ body {
 }
 .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 4px; cursor: pointer; border: none; background: transparent; font-family: 'Tajawal', sans-serif; font-size: 10px; color: var(--ink-faint); transition: all 0.2s; }
 .nav-item .nav-icon { font-size: 20px; line-height: 1; transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1); }
-.nav-item.active { color: var(--rose); }
+.nav-item.active { color: var(--primary); }
 .nav-item.active .nav-icon { transform: scale(1.2) translateY(-2px); }
 .nav-item:active { transform: scale(0.93); }
-.nav-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--rose); margin: 0 auto; opacity: 0; transition: opacity 0.2s; }
+.nav-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--primary); margin: 0 auto; opacity: 0; transition: opacity 0.2s; }
 .nav-item.active .nav-dot { opacity: 1; }
 
 /* ===== PAGES ===== */
@@ -113,44 +200,34 @@ body {
 .page.active { display: block; animation: fadeUp 0.3s ease; }
 @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
 
-.sec-title { font-family: 'Amiri', serif; font-size: 20px; color: var(--rose); margin: 20px 0 14px; display: flex; align-items: center; gap: 10px; text-shadow: var(--glow-rose); }
-.sec-title::before { content: '✦'; font-size: 13px; color: var(--lilac); }
+.sec-title { font-family: var(--brand-font); font-size: 20px; color: var(--primary); margin: 20px 0 14px; display: flex; align-items: center; gap: 10px; text-shadow: var(--glow-primary); }
+.sec-title::before { content: '✦'; font-size: 13px; color: var(--secondary); }
 
-/* ===== HIJRI DATE BANNER ===== */
+/* ===== HIJRI BANNER ===== */
 .hijri-banner {
-  background: linear-gradient(135deg, rgba(255,107,157,0.08), rgba(192,132,252,0.06));
-  border: 1px solid var(--rose-border);
+  background: linear-gradient(135deg, var(--primary-glow), var(--secondary-glow));
+  border: 1px solid var(--primary-border);
   border-radius: var(--radius-sm);
-  padding: 12px 16px;
-  margin-bottom: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px;
+  padding: 12px 16px; margin-bottom: 14px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;
 }
-.hijri-banner .h-date { font-family: 'Amiri', serif; font-size: 16px; color: var(--rose); }
+.hijri-banner .h-date { font-family: 'Amiri', serif; font-size: 16px; color: var(--primary); }
 .hijri-banner .h-gregorian { font-size: 12px; color: var(--ink-muted); }
-.hijri-banner .h-day-num {
-  font-size: 32px; font-weight: 800; color: var(--rose);
-  line-height: 1; opacity: 0.15; font-family: 'Amiri', serif;
-}
+.hijri-banner .h-day-num { font-size: 32px; font-weight: 800; color: var(--primary); line-height: 1; opacity: 0.15; font-family: 'Amiri', serif; }
 
 /* ===== STATS ===== */
 .stats-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 18px; }
 @media(max-width:600px){ .stats-grid { grid-template-columns: repeat(3,1fr); } }
-@media(max-width:360px){ .stats-grid { grid-template-columns: repeat(2,1fr); } }
 .stat-card { background: var(--surface); border-radius: var(--radius-sm); padding: 14px 8px; text-align: center; border: 1px solid var(--border); transition: transform 0.2s, box-shadow 0.2s; position: relative; overflow: hidden; }
-.stat-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, var(--rose-glow), transparent); opacity: 0; transition: opacity 0.3s; }
-.stat-card:hover { transform: translateY(-3px); box-shadow: var(--glow-rose); }
-.stat-card:hover::after { opacity: 1; }
-.stat-card .accent-line { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--rose), var(--lilac)); }
-.stat-card.s2 .accent-line { background: linear-gradient(90deg, var(--lilac), var(--blue)); }
-.stat-card.s3 .accent-line { background: linear-gradient(90deg, var(--mint), var(--lilac)); }
-.stat-card.s4 .accent-line { background: linear-gradient(90deg, var(--gold), var(--rose)); }
-.stat-card.s5 .accent-line { background: linear-gradient(90deg, var(--red), #ff8888); }
-.stat-card .val { font-size: 24px; font-weight: 800; color: var(--ink); line-height: 1.1; position: relative; z-index: 1; }
-.stat-card .lbl { font-size: 10px; color: var(--ink-muted); margin-top: 4px; position: relative; z-index: 1; }
+.stat-card:hover { transform: translateY(-3px); box-shadow: var(--glow-primary); }
+.stat-card .accent-line { position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+.stat-card.s1 .accent-line { background: linear-gradient(90deg, var(--primary), var(--secondary)); }
+.stat-card.s2 .accent-line { background: linear-gradient(90deg, var(--secondary), var(--blue)); }
+.stat-card.s3 .accent-line { background: linear-gradient(90deg, var(--accent1), var(--secondary)); }
+.stat-card.s4 .accent-line { background: linear-gradient(90deg, var(--accent2), var(--primary)); }
+.stat-card.s5 .accent-line { background: linear-gradient(90deg, var(--danger), #ff8888); }
+.stat-card .val { font-size: 24px; font-weight: 800; color: var(--ink); line-height: 1.1; }
+.stat-card .lbl { font-size: 10px; color: var(--ink-muted); margin-top: 4px; }
 
 /* ===== CHARTS ===== */
 .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
@@ -161,12 +238,11 @@ body {
 /* ===== HABITS TABLE ===== */
 .habits-wrap { background: var(--surface); border-radius: var(--radius); overflow: hidden; margin-bottom: 16px; border: 1px solid var(--border); box-shadow: var(--shadow); }
 .habits-header { padding: 14px 16px; background: var(--surface2); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; border-bottom: 1px solid var(--border); }
-.habits-header h3 { font-size: 14px; color: var(--rose); font-weight: 700; }
+.habits-header h3 { font-size: 14px; color: var(--primary); font-weight: 700; }
 .filter-chips { display: flex; gap: 6px; flex-wrap: wrap; }
 .chip { padding: 5px 13px; border-radius: 20px; border: 1px solid var(--border2); background: var(--surface3); font-family: 'Tajawal', sans-serif; font-size: 12px; color: var(--ink-muted); cursor: pointer; transition: all 0.2s; }
-.chip:hover { border-color: var(--rose-border); color: var(--rose); }
-.chip.active { background: var(--rose); color: white; border-color: var(--rose); }
-.chip.lilac.active { background: var(--lilac); border-color: var(--lilac); color: white; }
+.chip.active { background: var(--primary); color: white; border-color: var(--primary); }
+.chip.sec.active { background: var(--secondary); border-color: var(--secondary); color: white; }
 .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 table { width: 100%; border-collapse: collapse; min-width: 400px; }
 thead th { padding: 10px 12px; font-size: 11px; font-weight: 600; color: var(--ink-muted); text-align: center; background: var(--surface2); border-bottom: 1px solid var(--border); white-space: nowrap; }
@@ -181,107 +257,123 @@ td { padding: 9px 12px; text-align: center; vertical-align: middle; }
 td.name-td { text-align: right; }
 .habit-row-name { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
 .name-text { font-size: 13px; cursor: text; color: var(--ink-soft); transition: color 0.15s; }
-.name-text:hover { color: var(--rose); }
-.cat-badge { font-size: 10px; padding: 3px 8px; border-radius: 10px; background: var(--rose-glow); color: var(--rose); white-space: nowrap; flex-shrink: 0; border: 1px solid var(--rose-border); }
-.cat-badge.ذكر    { background: var(--gold-glow);   color: var(--gold);   border-color: rgba(251,191,36,0.3); }
-.cat-badge.دروس   { background: rgba(96,165,250,0.12); color: var(--blue);  border-color: rgba(96,165,250,0.3); }
-.cat-badge.برمجة  { background: var(--lilac-glow);  color: var(--lilac);  border-color: rgba(192,132,252,0.3); }
-.cat-badge.ذنوب   { background: var(--red-glow);    color: var(--red);    border-color: rgba(248,113,113,0.3); }
-.cat-badge.أخرى   { background: var(--mint-glow);   color: var(--mint);   border-color: rgba(52,211,153,0.3); }
+.name-text:hover { color: var(--primary); }
+.cat-badge { font-size: 10px; padding: 3px 8px; border-radius: 10px; background: var(--primary-glow); color: var(--primary); white-space: nowrap; flex-shrink: 0; border: 1px solid var(--primary-border); }
+.cat-badge.ذكر    { background: var(--accent2-glow); color: var(--accent2); border-color: rgba(251,191,36,0.3); }
+.cat-badge.دروس   { background: rgba(96,165,250,0.12); color: var(--blue); border-color: rgba(96,165,250,0.3); }
+.cat-badge.برمجة  { background: var(--secondary-glow); color: var(--secondary); border-color: rgba(192,132,252,0.3); }
+.cat-badge.ذنوب   { background: var(--danger-glow); color: var(--danger); border-color: rgba(248,113,113,0.3); }
+.cat-badge.أخرى   { background: var(--accent1-glow); color: var(--accent1); border-color: rgba(52,211,153,0.3); }
 .row-del-btn { opacity: 0; border: none; background: none; cursor: pointer; color: var(--ink-faint); font-size: 13px; padding: 2px 4px; transition: all 0.15s; }
 tr:hover .row-del-btn { opacity: 1; }
-.row-del-btn:hover { color: var(--red); }
+.row-del-btn:hover { color: var(--danger); }
 .chk { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid var(--border2); background: transparent; cursor: pointer; font-size: 15px; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; color: var(--ink-muted); }
-.chk:hover { border-color: var(--rose); background: var(--rose-glow); color: var(--rose); }
-.chk.done { background: linear-gradient(135deg, var(--rose), var(--rose-dim)); border-color: var(--rose); color: white; box-shadow: 0 0 12px rgba(255,107,157,0.4); }
+.chk:hover { border-color: var(--primary); background: var(--primary-glow); color: var(--primary); }
+.chk.done { background: linear-gradient(135deg, var(--primary), var(--primary-dim)); border-color: var(--primary); color: white; box-shadow: 0 0 12px var(--primary-glow); }
 .chk.skip { background: var(--surface3); border-color: var(--border2); color: var(--ink-faint); }
-.pct-badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 10px; background: var(--mint-glow); color: var(--mint); border: 1px solid rgba(52,211,153,0.3); }
-.pct-badge.mid { background: var(--gold-glow); color: var(--gold); border-color: rgba(251,191,36,0.3); }
-.pct-badge.low { background: var(--red-glow); color: var(--red); border-color: rgba(248,113,113,0.3); }
+.pct-badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 10px; background: var(--accent1-glow); color: var(--accent1); border: 1px solid rgba(52,211,153,0.3); }
+.pct-badge.mid { background: var(--accent2-glow); color: var(--accent2); border-color: rgba(251,191,36,0.3); }
+.pct-badge.low { background: var(--danger-glow); color: var(--danger); border-color: rgba(248,113,113,0.3); }
 
 /* ===== ADD BAR ===== */
 .add-bar { display: flex; gap: 8px; padding: 12px 14px; background: var(--surface2); border-top: 1px solid var(--border); flex-wrap: wrap; align-items: center; }
 .add-bar input, .add-bar select { flex: 1; min-width: 100px; padding: 9px 13px; border-radius: var(--radius-xs); border: 1px solid var(--border2); background: var(--surface3); font-family: 'Tajawal', sans-serif; font-size: 13px; color: var(--ink); outline: none; transition: border-color 0.2s; }
-.add-bar input:focus, .add-bar select:focus { border-color: var(--rose); box-shadow: 0 0 0 3px var(--rose-glow); }
+.add-bar input:focus, .add-bar select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow); }
 .add-bar select option { background: var(--surface3); color: var(--ink); }
-.btn-add { padding: 9px 18px; border-radius: var(--radius-xs); border: none; background: linear-gradient(135deg, var(--rose), var(--rose-dim)); color: white; font-family: 'Tajawal', sans-serif; font-size: 13px; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 12px rgba(255,107,157,0.35); white-space: nowrap; font-weight: 700; }
-.btn-add:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(255,107,157,0.5); }
-.btn-add:active { transform: scale(0.97); }
-.btn-add.lilac-btn { background: linear-gradient(135deg, var(--lilac), var(--lilac-dim)); box-shadow: 0 2px 12px rgba(192,132,252,0.35); }
+.btn-add { padding: 9px 18px; border-radius: var(--radius-xs); border: none; background: linear-gradient(135deg, var(--primary), var(--primary-dim)); color: white; font-family: 'Tajawal', sans-serif; font-size: 13px; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 12px var(--primary-glow); white-space: nowrap; font-weight: 700; }
+.btn-add:hover { transform: translateY(-1px); box-shadow: 0 4px 20px var(--primary-glow); }
+.btn-add.sec-btn { background: linear-gradient(135deg, var(--secondary), var(--secondary-dim)); box-shadow: 0 2px 12px var(--secondary-glow); }
+
+/* ===== INSPIRATION CARDS (3-column) ===== */
+.inspiration-section { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 18px; }
+@media(min-width:600px){ .inspiration-section { grid-template-columns: 1fr 1fr; } }
+@media(min-width:900px){ .inspiration-section { grid-template-columns: 1fr 1fr 1fr 1fr; } }
+.inspo-card { border-radius: var(--radius-sm); padding: 16px 18px; border: 1px solid var(--border); position: relative; overflow: hidden; animation: fadeUp 0.4s ease; }
+.inspo-card.hadith  { background: linear-gradient(135deg, var(--accent2-glow), var(--primary-glow)); border-color: rgba(251,191,36,0.2); border-right: 3px solid var(--accent2); }
+.inspo-card.nahiy   { background: linear-gradient(135deg, var(--danger-glow), rgba(192,132,252,0.05)); border-color: rgba(248,113,113,0.2); border-right: 3px solid var(--danger); }
+.inspo-card.hath    { background: linear-gradient(135deg, var(--accent1-glow), rgba(96,165,250,0.05)); border-color: rgba(52,211,153,0.2); border-right: 3px solid var(--accent1); }
+.inspo-card.salaf   { background: linear-gradient(135deg, var(--secondary-glow), rgba(96,165,250,0.05)); border-color: rgba(192,132,252,0.2); border-right: 3px solid var(--secondary); }
+.inspo-card .i-label { font-size: 11px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+.inspo-card.hadith  .i-label { color: var(--accent2); }
+.inspo-card.nahiy   .i-label { color: var(--danger); }
+.inspo-card.hath    .i-label { color: var(--accent1); }
+.inspo-card.salaf   .i-label { color: var(--secondary); }
+.inspo-card .i-text { font-size: 13px; color: var(--ink-soft); line-height: 1.9; font-family: 'Amiri', serif; }
+.inspo-card .i-source { font-size: 11px; color: var(--ink-faint); margin-top: 8px; font-family: 'Tajawal', sans-serif; }
+.inspo-card .i-practical { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); font-size: 11px; color: var(--ink-muted); line-height: 1.7; }
+.inspo-card .i-practical strong { color: var(--accent1); }
+.inspo-refresh-btn { position: absolute; top: 10px; left: 10px; background: none; border: none; cursor: pointer; font-size: 13px; color: var(--ink-faint); transition: all 0.2s; padding: 3px; }
+.inspo-refresh-btn:hover { color: var(--primary); transform: rotate(180deg); }
 
 /* ===== DHIKR ===== */
 .dhikr-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 16px; }
-.dhikr-slot { background: var(--surface); border-radius: var(--radius-sm); padding: 16px; border: 1px solid var(--border); border-top: 2px solid var(--rose); }
-.dhikr-slot.s-morning { border-top-color: var(--gold); }
-.dhikr-slot.s-fajr    { border-top-color: var(--mint); }
-.dhikr-slot.s-eve     { border-top-color: var(--lilac); }
+.dhikr-slot { background: var(--surface); border-radius: var(--radius-sm); padding: 16px; border: 1px solid var(--border); border-top: 2px solid var(--primary); }
+.dhikr-slot.s-morning { border-top-color: var(--accent2); }
+.dhikr-slot.s-fajr    { border-top-color: var(--accent1); }
+.dhikr-slot.s-eve     { border-top-color: var(--secondary); }
 .dhikr-slot.s-night   { border-top-color: var(--blue); }
-.dhikr-slot h4 { font-size: 13px; color: var(--ink-soft); font-weight: 700; margin-bottom: 12px; }
+.dhikr-slot-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.dhikr-slot h4 { font-size: 13px; color: var(--ink-soft); font-weight: 700; }
+.slot-progress { display: flex; align-items: center; gap: 6px; }
+.slot-pct { font-size: 11px; color: var(--ink-muted); }
+.slot-bar { width: 60px; height: 4px; background: var(--surface3); border-radius: 4px; overflow: hidden; }
+.slot-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--primary), var(--secondary)); transition: width 0.4s ease; }
 .dhikr-item { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); gap: 8px; }
 .dhikr-item:last-child { border-bottom: none; }
 .dhikr-text { font-size: 13px; color: var(--ink-soft); flex: 1; line-height: 1.5; }
 .dhikr-counter { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-.cnt-btn { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border2); background: var(--surface2); color: var(--rose); font-size: 16px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: all 0.15s; }
-.cnt-btn:hover:not(:disabled) { background: var(--rose); color: white; box-shadow: 0 0 8px rgba(255,107,157,0.4); }
+.cnt-btn { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--border2); background: var(--surface2); color: var(--primary); font-size: 16px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; transition: all 0.15s; }
+.cnt-btn:hover:not(:disabled) { background: var(--primary); color: white; }
 .cnt-btn:disabled { opacity: 0.3; cursor: default; }
 .cnt-num { font-size: 14px; font-weight: 800; min-width: 28px; text-align: center; color: var(--ink); }
 .cnt-target { font-size: 10px; color: var(--ink-faint); }
-.done-pill { font-size: 10px; padding: 3px 8px; border-radius: 10px; background: var(--mint-glow); color: var(--mint); font-weight: 700; border: 1px solid rgba(52,211,153,0.3); }
-
-/* ===== PROGRESS RING ===== */
-.dhikr-slot-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-.slot-progress { display: flex; align-items: center; gap: 6px; }
-.slot-pct { font-size: 11px; color: var(--ink-muted); }
-.slot-bar { width: 60px; height: 4px; background: var(--surface3); border-radius: 4px; overflow: hidden; }
-.slot-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--rose), var(--lilac)); transition: width 0.4s ease; }
+.done-pill { font-size: 10px; padding: 3px 8px; border-radius: 10px; background: var(--accent1-glow); color: var(--accent1); font-weight: 700; border: 1px solid rgba(52,211,153,0.3); }
 
 /* ===== SINS ===== */
 .sins-wrap { background: var(--surface); border-radius: var(--radius); overflow: hidden; margin-bottom: 16px; border: 1px solid rgba(248,113,113,0.15); }
 .sins-header { padding: 14px 16px; background: var(--surface2); display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
-.sins-header h3 { font-size: 14px; color: var(--red); font-weight: 700; }
+.sins-header h3 { font-size: 14px; color: var(--danger); font-weight: 700; }
 .sin-row { display: flex; align-items: center; padding: 11px 16px; border-bottom: 1px solid var(--border); gap: 12px; }
 .sin-row:last-child { border-bottom: none; }
 .sin-name { flex: 1; font-size: 13px; color: var(--ink-soft); }
 .sin-tally { display: flex; align-items: center; gap: 8px; }
-.tally-marks { font-size: 14px; color: var(--red); min-width: 50px; letter-spacing: 2px; }
+.tally-marks { font-size: 14px; color: var(--danger); min-width: 50px; letter-spacing: 2px; }
 .sin-del { border: none; background: none; cursor: pointer; color: var(--ink-faint); font-size: 13px; transition: color 0.15s; }
-.sin-del:hover { color: var(--red); }
+.sin-del:hover { color: var(--danger); }
 
 /* ===== COURSES ===== */
 .courses-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 12px; margin-bottom: 16px; }
-.course-card { background: var(--surface); border-radius: var(--radius-sm); padding: 18px; border: 1px solid var(--border); border-top: 2px solid var(--rose); transition: transform 0.2s, box-shadow 0.2s; }
+.course-card { background: var(--surface); border-radius: var(--radius-sm); padding: 18px; border: 1px solid var(--border); border-top: 2px solid var(--primary); transition: transform 0.2s, box-shadow 0.2s; }
 .course-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
-.course-card.برمجة { border-top-color: var(--lilac); }
-.course-card.ديني  { border-top-color: var(--mint); }
+.course-card.برمجة { border-top-color: var(--secondary); }
+.course-card.ديني  { border-top-color: var(--accent1); }
 .course-card h4 { font-size: 15px; font-weight: 800; color: var(--ink); margin-bottom: 4px; }
 .course-type-lbl { font-size: 12px; color: var(--ink-muted); margin-bottom: 12px; }
 .prog-wrap { background: var(--surface3); border-radius: 10px; height: 6px; margin-bottom: 6px; overflow: hidden; }
-.prog-fill { height: 6px; border-radius: 10px; background: linear-gradient(90deg, var(--rose), var(--lilac)); transition: width 0.5s ease; }
-.course-card.برمجة .prog-fill { background: linear-gradient(90deg, var(--lilac), var(--blue)); }
-.course-card.ديني  .prog-fill { background: linear-gradient(90deg, var(--mint), var(--blue)); }
+.prog-fill { height: 6px; border-radius: 10px; background: linear-gradient(90deg, var(--primary), var(--secondary)); transition: width 0.5s ease; }
+.course-card.برمجة .prog-fill { background: linear-gradient(90deg, var(--secondary), var(--blue)); }
+.course-card.ديني  .prog-fill { background: linear-gradient(90deg, var(--accent1), var(--blue)); }
 .prog-label { font-size: 11px; color: var(--ink-muted); display: flex; justify-content: space-between; margin-bottom: 12px; }
 .course-controls { display: flex; gap: 6px; align-items: center; }
 .course-controls input { width: 60px; padding: 6px 8px; border-radius: var(--radius-xs); border: 1px solid var(--border2); background: var(--surface2); color: var(--ink); font-size: 13px; font-family: 'Tajawal',sans-serif; text-align: center; outline: none; }
-.course-controls input:focus { border-color: var(--rose); }
-.course-controls .cc-btn { padding: 6px 14px; border-radius: var(--radius-xs); font-size: 12px; font-family: 'Tajawal',sans-serif; cursor: pointer; transition: all 0.15s; border: 1px solid var(--rose-border); color: var(--rose); background: var(--rose-glow); }
-.course-controls .cc-btn:hover { background: var(--rose); color: white; }
-.course-card.برمجة .cc-btn { border-color: rgba(192,132,252,0.3); color: var(--lilac); background: var(--lilac-glow); }
-.course-card.برمجة .cc-btn:hover { background: var(--lilac); color: white; }
+.course-controls input:focus { border-color: var(--primary); }
+.course-controls .cc-btn { padding: 6px 14px; border-radius: var(--radius-xs); font-size: 12px; font-family: 'Tajawal',sans-serif; cursor: pointer; transition: all 0.15s; border: 1px solid var(--primary-border); color: var(--primary); background: var(--primary-glow); }
+.course-controls .cc-btn:hover { background: var(--primary); color: white; }
 .cc-del { margin-right: auto; border-color: var(--border2) !important; color: var(--ink-muted) !important; background: transparent !important; }
-.cc-del:hover { border-color: rgba(248,113,113,0.4) !important; color: var(--red) !important; background: var(--red-glow) !important; }
+.cc-del:hover { border-color: rgba(248,113,113,0.4) !important; color: var(--danger) !important; background: var(--danger-glow) !important; }
 
 /* ===== HERO ===== */
 .hero-card { border-radius: var(--radius); background: linear-gradient(135deg, #1a0d28 0%, #0d1a2e 50%, #0d1e1a 100%); padding: 40px 24px; text-align: center; margin-bottom: 20px; position: relative; overflow: hidden; border: 1px solid var(--border2); }
-[data-theme="light"] .hero-card { background: linear-gradient(135deg, #f5e8ff 0%, #e8f0ff 50%, #e8fff5 100%); }
-.hero-card::before { content: ''; position: absolute; top: -60px; right: -60px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(255,107,157,0.12), transparent 70%); border-radius: 50%; }
-.hero-card::after { content: ''; position: absolute; bottom: -40px; left: -40px; width: 160px; height: 160px; background: radial-gradient(circle, rgba(192,132,252,0.10), transparent 70%); border-radius: 50%; }
-.hero-card h1 { font-family: 'Amiri',serif; font-size: 32px; color: var(--rose); margin-bottom: 8px; position: relative; z-index: 1; text-shadow: var(--glow-rose); }
+[data-gender="male"] .hero-card { background: linear-gradient(135deg, #0a0d1f 0%, #0f1225 50%, #181410 100%); }
+.hero-card::before { content: ''; position: absolute; top: -60px; right: -60px; width: 200px; height: 200px; background: radial-gradient(circle, var(--primary-glow), transparent 70%); border-radius: 50%; }
+.hero-card::after { content: ''; position: absolute; bottom: -40px; left: -40px; width: 160px; height: 160px; background: radial-gradient(circle, var(--secondary-glow), transparent 70%); border-radius: 50%; }
+.hero-card h1 { font-family: var(--brand-font); font-size: 32px; color: var(--primary); margin-bottom: 8px; position: relative; z-index: 1; text-shadow: var(--glow-primary); }
 .hero-card p { font-size: 14px; color: var(--ink-soft); margin-bottom: 24px; line-height: 1.8; position: relative; z-index: 1; }
-.btn-hero { display: inline-block; padding: 13px 36px; background: linear-gradient(135deg, var(--rose), var(--lilac)); color: white; border-radius: 30px; font-size: 15px; cursor: pointer; border: none; font-family: 'Tajawal',sans-serif; font-weight: 800; transition: all 0.2s; box-shadow: 0 4px 20px rgba(255,107,157,0.4); position: relative; z-index: 1; }
-.btn-hero:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255,107,157,0.55); }
+.btn-hero { display: inline-block; padding: 13px 36px; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border-radius: 30px; font-size: 15px; cursor: pointer; border: none; font-family: 'Tajawal',sans-serif; font-weight: 800; transition: all 0.2s; box-shadow: 0 4px 20px var(--primary-glow); position: relative; z-index: 1; }
+.btn-hero:hover { transform: translateY(-2px); }
 .tmpl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr)); gap: 12px; margin-bottom: 20px; }
 .tmpl-opt { background: var(--surface); border-radius: var(--radius-sm); padding: 20px; border: 1px solid var(--border); text-align: center; cursor: pointer; transition: all 0.25s; }
-.tmpl-opt:hover { border-color: var(--rose-border); transform: translateY(-3px); box-shadow: var(--glow-rose); }
+.tmpl-opt:hover { border-color: var(--primary-border); transform: translateY(-3px); box-shadow: var(--glow-primary); }
 .tmpl-opt .t-icon { font-size: 28px; margin-bottom: 10px; }
 .tmpl-opt h4 { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 5px; }
 .tmpl-opt p { font-size: 11px; color: var(--ink-muted); line-height: 1.6; }
@@ -289,89 +381,55 @@ tr:hover .row-del-btn { opacity: 1; }
 .settings-card .s-title { font-size: 13px; color: var(--ink-muted); font-weight: 700; margin-bottom: 12px; }
 .settings-btns { display: flex; gap: 8px; flex-wrap: wrap; }
 .s-btn { padding: 8px 16px; border-radius: var(--radius-xs); border: 1px solid var(--border2); background: var(--surface2); font-family: 'Tajawal',sans-serif; font-size: 12px; color: var(--ink-soft); cursor: pointer; transition: all 0.2s; }
-.s-btn:hover { border-color: var(--rose-border); color: var(--rose); }
-.s-btn.danger { border-color: rgba(248,113,113,0.3); color: var(--red); background: var(--red-glow); }
-.s-btn.danger:hover { background: var(--red); color: white; }
+.s-btn:hover { border-color: var(--primary-border); color: var(--primary); }
+.s-btn.danger { border-color: rgba(248,113,113,0.3); color: var(--danger); background: var(--danger-glow); }
+.s-btn.danger:hover { background: var(--danger); color: white; }
 
 /* ===== QUOTE ===== */
-.quote-card { background: var(--surface); border-radius: var(--radius-sm); padding: 18px 20px; margin-top: 16px; border: 1px solid var(--border); border-right: 3px solid var(--lilac); }
-.quote-card .q-head { font-size: 13px; color: var(--lilac); font-weight: 700; margin-bottom: 8px; }
+.quote-card { background: var(--surface); border-radius: var(--radius-sm); padding: 18px 20px; margin-top: 16px; border: 1px solid var(--border); border-right: 3px solid var(--secondary); }
+.quote-card .q-head { font-size: 13px; color: var(--secondary); font-weight: 700; margin-bottom: 8px; }
 .quote-card p { font-size: 13px; color: var(--ink-soft); line-height: 2; }
+
+/* ===== MOOD ===== */
+.mood-bar { background: var(--surface); border-radius: var(--radius-sm); padding: 14px 16px; border: 1px solid var(--border); margin-bottom: 14px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.mood-bar .mood-lbl { font-size: 13px; color: var(--ink-muted); white-space: nowrap; }
+.mood-btns { display: flex; gap: 8px; }
+.mood-btn { width: 38px; height: 38px; border-radius: 50%; border: 1.5px solid var(--border2); background: var(--surface2); font-size: 18px; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; justify-content: center; }
+.mood-btn:hover { transform: scale(1.2); border-color: var(--primary-border); }
+.mood-btn.selected { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow); transform: scale(1.15); background: var(--primary-glow); }
+.mood-note { flex: 1; min-width: 120px; padding: 8px 12px; border-radius: var(--radius-xs); border: 1px solid var(--border2); background: var(--surface3); color: var(--ink); font-family: 'Tajawal', sans-serif; font-size: 12px; outline: none; }
+.mood-note:focus { border-color: var(--primary); }
+.mood-save-btn { padding: 8px 14px; border-radius: var(--radius-xs); background: var(--primary-glow); color: var(--primary); border: 1px solid var(--primary-border); font-family: 'Tajawal', sans-serif; font-size: 12px; cursor: pointer; font-weight: 700; transition: all 0.2s; white-space: nowrap; }
+.mood-save-btn:hover { background: var(--primary); color: white; }
+.mood-history { font-size: 11px; color: var(--ink-faint); margin-top: 8px; width: 100%; display: flex; gap: 8px; flex-wrap: wrap; }
+.mood-chip { background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: 3px 10px; font-size: 11px; color: var(--ink-muted); }
+
+/* ===== DATE ROW ===== */
+.date-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
+.date-row label { font-size: 13px; color: var(--ink-muted); white-space: nowrap; }
+.date-picker-input { padding: 7px 12px; border-radius: var(--radius-xs); border: 1px solid var(--border2); background: var(--surface2); color: var(--ink); font-family: 'Tajawal', sans-serif; font-size: 13px; outline: none; cursor: pointer; transition: border-color 0.2s; }
+.date-picker-input:focus { border-color: var(--primary); }
+.btn-add-date { padding: 7px 16px; border-radius: var(--radius-xs); border: none; background: linear-gradient(135deg, var(--primary), var(--primary-dim)); color: white; font-family: 'Tajawal', sans-serif; font-size: 13px; cursor: pointer; font-weight: 700; white-space: nowrap; box-shadow: 0 2px 10px var(--primary-glow); transition: all 0.2s; }
+.btn-add-date:hover { transform: translateY(-1px); }
 
 /* ===== MODAL ===== */
 .modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 300; align-items: flex-end; justify-content: center; backdrop-filter: blur(8px); }
 .modal-bg.open { display: flex; }
 .modal { background: var(--surface); border-radius: var(--radius) var(--radius) 0 0; padding: 24px 20px 36px; width: 100%; max-width: 480px; box-shadow: var(--shadow-lg); animation: fadeUp 0.25s ease; border: 1px solid var(--border2); border-bottom: none; }
 .modal-handle { width: 40px; height: 4px; background: var(--border2); border-radius: 4px; margin: 0 auto 22px; }
-.modal h3 { font-family: 'Amiri',serif; font-size: 20px; color: var(--rose); margin-bottom: 18px; text-align: center; text-shadow: var(--glow-rose); }
+.modal h3 { font-family: var(--brand-font); font-size: 20px; color: var(--primary); margin-bottom: 18px; text-align: center; text-shadow: var(--glow-primary); }
 .modal label { font-size: 13px; color: var(--ink-muted); display: block; margin-bottom: 6px; }
 .modal input, .modal select { width: 100%; padding: 11px 14px; border-radius: var(--radius-xs); border: 1px solid var(--border2); background: var(--surface2); font-family: 'Tajawal',sans-serif; font-size: 14px; color: var(--ink); margin-bottom: 16px; outline: none; transition: border-color 0.2s; }
-.modal input:focus, .modal select:focus { border-color: var(--rose); box-shadow: 0 0 0 3px var(--rose-glow); }
+.modal input:focus, .modal select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow); }
 .modal-actions { display: flex; gap: 10px; }
-.btn-confirm { flex: 1; padding: 12px; border-radius: var(--radius-xs); border: none; background: linear-gradient(135deg, var(--rose), var(--rose-dim)); color: white; font-family: 'Tajawal',sans-serif; font-size: 15px; cursor: pointer; font-weight: 800; box-shadow: 0 3px 14px rgba(255,107,157,0.35); }
+.btn-confirm { flex: 1; padding: 12px; border-radius: var(--radius-xs); border: none; background: linear-gradient(135deg, var(--primary), var(--primary-dim)); color: white; font-family: 'Tajawal',sans-serif; font-size: 15px; cursor: pointer; font-weight: 800; }
 .btn-cancel { padding: 12px 20px; border-radius: var(--radius-xs); border: 1px solid var(--border2); background: var(--surface2); font-family: 'Tajawal',sans-serif; font-size: 14px; cursor: pointer; color: var(--ink-muted); }
 .empty-state { text-align: center; padding: 32px; color: var(--ink-faint); font-size: 14px; }
 .btn-sm-outline { padding: 5px 13px; border-radius: 20px; border: 1px solid var(--border2); background: var(--surface2); font-family: 'Tajawal',sans-serif; font-size: 12px; color: var(--ink-muted); cursor: pointer; transition: all 0.2s; }
-.btn-sm-outline:hover { border-color: var(--rose-border); color: var(--rose); }
-.btn-sm-outline.red-outline:hover { border-color: rgba(248,113,113,0.4); color: var(--red); }
-
-/* ===== DATE PICKER ROW ===== */
-.date-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
-.date-row label { font-size: 13px; color: var(--ink-muted); white-space: nowrap; }
-.date-picker-input { padding: 7px 12px; border-radius: var(--radius-xs); border: 1px solid var(--border2); background: var(--surface2); color: var(--ink); font-family: 'Tajawal', sans-serif; font-size: 13px; outline: none; cursor: pointer; transition: border-color 0.2s; }
-.date-picker-input:focus { border-color: var(--rose); }
-.btn-add-date { padding: 7px 16px; border-radius: var(--radius-xs); border: none; background: linear-gradient(135deg, var(--rose), var(--rose-dim)); color: white; font-family: 'Tajawal', sans-serif; font-size: 13px; cursor: pointer; font-weight: 700; white-space: nowrap; box-shadow: 0 2px 10px rgba(255,107,157,0.3); transition: all 0.2s; }
-.btn-add-date:hover { transform: translateY(-1px); }
-
-/* ===== DAILY INSPIRATION ===== */
-.inspiration-section { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 18px; }
-@media(min-width:600px){ .inspiration-section { grid-template-columns: 1fr 1fr; } }
-@media(min-width:900px){ .inspiration-section { grid-template-columns: 1fr 1fr 1fr; } }
-.inspo-card { border-radius: var(--radius-sm); padding: 16px 18px; border: 1px solid var(--border); position: relative; overflow: hidden; animation: fadeUp 0.4s ease; }
-.inspo-card.hadith { background: linear-gradient(135deg, rgba(251,191,36,0.08), rgba(255,107,157,0.05)); border-color: rgba(251,191,36,0.2); border-right: 3px solid var(--gold); }
-.inspo-card.sin-warn { background: linear-gradient(135deg, rgba(248,113,113,0.08), rgba(192,132,252,0.05)); border-color: rgba(248,113,113,0.2); border-right: 3px solid var(--red); }
-.inspo-card.salaf { background: linear-gradient(135deg, rgba(52,211,153,0.08), rgba(96,165,250,0.05)); border-color: rgba(52,211,153,0.2); border-right: 3px solid var(--mint); }
-.inspo-card .i-label { font-size: 11px; font-weight: 700; letter-spacing: 0.5px; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-.inspo-card.hadith  .i-label { color: var(--gold); }
-.inspo-card.sin-warn .i-label { color: var(--red); }
-.inspo-card.salaf   .i-label { color: var(--mint); }
-.inspo-card .i-text { font-size: 13px; color: var(--ink-soft); line-height: 1.9; font-family: 'Amiri', serif; }
-.inspo-card .i-source { font-size: 11px; color: var(--ink-faint); margin-top: 8px; font-family: 'Tajawal', sans-serif; }
-
-/* ===== MOOD TRACKER (new) ===== */
-.mood-bar {
-  background: var(--surface); border-radius: var(--radius-sm); padding: 14px 16px;
-  border: 1px solid var(--border); margin-bottom: 14px;
-  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
-}
-.mood-bar .mood-lbl { font-size: 13px; color: var(--ink-muted); white-space: nowrap; }
-.mood-btns { display: flex; gap: 8px; }
-.mood-btn {
-  width: 38px; height: 38px; border-radius: 50%;
-  border: 1.5px solid var(--border2); background: var(--surface2);
-  font-size: 18px; cursor: pointer; transition: all 0.2s;
-  display: inline-flex; align-items: center; justify-content: center;
-}
-.mood-btn:hover { transform: scale(1.2); border-color: var(--rose-border); }
-.mood-btn.selected { border-color: var(--rose); box-shadow: 0 0 0 3px var(--rose-glow); transform: scale(1.15); background: var(--rose-glow); }
-.mood-note { flex: 1; min-width: 120px; padding: 8px 12px; border-radius: var(--radius-xs); border: 1px solid var(--border2); background: var(--surface3); color: var(--ink); font-family: 'Tajawal', sans-serif; font-size: 12px; outline: none; }
-.mood-note:focus { border-color: var(--rose); }
-.mood-save-btn { padding: 8px 14px; border-radius: var(--radius-xs); border: none; background: var(--rose-glow); color: var(--rose); border: 1px solid var(--rose-border); font-family: 'Tajawal', sans-serif; font-size: 12px; cursor: pointer; font-weight: 700; transition: all 0.2s; white-space: nowrap; }
-.mood-save-btn:hover { background: var(--rose); color: white; }
-.mood-history { font-size: 11px; color: var(--ink-faint); margin-top: 8px; width: 100%; display: flex; gap: 8px; flex-wrap: wrap; }
-.mood-chip { background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: 3px 10px; font-size: 11px; color: var(--ink-muted); }
-
-/* ===== DAILY QUOTE REFRESH ===== */
-.inspo-refresh-btn {
-  position: absolute; top: 10px; left: 10px;
-  background: none; border: none; cursor: pointer;
-  font-size: 13px; color: var(--ink-faint); transition: all 0.2s;
-  padding: 3px;
-}
-.inspo-refresh-btn:hover { color: var(--rose); transform: rotate(180deg); }
+.btn-sm-outline:hover { border-color: var(--primary-border); color: var(--primary); }
+.btn-sm-outline.red-outline:hover { border-color: rgba(248,113,113,0.4); color: var(--danger); }
 
 /* ===== DESKTOP ===== */
-@media(min-width:600px) and (max-width:900px) { .stats-grid { grid-template-columns: repeat(5,1fr); } .page { padding: 20px; } }
 @media(min-width:900px) {
   body { padding-bottom: 0; }
   .bottom-nav { top: 0; bottom: auto; border-top: none; border-bottom: 1px solid var(--border); flex-direction: row; justify-content: center; gap: 4px; padding: 8px 20px; }
@@ -379,7 +437,7 @@ tr:hover .row-del-btn { opacity: 1; }
   .page { padding: 24px 28px; }
   .nav-item { flex-direction: row; gap: 8px; padding: 8px 16px; border-radius: var(--radius-xs); font-size: 13px; }
   .nav-item .nav-icon { font-size: 18px; }
-  .nav-item.active { background: var(--rose-glow); border-radius: var(--radius-xs); }
+  .nav-item.active { background: var(--primary-glow); border-radius: var(--radius-xs); }
   .nav-item.active .nav-icon { transform: none; }
   .nav-dot { display: none; }
   body { padding-top: 57px; }
@@ -388,34 +446,53 @@ tr:hover .row-del-btn { opacity: 1; }
 </head>
 <body>
 
+<!-- GENDER SELECTOR -->
+<div id="gender-overlay">
+  <div class="gender-title">مرحباً بك في مُحاسِبة 🌸</div>
+  <div class="gender-sub">اختر شكل التطبيق المناسب لك</div>
+  <div class="gender-cards">
+    <div class="gender-card girl-card" onclick="setGender('female')">
+      <div class="g-icon">🌸</div>
+      <h3>أخت مسلمة</h3>
+     
+    </div>
+    <div class="gender-card boy-card" onclick="setGender('male')">
+      <div class="g-icon">🕌</div>
+      <h3>أخ مسلم</h3>
+    
+    </div>
+  </div>
+</div>
+
 <div class="header">
   <div class="header-top">
-    <div class="brand">مُحاسِبة <span class="dot">🌸</span></div>
+    <div class="brand" id="brand-text">مُحاسِبة <span class="dot">🌸</span></div>
     <div class="header-right">
       <div class="header-date" id="nav-date"></div>
+      <button class="gender-switch" id="gender-switch-btn" onclick="resetGender()" title="تغيير الثيم">⇄</button>
       <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()" title="تغيير المظهر">🌙</button>
     </div>
   </div>
 </div>
 
+<!-- DASHBOARD PAGE -->
 <div class="page active" id="page-dashboard">
   <div class="hijri-banner" id="hijri-banner"></div>
   <div class="date-row">
-    <label>📅 أضيفي يوم:</label>
+    <label>📅 أضف يوم:</label>
     <input type="date" class="date-picker-input" id="date-picker-input" />
-    <button class="btn-add-date" onclick="addDayFromPicker()">+ أضيفي اليوم</button>
+    <button class="btn-add-date" onclick="addDayFromPicker()">+ أضف اليوم</button>
   </div>
-  <!-- Mood tracker -->
   <div class="mood-bar" id="mood-bar">
     <span class="mood-lbl">كيف حالك اليوم؟</span>
-    <div class="mood-btns" id="mood-btns">
+    <div class="mood-btns">
       <button class="mood-btn" data-mood="😊" onclick="selectMood(this)">😊</button>
       <button class="mood-btn" data-mood="😐" onclick="selectMood(this)">😐</button>
       <button class="mood-btn" data-mood="😔" onclick="selectMood(this)">😔</button>
       <button class="mood-btn" data-mood="😤" onclick="selectMood(this)">😤</button>
       <button class="mood-btn" data-mood="🥰" onclick="selectMood(this)">🥰</button>
     </div>
-    <input class="mood-note" id="mood-note" placeholder="ملاحظة صغيرة... (اختياري)" maxlength="60"/>
+    <input class="mood-note" id="mood-note" placeholder="ملاحظة... (اختياري)" maxlength="60"/>
     <button class="mood-save-btn" onclick="saveMood()">حفظ</button>
     <div class="mood-history" id="mood-history"></div>
   </div>
@@ -423,7 +500,7 @@ tr:hover .row-del-btn { opacity: 1; }
   <div class="stats-grid" id="stats-grid"></div>
   <div class="charts-row">
     <div class="chart-card"><h4>📊 إنجاز الأسبوع</h4><canvas id="weekChart" height="140"></canvas></div>
-    <div class="chart-card"><h4>🌸 توزيع الفئات</h4><canvas id="catChart" height="140"></canvas></div>
+    <div class="chart-card"><h4>🌿 توزيع الفئات</h4><canvas id="catChart" height="140"></canvas></div>
   </div>
   <div class="habits-wrap">
     <div class="habits-header">
@@ -432,9 +509,8 @@ tr:hover .row-del-btn { opacity: 1; }
         <button class="chip active" onclick="filterCat(this,'')">الكل</button>
         <button class="chip" onclick="filterCat(this,'عبادة')">عبادة</button>
         <button class="chip" onclick="filterCat(this,'ذكر')">ذكر</button>
-        <button class="chip lilac" onclick="filterCat(this,'دروس')">دروس</button>
-        <button class="chip lilac" onclick="filterCat(this,'برمجة')">برمجة</button>
-        <button class="chip" onclick="document.getElementById('date-picker-input').focus()" style="border-color:var(--rose-border);color:var(--rose)">📅 يوم</button>
+        <button class="chip sec" onclick="filterCat(this,'دروس')">دروس</button>
+        <button class="chip sec" onclick="filterCat(this,'برمجة')">برمجة</button>
       </div>
     </div>
     <div class="table-scroll">
@@ -454,6 +530,7 @@ tr:hover .row-del-btn { opacity: 1; }
   </div>
 </div>
 
+<!-- DHIKR PAGE -->
 <div class="page" id="page-dhikr">
   <div class="sec-title">ورد الأذكار اليومي</div>
   <div class="dhikr-grid" id="dhikr-grid"></div>
@@ -466,11 +543,12 @@ tr:hover .row-del-btn { opacity: 1; }
         <option>الصباح</option><option>بعد الفجر</option>
         <option>الضهر</option><option>المساء</option><option>قبل النوم</option>
       </select>
-      <button class="btn-add lilac-btn" onclick="addDhikr()">+ إضافة</button>
+      <button class="btn-add sec-btn" onclick="addDhikr()">+ إضافة</button>
     </div>
   </div>
 </div>
 
+<!-- SINS PAGE -->
 <div class="page" id="page-sins">
   <div class="sec-title">محاسبة النفس</div>
   <div class="sins-wrap">
@@ -481,15 +559,16 @@ tr:hover .row-del-btn { opacity: 1; }
     <div id="sins-list"></div>
     <div class="add-bar">
       <input type="text" id="new-sin-name" placeholder="سجل الذنب / المعصية..." />
-      <button class="btn-add" style="background:linear-gradient(135deg,var(--red),#c05060)" onclick="addSin()">+ تسجيل</button>
+      <button class="btn-add" style="background:linear-gradient(135deg,var(--danger),#c05060)" onclick="addSin()">+ تسجيل</button>
     </div>
   </div>
   <div class="quote-card">
     <div class="q-head">💭 تذكير</div>
-    <p>"حاسبوا أنفسكم قبل أن تُحاسَبوا" — التسجيل مش ضعف، ده خطوة للاستغفار والتوبة 🌿<br>كل ما وقعتِ في ذنب قولي: <strong>أستغفر الله وأتوب إليه</strong></p>
+    <p>"حاسبوا أنفسكم قبل أن تُحاسَبوا" — التسجيل مش ضعف، ده خطوة للاستغفار والتوبة 🌿<br>كل ما وقعت في ذنب قل: <strong>أستغفر الله وأتوب إليه</strong></p>
   </div>
 </div>
 
+<!-- COURSES PAGE -->
 <div class="page" id="page-courses">
   <div class="sec-title">الدروس والكورسات</div>
   <div class="courses-grid" id="courses-grid"></div>
@@ -503,23 +582,24 @@ tr:hover .row-del-btn { opacity: 1; }
         <option value="أخرى">✨ أخرى</option>
       </select>
       <input type="number" id="new-course-total" placeholder="الدروس" value="30" style="width:80px;flex:0"/>
-      <button class="btn-add lilac-btn" onclick="addCourse()">+ إضافة</button>
+      <button class="btn-add sec-btn" onclick="addCourse()">+ إضافة</button>
     </div>
   </div>
 </div>
 
+<!-- SETTINGS PAGE -->
 <div class="page" id="page-template">
   <div class="hero-card">
-    <h1>✦ مُحاسِبة ✦</h1>
-    <p>جدول محاسبة يومي إسلامي<br>خصصيه لعاداتك وعبادتك 🌸</p>
-    <button class="btn-hero" onclick="showPage('dashboard')">ابدأي الآن ✨</button>
+    <h1 id="hero-title">✦ مُحاسِبة ✦</h1>
+    <p>جدول محاسبة يومي إسلامي<br>خصصه لعاداتك وعبادتك 🌸</p>
+    <button class="btn-hero" onclick="showPage('dashboard')">ابدأ الآن ✨</button>
   </div>
-  <div class="sec-title">اختاري نموذج</div>
+  <div class="sec-title">اختر نموذج</div>
   <div class="tmpl-grid">
     <div class="tmpl-opt" onclick="loadTemplate('salah')"><div class="t-icon">🕌</div><h4>الصلوات والأذكار</h4><p>نموذج كامل للصلوات اليومية والأذكار</p></div>
     <div class="tmpl-opt" onclick="loadTemplate('full')"><div class="t-icon">📋</div><h4>النموذج الكامل</h4><p>كل العبادات من الفجر للعشاء مع الأذكار</p></div>
-    <div class="tmpl-opt" onclick="loadTemplate('student')"><div class="t-icon">📚</div><h4>طالبة</h4><p>عبادات + مذاكرة + برمجة + عادات صحية</p></div>
-    <div class="tmpl-opt" onclick="loadTemplate('empty')"><div class="t-icon">✏️</div><h4>فاضي تماماً</h4><p>ابدأي من الصفر بعاداتك الخاصة</p></div>
+    <div class="tmpl-opt" onclick="loadTemplate('student')"><div class="t-icon">📚</div><h4>طالب/طالبة</h4><p>عبادات + مذاكرة + برمجة + عادات صحية</p></div>
+    <div class="tmpl-opt" onclick="loadTemplate('empty')"><div class="t-icon">✏️</div><h4>فاضي تماماً</h4><p>ابدأ من الصفر بعاداتك الخاصة</p></div>
   </div>
   <div class="settings-card">
     <div class="s-title">⚙️ إعدادات</div>
@@ -558,33 +638,38 @@ tr:hover .row-del-btn { opacity: 1; }
 const DAYS_AR=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
 const MONTHS_AR=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
 
-// FIX #1: Parse date string as LOCAL date (not UTC)
-function parseLocalDate(val){
-  const [y,m,d]=val.split('-').map(Number);
-  return new Date(y, m-1, d);
-}
+function parseLocalDate(val){const [y,m,d]=val.split('-').map(Number);return new Date(y,m-1,d);}
+function todayLabel(){const d=new Date();return DAYS_AR[d.getDay()]+' '+d.getDate()+'/'+(d.getMonth()+1);}
+function formatDate(d){return DAYS_AR[d.getDay()]+' '+d.getDate()+' '+MONTHS_AR[d.getMonth()];}
 
-function todayLabel(){
+// Unique daily pick per array using salt
+function pickByDay(arr,salt){
   const d=new Date();
-  return DAYS_AR[d.getDay()]+' '+d.getDate()+'/'+(d.getMonth()+1);
+  const doy=Math.floor((d-new Date(d.getFullYear(),0,0))/(864e5));
+  return arr[Math.abs((doy*31+(salt||0))*7)%arr.length];
 }
 
-function formatDate(d){
-  return DAYS_AR[d.getDay()]+' '+d.getDate()+' '+MONTHS_AR[d.getMonth()];
+let inspoOverride={};
+
+// ===== DYNAMIC HIJRI DATE =====
+function getHijriDate(){
+  const d = new Date();
+  // Cairo timezone صريح + تصحيح يوم واحد للتوافق مع رؤية مصر
+  const opts = {
+    calendar: 'islamic',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'Africa/Cairo'
+  };
+  try {
+    return new Intl.DateTimeFormat('ar-SA-u-ca-islamic', opts).format(d);
+  } catch(e) {
+    return '';
+  }
 }
 
-// FIX #2: Generate a UNIQUE seed per array so each shows different content
-// Uses day-of-year * prime per array
-function pickByDay(arr, salt){
-  const d=new Date();
-  const dayOfYear = Math.floor((d - new Date(d.getFullYear(),0,0))/(1000*60*60*24));
-  const idx = ((dayOfYear * 31 + (salt||0)) * 7) % arr.length;
-  return arr[Math.abs(idx) % arr.length];
-}
-
-// For manual refresh
-let inspoOverride = {};
-
+// ===== STATE =====
 const DEFAULT_STATE={
   habits:[
     {id:'h1',name:'اذكار الاستيقاظ',cat:'ذكر'},
@@ -625,19 +710,50 @@ const DEFAULT_STATE={
   moods:[]
 };
 
-let S=JSON.parse(localStorage.getItem('muhassib_v4')||'null')||JSON.parse(JSON.stringify(DEFAULT_STATE));
-if(!S.moods) S.moods=[];
+let S=JSON.parse(localStorage.getItem('muhassib_v5')||'null')||JSON.parse(JSON.stringify(DEFAULT_STATE));
+if(!S.moods)S.moods=[];
 let currentCat='';
 let weekChart,catChart;
 let isDark=localStorage.getItem('muhassib_theme')!=='light';
+let currentGender=localStorage.getItem('muhassib_gender')||'';
 
-function save(){localStorage.setItem('muhassib_v4',JSON.stringify(S));}
+function save(){localStorage.setItem('muhassib_v5',JSON.stringify(S));}
+
+// ===== GENDER SYSTEM =====
+function setGender(g){
+  currentGender=g;
+  localStorage.setItem('muhassib_gender',g);
+  applyGender();
+  document.getElementById('gender-overlay').classList.add('hidden');
+  setTimeout(()=>{document.getElementById('gender-overlay').style.display='none';},400);
+}
+
+function resetGender(){
+  currentGender='';
+  localStorage.removeItem('muhassib_gender');
+  document.getElementById('gender-overlay').style.display='flex';
+  document.getElementById('gender-overlay').classList.remove('hidden');
+}
+
+function applyGender(){
+  const html=document.documentElement;
+  if(currentGender==='male'){
+    html.setAttribute('data-gender','male');
+    document.getElementById('brand-text').innerHTML='مُحاسِب <span class="dot">🕌</span>';
+    document.getElementById('hero-title').textContent='✦ مُحاسِب ✦';
+  } else {
+    html.removeAttribute('data-gender');
+    document.getElementById('brand-text').innerHTML='مُحاسِبة <span class="dot">🌸</span>';
+    document.getElementById('hero-title').textContent='✦ مُحاسِبة ✦';
+  }
+  if(weekChart||catChart)renderCharts();
+}
 
 function toggleTheme(){isDark=!isDark;applyTheme();localStorage.setItem('muhassib_theme',isDark?'dark':'light');}
 function applyTheme(){
   document.documentElement.setAttribute('data-theme',isDark?'dark':'light');
   document.getElementById('theme-btn').textContent=isDark?'🌙':'☀️';
-  if(weekChart||catChart){renderCharts();}
+  if(weekChart||catChart)renderCharts();
 }
 
 function showPage(id){
@@ -651,25 +767,18 @@ function showPage(id){
   if(id==='courses')renderCourses();
 }
 
+// ===== HABITS =====
 function hKey(hid,day){return hid+'::'+day;}
 function getCheck(hid,day){return S.checks[hKey(hid,day)]||0;}
 function cycleCheck(hid,day){S.checks[hKey(hid,day)]=(getCheck(hid,day)+1)%3;save();renderTable();renderStats();renderCharts();}
-
-function filterCat(el,cat){
-  currentCat=cat;
-  document.querySelectorAll('.filter-chips .chip').forEach(c=>c.classList.remove('active'));
-  el.classList.add('active');
-  renderTable();
-}
+function filterCat(el,cat){currentCat=cat;document.querySelectorAll('.filter-chips .chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');renderTable();}
 
 function renderTable(){
   const habits=currentCat?S.habits.filter(h=>h.cat===currentCat):S.habits;
   const head=document.getElementById('table-head');
   const body=document.getElementById('table-body');
   let h='<tr><th class="name-th">العادة</th>';
-  S.days.forEach((d,di)=>{
-    h+=`<th class="day-th">${d}<button class="del-day" onclick="removeDay(${di})">✕</button></th>`;
-  });
+  S.days.forEach((d,di)=>{h+=`<th class="day-th">${d}<button class="del-day" onclick="removeDay(${di})">✕</button></th>`;});
   h+='<th>%</th></tr>';
   head.innerHTML=h;
   if(!habits.length){body.innerHTML='<tr><td colspan="'+(S.days.length+2)+'" class="empty-state">لا توجد عادات في هذه الفئة 🌸</td></tr>';return;}
@@ -695,26 +804,17 @@ function renderTable(){
   body.innerHTML=b;
 }
 
-function addHabit(){
-  const name=document.getElementById('new-habit-name').value.trim();
-  const cat=document.getElementById('new-habit-cat').value;
-  if(!name)return;
-  S.habits.push({id:'h'+Date.now(),name,cat});
-  document.getElementById('new-habit-name').value='';
-  save();renderTable();renderStats();renderCharts();
-}
+function addHabit(){const name=document.getElementById('new-habit-name').value.trim();const cat=document.getElementById('new-habit-cat').value;if(!name)return;S.habits.push({id:'h'+Date.now(),name,cat});document.getElementById('new-habit-name').value='';save();renderTable();renderStats();renderCharts();}
 function removeHabit(id){if(!confirm('حذف هذه العادة؟'))return;S.habits=S.habits.filter(h=>h.id!==id);save();renderTable();renderStats();renderCharts();}
 function editHabit(id){const h=S.habits.find(x=>x.id===id);if(!h)return;const v=prompt('اسم العادة:',h.name);if(v&&v.trim()){h.name=v.trim();save();renderTable();}}
-function openAddDay(){document.getElementById('modal-day-input').value='';document.getElementById('modal-day').classList.add('open');setTimeout(()=>document.getElementById('modal-day-input').focus(),100);}
 function confirmAddDay(){const v=document.getElementById('modal-day-input').value.trim();if(v){S.days.push(v);save();renderTable();renderStats();renderCharts();}closeModal('modal-day');}
 function removeDay(i){if(!confirm('حذف اليوم "'+S.days[i]+'"؟'))return;S.days.splice(i,1);save();renderTable();renderStats();renderCharts();}
 
-// FIX #3: Date picker uses local date parsing
 function addDayFromPicker(){
   const input=document.getElementById('date-picker-input');
   const val=input.value;
   if(!val){input.focus();return;}
-  const d=parseLocalDate(val); // LOCAL not UTC
+  const d=parseLocalDate(val);
   const label=DAYS_AR[d.getDay()]+' '+d.getDate()+'/'+(d.getMonth()+1);
   if(S.days.includes(label)){alert('هذا اليوم موجود بالفعل!');return;}
   S.days.push(label);
@@ -722,13 +822,9 @@ function addDayFromPicker(){
   input.value='';
 }
 
-// Set today as default
-(function(){
-  const t=new Date();
-  const pad=n=>String(n).padStart(2,'0');
-  document.getElementById('date-picker-input').value=`${t.getFullYear()}-${pad(t.getMonth()+1)}-${pad(t.getDate())}`;
-})();
+(function(){const t=new Date();const pad=n=>String(n).padStart(2,'0');document.getElementById('date-picker-input').value=`${t.getFullYear()}-${pad(t.getMonth()+1)}-${pad(t.getDate())}`;})();
 
+// ===== STATS =====
 function renderStats(){
   let total=0,done=0,perfect=0;
   S.days.forEach(d=>{let dd=0;S.habits.forEach(h=>{total++;if(getCheck(h.id,d)===1){done++;dd++;}});if(S.habits.length&&dd===S.habits.length)perfect++;});
@@ -736,26 +832,28 @@ function renderStats(){
   const streak=calcStreak();
   const sinTotal=S.sins.reduce((a,s)=>a+(s.count||0),0);
   document.getElementById('stats-grid').innerHTML=`
-    <div class="stat-card"><div class="accent-line"></div><div class="val">${pct}%</div><div class="lbl">الإنجاز الكلي</div></div>
+    <div class="stat-card s1"><div class="accent-line"></div><div class="val">${pct}%</div><div class="lbl">الإنجاز الكلي</div></div>
     <div class="stat-card s2"><div class="accent-line"></div><div class="val">${streak}🔥</div><div class="lbl">السلسلة</div></div>
     <div class="stat-card s3"><div class="accent-line"></div><div class="val">${perfect}</div><div class="lbl">أيام مثالية</div></div>
     <div class="stat-card s4"><div class="accent-line"></div><div class="val">${S.habits.length}</div><div class="lbl">عدد العادات</div></div>
     <div class="stat-card s5"><div class="accent-line"></div><div class="val">${sinTotal}</div><div class="lbl">ذنوب اليوم</div></div>`;
 }
-
 function calcStreak(){let s=0;for(let i=S.days.length-1;i>=0;i--){const d=S.days[i];if(!S.habits.length)break;let all=true;S.habits.forEach(h=>{if(getCheck(h.id,d)!==1)all=false;});if(all)s++;else break;}return s;}
 
+// ===== CHARTS =====
 function renderCharts(){
   const dark=isDark;
   const gridColor=dark?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.06)';
   const tickColor=dark?'#8a7a9e':'#7a5a9a';
+  const isMale=currentGender==='male';
+  const barColor=v=>v>=70?(isMale?'#d4af37':'#ff6b9d'):v>=40?(isMale?'#7ec8e3':'#c084fc'):(isMale?'#e05c5c':'#f87171');
+  const catColors=isMale?['#d4af37','#e07b4f','#7ec8e3','#9b77c9','#34d399']:['#ff6b9d','#fbbf24','#60a5fa','#c084fc','#34d399'];
   const wl=S.days.slice(-7);
   const wd=wl.map(d=>{if(!S.habits.length)return 0;let dn=0;S.habits.forEach(h=>{if(getCheck(h.id,d)===1)dn++;});return Math.round(dn/S.habits.length*100);});
   const ctx1=document.getElementById('weekChart').getContext('2d');
   if(weekChart)weekChart.destroy();
-  weekChart=new Chart(ctx1,{type:'bar',data:{labels:wl,datasets:[{data:wd,backgroundColor:wd.map(v=>v>=70?'#ff6b9d':v>=40?'#c084fc':'#f87171'),borderRadius:8,borderSkipped:false}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{max:100,ticks:{callback:v=>v+'%',color:tickColor,font:{family:'Tajawal'}},grid:{color:gridColor}},x:{grid:{display:false},ticks:{color:tickColor,font:{family:'Tajawal',size:9}}}}}});
+  weekChart=new Chart(ctx1,{type:'bar',data:{labels:wl,datasets:[{data:wd,backgroundColor:wd.map(barColor),borderRadius:8,borderSkipped:false}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{max:100,ticks:{callback:v=>v+'%',color:tickColor,font:{family:'Tajawal'}},grid:{color:gridColor}},x:{grid:{display:false},ticks:{color:tickColor,font:{family:'Tajawal',size:9}}}}}});
   const cats=['عبادة','ذكر','دروس','برمجة','أخرى'];
-  const catColors=['#ff6b9d','#fbbf24','#60a5fa','#c084fc','#34d399'];
   const catData=cats.map(cat=>{let dn=0;S.habits.filter(h=>h.cat===cat).forEach(h=>{S.days.forEach(d=>{if(getCheck(h.id,d)===1)dn++;});});return dn;});
   const ctx2=document.getElementById('catChart').getContext('2d');
   if(catChart)catChart.destroy();
@@ -767,7 +865,6 @@ function dhikrCount(id){const k=new Date().toDateString();const item=S.dhikr.fin
 function incDhikr(id){const k=new Date().toDateString();const item=S.dhikr.find(x=>x.id===id);if(!item)return;if(!item.counts)item.counts={};item.counts[k]=(item.counts[k]||0)+1;save();renderDhikr();}
 function resetDhikr(id){const k=new Date().toDateString();const item=S.dhikr.find(x=>x.id===id);if(item){item.counts[k]=0;save();renderDhikr();}}
 function removeDhikr(id){if(!confirm('حذف هذا الذكر؟'))return;S.dhikr=S.dhikr.filter(d=>d.id!==id);save();renderDhikr();}
-
 function renderDhikr(){
   const slots=[...new Set(S.dhikr.map(d=>d.slot))];
   const slotClass={'الصباح':'s-morning','بعد الفجر':'s-fajr','المساء':'s-eve','قبل النوم':'s-night'};
@@ -780,10 +877,7 @@ function renderDhikr(){
     return `<div class="dhikr-slot ${slotClass[slot]||''}">
       <div class="dhikr-slot-header">
         <h4>${slotIcon[slot]||'🕌'} ${slot}</h4>
-        <div class="slot-progress">
-          <span class="slot-pct">${slotPct}%</span>
-          <div class="slot-bar"><div class="slot-fill" style="width:${slotPct}%"></div></div>
-        </div>
+        <div class="slot-progress"><span class="slot-pct">${slotPct}%</span><div class="slot-bar"><div class="slot-fill" style="width:${slotPct}%"></div></div></div>
       </div>
       ${items.map(item=>{
         const cnt=dhikrCount(item.id);const done=cnt>=item.target;
@@ -802,21 +896,12 @@ function renderDhikr(){
     </div>`;
   }).join('');
 }
-
-function addDhikr(){
-  const text=document.getElementById('new-dhikr-text').value.trim();
-  const target=parseInt(document.getElementById('new-dhikr-target').value)||33;
-  const slot=document.getElementById('new-dhikr-slot').value;
-  if(!text)return;
-  S.dhikr.push({id:'d'+Date.now(),slot,text,target,counts:{}});
-  document.getElementById('new-dhikr-text').value='';
-  save();renderDhikr();
-}
+function addDhikr(){const text=document.getElementById('new-dhikr-text').value.trim();const target=parseInt(document.getElementById('new-dhikr-target').value)||33;const slot=document.getElementById('new-dhikr-slot').value;if(!text)return;S.dhikr.push({id:'d'+Date.now(),slot,text,target,counts:{}});document.getElementById('new-dhikr-text').value='';save();renderDhikr();}
 
 // ===== SINS =====
 function renderSins(){
   const list=document.getElementById('sins-list');
-  if(!S.sins.length){list.innerHTML='<div class="empty-state">ما في ذنوب مسجلة — حافظي على ذلك 🌿</div>';return;}
+  if(!S.sins.length){list.innerHTML='<div class="empty-state">ما في ذنوب مسجلة — حافظ على ذلك 🌿</div>';return;}
   list.innerHTML=S.sins.map((sin,i)=>{
     const marks='|'.repeat(Math.min(sin.count,20))+(sin.count>20?'...':'');
     return `<div class="sin-row">
@@ -824,7 +909,7 @@ function renderSins(){
       <div class="sin-tally">
         <span class="tally-marks">${marks}</span>
         <span style="font-size:12px;color:var(--ink-muted)">${sin.count}×</span>
-        <button class="cnt-btn" style="border-color:rgba(248,113,113,0.3);background:var(--red-glow);color:var(--red)" onclick="incSin(${i})">+</button>
+        <button class="cnt-btn" style="border-color:rgba(248,113,113,0.3);background:var(--danger-glow);color:var(--danger)" onclick="incSin(${i})">+</button>
         <button class="sin-del" onclick="removeSin(${i})">✕</button>
       </div>
     </div>`;
@@ -857,19 +942,11 @@ function renderCourses(){
 }
 function advanceCourse(i){const step=parseInt(document.getElementById('cs'+i).value)||1;S.courses[i].done=Math.min(S.courses[i].done+step,S.courses[i].total);save();renderCourses();}
 function removeCourse(i){if(confirm('حذف هذا الكورس؟')){S.courses.splice(i,1);save();renderCourses();}}
-function addCourse(){
-  const name=document.getElementById('new-course-name').value.trim();
-  const type=document.getElementById('new-course-type').value;
-  const total=parseInt(document.getElementById('new-course-total').value)||30;
-  if(!name)return;
-  S.courses.push({id:'c'+Date.now(),name,type,total,done:0});
-  document.getElementById('new-course-name').value='';
-  save();renderCourses();
-}
+function addCourse(){const name=document.getElementById('new-course-name').value.trim();const type=document.getElementById('new-course-type').value;const total=parseInt(document.getElementById('new-course-total').value)||30;if(!name)return;S.courses.push({id:'c'+Date.now(),name,type,total,done:0});document.getElementById('new-course-name').value='';save();renderCourses();}
 
-// ===== TEMPLATE =====
+// ===== TEMPLATES =====
 function loadTemplate(type){
-  if(!confirm('ده هيمسح العادات الحالية. متأكدة؟'))return;
+  if(!confirm('ده هيمسح العادات الحالية. متأكد؟'))return;
   S.habits=[];S.checks={};
   if(type==='salah'){S.habits=[{id:'t1',name:'صلاة الفجر',cat:'عبادة'},{id:'t2',name:'سنة الفجر',cat:'عبادة'},{id:'t3',name:'صلاة الضهر',cat:'عبادة'},{id:'t4',name:'صلاة العصر',cat:'عبادة'},{id:'t5',name:'صلاة المغرب',cat:'عبادة'},{id:'t6',name:'صلاة العشاء',cat:'عبادة'},{id:'t7',name:'اذكار الصباح',cat:'ذكر'},{id:'t8',name:'اذكار المساء',cat:'ذكر'}];}
   else if(type==='full'){S.habits=DEFAULT_STATE.habits.map(h=>({...h}));}
@@ -884,11 +961,8 @@ function closeModal(id){document.getElementById(id).classList.remove('open');}
 document.querySelectorAll('.modal-bg').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');});});
 document.getElementById('modal-day-input').addEventListener('keydown',e=>{if(e.key==='Enter')confirmAddDay();});
 
-// ===== MOOD TRACKER =====
-function selectMood(btn){
-  document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('selected'));
-  btn.classList.add('selected');
-}
+// ===== MOOD =====
+function selectMood(btn){document.querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');}
 function saveMood(){
   const selected=document.querySelector('.mood-btn.selected');
   if(!selected)return;
@@ -896,8 +970,8 @@ function saveMood(){
   const note=document.getElementById('mood-note').value.trim();
   const today=new Date().toLocaleDateString('ar');
   S.moods=S.moods.filter(m=>m.date!==today);
-  S.moods.push({date:today, mood, note});
-  if(S.moods.length>30) S.moods=S.moods.slice(-30);
+  S.moods.push({date:today,mood,note});
+  if(S.moods.length>30)S.moods=S.moods.slice(-30);
   save();
   document.querySelector('.mood-btn.selected').classList.remove('selected');
   document.getElementById('mood-note').value='';
@@ -915,98 +989,209 @@ function renderMoodHistory(){
 function renderHijriBanner(){
   const d=new Date();
   const greg=formatDate(d);
-  // Simple Hijri approximation (not exact but close)
-  const hijriDate=new Intl.DateTimeFormat('ar-SA-u-ca-islamic',{day:'numeric',month:'long',year:'numeric'}).format(d);
+  const hijri=getHijriDate();
   const dayNum=d.getDate();
   document.getElementById('hijri-banner').innerHTML=`
     <div>
-      <div class="h-date">${hijriDate}</div>
+      <div class="h-date">${hijri}</div>
       <div class="h-gregorian">${greg}</div>
     </div>
     <div class="h-day-num">${dayNum}</div>`;
 }
 
 // ===== INSPIRATION DATA =====
+// ① حديث اليوم (أفضل الأعمال + تحفيز)
 const HADITHS=[
   {text:'إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى.',source:'متفق عليه'},
-  {text:'خير الناس أنفعهم للناس.',source:'رواه الطبراني'},
-  {text:'من كان يؤمن بالله واليوم الآخر فليقل خيراً أو ليصمت.',source:'متفق عليه'},
-  {text:'لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه.',source:'متفق عليه'},
   {text:'أحب الأعمال إلى الله أدومها وإن قل.',source:'متفق عليه'},
+  {text:'خير الناس أنفعهم للناس.',source:'رواه الطبراني'},
   {text:'من سلك طريقاً يلتمس فيه علماً سهّل الله له به طريقاً إلى الجنة.',source:'رواه مسلم'},
-  {text:'المسلم من سلم المسلمون من لسانه ويده.',source:'متفق عليه'},
-  {text:'اتق الله حيثما كنت، وأتبع السيئة الحسنة تمحها، وخالق الناس بخلق حسن.',source:'رواه الترمذي'},
-  {text:'إن الله يحب إذا عمل أحدكم عملاً أن يتقنه.',source:'رواه البيهقي'},
-  {text:'الطهور شطر الإيمان، والحمد لله تملأ الميزان.',source:'رواه مسلم'},
-  {text:'أفضل الصيام بعد رمضان شهر الله المحرم.',source:'رواه مسلم'},
   {text:'من قرأ حرفاً من كتاب الله فله به حسنة والحسنة بعشر أمثالها.',source:'رواه الترمذي'},
-  {text:'الدنيا سجن المؤمن وجنة الكافر.',source:'رواه مسلم'},
-  {text:'صلة الرحم تزيد في العمر وتوسع في الرزق.',source:'رواه أحمد'},
-  {text:'من صلى الفجر في جماعة فهو في ذمة الله.',source:'رواه مسلم'},
   {text:'كلمتان خفيفتان على اللسان ثقيلتان في الميزان: سبحان الله وبحمده سبحان الله العظيم.',source:'متفق عليه'},
-  {text:'ما نقصت صدقة من مال.',source:'رواه مسلم'},
-  {text:'من أحب أن يُبسط له في رزقه وأن يُنسأ له في أثره فليصل رحمه.',source:'متفق عليه'},
-  {text:'التائب من الذنب كمن لا ذنب له.',source:'رواه ابن ماجه'},
-  {text:'البر حسن الخلق، والإثم ما حاك في نفسك وكرهت أن يطلع عليه الناس.',source:'رواه مسلم'},
+  {text:'إن الله يُحب إذا عمل أحدكم عملاً أن يتقنه.',source:'رواه البيهقي'},
+  {text:'من صلى الفجر في جماعة فهو في ذمة الله.',source:'رواه مسلم'},
   {text:'من تواضع لله رفعه الله.',source:'رواه ابن ماجه'},
-  {text:'أكثروا من ذكر هادم اللذات: الموت.',source:'رواه الترمذي'},
-  {text:'إن الله جميل يحب الجمال.',source:'رواه مسلم'},
-  {text:'الحياء لا يأتي إلا بخير.',source:'متفق عليه'},
+  {text:'التائب من الذنب كمن لا ذنب له.',source:'رواه ابن ماجه'},
+  {text:'ما نقصت صدقة من مال.',source:'رواه مسلم'},
   {text:'المؤمن القوي خير وأحب إلى الله من المؤمن الضعيف.',source:'رواه مسلم'},
-  {text:'خيركم من تعلم القرآن وعلّمه.',source:'رواه البخاري'},
-  {text:'من حسن إسلام المرء تركه ما لا يعنيه.',source:'رواه الترمذي'},
-  {text:'ما أُعطي عبد عطاءً خير وأوسع من الصبر.',source:'رواه البخاري'},
-  {text:'استعينوا على إنجاح الحوائج بالكتمان.',source:'رواه الطبراني'},
   {text:'من أصبح منكم آمناً في سربه، معافىً في جسده، عنده قوت يومه، فكأنما حيزت له الدنيا.',source:'رواه الترمذي'},
+  {text:'خيركم من تعلم القرآن وعلّمه.',source:'رواه البخاري'},
+  {text:'الطهور شطر الإيمان، والحمد لله تملأ الميزان.',source:'رواه مسلم'},
+  {text:'صلة الرحم تزيد في العمر وتوسع في الرزق.',source:'رواه أحمد'},
+  {text:'من أحب أن يُبسط له في رزقه وأن يُنسأ له في أثره فليصل رحمه.',source:'متفق عليه'},
+  {text:'اتق الله حيثما كنت، وأتبع السيئة الحسنة تمحها، وخالق الناس بخلق حسن.',source:'رواه الترمذي'},
+  {text:'الحياء لا يأتي إلا بخير.',source:'متفق عليه'},
+  {text:'لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه.',source:'متفق عليه'},
+  {text:'من حسن إسلام المرء تركه ما لا يعنيه.',source:'رواه الترمذي'},
+  {text:'أكثروا من ذكر هادم اللذات: الموت.',source:'رواه الترمذي'},
+  {text:'ما أُعطي عبد عطاءً خير وأوسع من الصبر.',source:'رواه البخاري'},
+  {text:'إن الله جميل يحب الجمال.',source:'رواه مسلم'},
+  {text:'المسلم من سلم المسلمون من لسانه ويده.',source:'متفق عليه'},
 ];
 
-const SIN_WARNINGS=[
-  {text:'وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ',source:'الطلاق: ٢-٣',type:'آية'},
-  {text:'إِنَّ الَّذِينَ اتَّقَوا إِذَا مَسَّهُمْ طَائِفٌ مِّنَ الشَّيْطَانِ تَذَكَّرُوا فَإِذَا هُم مُّبْصِرُونَ',source:'الأعراف: ٢٠١',type:'آية'},
-  {text:'إن العبد ليذنب الذنب فيُحرم به قيام الليل.',source:'رواه ابن ماجه — الإمام أحمد',type:'حديث'},
-  {text:'وَالَّذِينَ إِذَا فَعَلُوا فَاحِشَةً أَوْ ظَلَمُوا أَنفُسَهُمْ ذَكَرُوا اللَّهَ فَاسْتَغْفَرُوا لِذُنُوبِهِمْ',source:'آل عمران: ١٣٥',type:'آية'},
-  {text:'إن الذنوب إذا تكاثرت على القلب أظلمته.',source:'ابن القيم — الجواب الكافي',type:'أثر'},
-  {text:'مَن يَعْمَلْ سُوءًا يُجْزَ بِهِ وَلَا يَجِدْ لَهُ مِن دُونِ اللَّهِ وَلِيًّا وَلَا نَصِيرًا',source:'النساء: ١٢٣',type:'آية'},
-  {text:'ما أصاب العبدَ قط همٌّ ولا غمٌّ ولا أذى حتى الشوكة يُشاكها إلا كفّر الله بها من خطاياه.',source:'متفق عليه',type:'حديث'},
-  {text:'وَأَقِمِ الصَّلَاةَ إِنَّ الصَّلَاةَ تَنْهَىٰ عَنِ الْفَحْشَاءِ وَالْمُنكَرِ',source:'العنكبوت: ٤٥',type:'آية'},
-  {text:'الذنوب جراحات، وربّ جرح في مقتل.',source:'ابن عطاء الله السكندري',type:'أثر'},
-  {text:'يَا أَيُّهَا الَّذِينَ آمَنُوا تُوبُوا إِلَى اللَّهِ تَوْبَةً نَّصُوحًا',source:'التحريم: ٨',type:'آية'},
-  {text:'ما استُقيت الذنوب بمثل الاستغفار، ولا نُوديت رحمة الله بمثل التوبة.',source:'ابن القيم',type:'أثر'},
-  {text:'وَمَا أَصَابَكُم مِّن مُّصِيبَةٍ فَبِمَا كَسَبَتْ أَيْدِيكُمْ وَيَعْفُو عَن كَثِيرٍ',source:'الشورى: ٣٠',type:'آية'},
-  {text:'إن الإيمان يزيد وينقص؛ يزيد بالطاعة وينقص بالمعصية.',source:'الإمام أحمد',type:'أثر'},
-  {text:'قُلْ يَا عِبَادِيَ الَّذِينَ أَسْرَفُوا عَلَىٰ أَنفُسِهِمْ لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ',source:'الزمر: ٥٣',type:'آية'},
-  {text:'اتقوا الدنيا واتقوا النساء، فإن أول فتنة بني إسرائيل كانت في النساء.',source:'رواه مسلم',type:'حديث'},
+// ② حديث النهي (نهي عن تصرف + كيف تطبق الاجتناب عملياً)
+const NAHIY_HADITHS=[
+  {
+    text:'إياكم والغيبة، فإن الغيبة أشد من الزنا.',
+    source:'رواه أبو داود',
+    practical:'🛑 كيف تتجنبها: قبل ما تتكلم عن غائب اسأل نفسك "هل هذا يسعده لو سمعه؟" — إذا لا، توقف فوراً. غيّر الموضوع أو اخرج من المجلس.'
+  },
+  {
+    text:'لا يحل لمسلم أن يهجر أخاه فوق ثلاث.',
+    source:'متفق عليه',
+    practical:'🛑 التطبيق: إذا عندك خلاف مع أحد لأكثر من 3 أيام، ابدأ أنت بالتواصل ولو برسالة قصيرة. البادئ بالسلام أفضل عند الله.'
+  },
+  {
+    text:'إياكم والكذب، فإن الكذب يهدي إلى الفجور، والفجور يهدي إلى النار.',
+    source:'متفق عليه',
+    practical:'🛑 التطبيق: إذا أغراك الكذب لتفادي موقف — توقف 3 ثوانٍ وقل: "دعني أفكر" بدلاً من الكذب الفوري. الصمت أفضل من الكذب.'
+  },
+  {
+    text:'اتقوا الظلم، فإن الظلم ظلمات يوم القيامة.',
+    source:'رواه مسلم',
+    practical:'🛑 التطبيق: راجع تعاملاتك المالية اليوم — هل فيها حق لأحد؟ الظلم لا يقتصر على الضرب، يشمل الغبن والتأخير في الحقوق.'
+  },
+  {
+    text:'لا تحاسدوا، ولا تناجشوا، ولا تباغضوا، ولا تدابروا.',
+    source:'متفق عليه',
+    practical:'🛑 التطبيق: إذا رأيت نعمة عند أحد فقل: "اللهم بارك له وارزقني من فضلك." الحسد يُحرق الحسنات كما تحرق النار الحطب.'
+  },
+  {
+    text:'إياكم وكثرة الضحك، فإن كثرة الضحك تميت القلب.',
+    source:'رواه ابن ماجه',
+    practical:'🛑 التطبيق: خصص وقت محدد للترفيه ولا تجعل يومك كله مزاحاً. القلب الحي يحتاج توازناً بين الجد والترويح عن النفس.'
+  },
+  {
+    text:'لا يشير أحدكم على أخيه بالسلاح، فإنه لا يدري لعل الشيطان ينزع في يده.',
+    source:'متفق عليه',
+    practical:'🛑 التطبيق: تجنب كل فعل قد يؤذي أحداً حتى لو مازحاً. الأذى المقصود والغير مقصود كلاهما يضر بالعلاقات والنفس.'
+  },
+  {
+    text:'من غش فليس منا.',
+    source:'رواه مسلم',
+    practical:'🛑 التطبيق: في كل معاملة اليوم — بيع، شراء، عمل، دراسة — كن شفافاً وصادقاً. الرزق الحلال يبارك فيه حتى لو قل.'
+  },
+  {
+    text:'إياكم والجلوس في الطرقات. قالوا: ما لنا بد، إنما هي مجالسنا. قال: فأدوا الطريق حقه.',
+    source:'متفق عليه',
+    practical:'🛑 التطبيق: في الأماكن العامة — غض البصر، تجنب إيذاء المارة، وكن قدوة في التصرف الحضاري لأن المسلم مرآة دينه.'
+  },
+  {
+    text:'لا يبع أحدكم على بيع أخيه.',
+    source:'متفق عليه',
+    practical:'🛑 التطبيق: في المنافسة المهنية أو التجارية — لا تضر منافسك بأساليب ملتوية. المنافسة الشريفة مقبولة، التعدي على حق الغير محرم.'
+  },
+  {
+    text:'إياكم والدخول على النساء. قالوا: أفرأيت الحمو؟ قال: الحمو الموت.',
+    source:'متفق عليه',
+    practical:'🛑 التطبيق: الخلوة بأجنبية (أو أجنبي) ممنوعة حتى مع أقارب الزوج/الزوجة. الحشمة في التعامل حماية لك ولأسرتك.'
+  },
+  {
+    text:'لا يمنع جار جاره أن يغرز خشبه في جداره.',
+    source:'متفق عليه',
+    practical:'🛑 التطبيق: لا تمنع أحداً حقه بحجة ملكيتك الشخصية. حقوق الجوار والشراكة من أخلاق الإسلام الراسخة.'
+  },
 ];
 
+// ③ حديث الحث (حث على فعل + كيف تطبقه عملياً اليوم)
+const HATH_HADITHS=[
+  {
+    text:'ازهد في الدنيا يحبك الله، وازهد فيما في أيدي الناس يحبك الناس.',
+    source:'رواه ابن ماجه',
+    practical:'✅ التطبيق: اليوم تخلص من شيء لا تحتاجه — تبرع به أو أعطه لمحتاج. وعندما تتمنى ما عند غيرك، ذكّر نفسك بنعم تملكها.'
+  },
+  {
+    text:'اتق الله حيثما كنت، وأتبع السيئة الحسنة تمحها، وخالق الناس بخلق حسن.',
+    source:'رواه الترمذي',
+    practical:'✅ التطبيق: اليوم ابحث عن شخص تحتاج أن تحسن معاملته — أهل، زميل، جار. ابدأ بابتسامة أو كلمة طيبة. الحسنة تمحو السيئة.'
+  },
+  {
+    text:'من صلى على واحدة صلى الله عليه عشراً.',
+    source:'رواه مسلم',
+    practical:'✅ التطبيق: اجعل ورد الصلاة على النبي ﷺ 100 مرة يومياً. يمكن تقسيمها: 10 بعد كل صلاة. جربها لأسبوع وانظر أثرها.'
+  },
+  {
+    text:'من قام رمضان إيماناً واحتساباً غُفر له ما تقدم من ذنبه.',
+    source:'متفق عليه',
+    practical:'✅ التطبيق: لا تنتظر رمضان — صلِّ ولو ركعتين بعد العشاء كل ليلة. القيام عادة تُبنى شيئاً فشيئاً وتُغير حال القلب.'
+  },
+  {
+    text:'من كان يؤمن بالله واليوم الآخر فليكرم ضيفه.',
+    source:'متفق عليه',
+    practical:'✅ التطبيق: اليوم استقبل أحداً في بيتك أو ادعه للطعام. كرم الضيافة سنة نبوية وصلة للأرحام في آنٍ واحد.'
+  },
+  {
+    text:'لا يزال لسان العبد رطباً من ذكر الله.',
+    source:'رواه الترمذي',
+    practical:'✅ التطبيق: اجعل ذكر الله طباقاً للأنشطة اليومية: سبح خلال انتظار الكتلة، اذكر الله أثناء المشي، أدعُ في السيارة. لا يتطلب وقتاً إضافياً.'
+  },
+  {
+    text:'عليكم بالصدق، فإن الصدق يهدي إلى البر، والبر يهدي إلى الجنة.',
+    source:'متفق عليه',
+    practical:'✅ التطبيق: اليوم التزم بوعد قطعته على نفسك — ولو صغيراً. الصدق مع النفس أساس الصدق مع الناس.'
+  },
+  {
+    text:'من نفّس عن مؤمن كربةً من كرب الدنيا نفّس الله عنه كربةً من كرب يوم القيامة.',
+    source:'رواه مسلم',
+    practical:'✅ التطبيق: ابحث اليوم عن شخص يمر بضائقة — استمع إليه، ساعده بما تستطيع أو ادعُ له. هذا من أعظم ما يخفف الهموم.'
+  },
+  {
+    text:'الدال على الخير كفاعله.',
+    source:'رواه الترمذي',
+    practical:'✅ التطبيق: شارك اليوم مقالاً نافعاً، أو أحل أحداً على عالم أو كتاب. نشر العلم الشرعي صدقة جارية تمتد بعد الموت.'
+  },
+  {
+    text:'خيركم من تعلم القرآن وعلّمه.',
+    source:'رواه البخاري',
+    practical:'✅ التطبيق: خصص 15 دقيقة يومياً للقرآن — حفظاً أو مراجعة أو تفسيراً. ابدأ بآية واحدة إذا لم يكن عندك وقت. المداومة هي السر.'
+  },
+  {
+    text:'أحب الأعمال إلى الله أدومها وإن قل.',
+    source:'متفق عليه',
+    practical:'✅ التطبيق: اختر عادة واحدة فقط تريد ترسيخها هذا الأسبوع وطبقها كل يوم بلا استثناء. الانتظام يغلب الكثرة المتقطعة.'
+  },
+  {
+    text:'من توضأ فأحسن الوضوء خرجت خطاياه من جسده.',
+    source:'رواه مسلم',
+    practical:'✅ التطبيق: في كل وضوء — تأكد من إتمام الأعضاء وادعُ بعد الانتهاء: "اللهم اجعلني من التوابين واجعلني من المتطهرين."'
+  },
+];
+
+// ④ لمحة من السلف (كلام السلف الصالح فقط — بدون أحاديث ولا آيات)
 const SALAF_QUOTES=[
-  {text:'ازهد في الدنيا يحبك الله، وازهد فيما في أيدي الناس يحبك الناس.',source:'سهل بن سعد — رواه ابن ماجه'},
   {text:'إذا أردت أن تعرف قدرك عند الله فانظر في ماذا يستعملك.',source:'ابن عطاء الله السكندري'},
-  {text:'ما جلس قوم يذكرون الله إلا حفّتهم الملائكة وغشيتهم الرحمة.',source:'رواه مسلم — عن أبي هريرة'},
-  {text:'علامة المحبة لله: أن تتبع النبي ﷺ في أقواله وأعماله وأحواله.',source:'ابن كثير — تفسير آل عمران ٣١'},
+  {text:'علامة المحبة لله: أن تتبع النبي ﷺ في أقواله وأعماله وأحواله.',source:'ابن كثير'},
   {text:'القلوب أوعية، فخيرها أوعاها للخير.',source:'الإمام الشافعي'},
-  {text:'لا تحقرن من المعروف شيئاً، ولو أن تلقى أخاك بوجه طلق.',source:'رواه مسلم'},
   {text:'من أراد أن يعلم قيمته عند الله فليرَ ماذا يُشغله الله به من عبادته.',source:'ابن القيم — مدارج السالكين'},
-  {text:'إن الله يُحب العبد المؤمن المُفتَّن التواب.',source:'رواه ابن حبان'},
   {text:'المعرفة بالله هي أصل كل خير، والجهل بالله أصل كل شر.',source:'ابن القيم'},
   {text:'الأنس بالله لا يحصل إلا بانقطاع القلب عن كل ما سواه.',source:'ابن رجب الحنبلي'},
-  {text:'من كانت له إلى الله حاجة فليُلحّ في الدعاء؛ فإن الله يحب الملحّين في الدعاء.',source:'رواه الطبراني'},
   {text:'كن لله كما يريد يكن لك فوق ما تريد.',source:'ابن عطاء الله السكندري'},
-  {text:'ما أُعطي عبد عطاءً خير وأوسع من الصبر.',source:'رواه البخاري'},
   {text:'الله أكبر من كل شيء، وأرحم بعباده من أنفسهم بأنفسهم.',source:'ابن تيمية'},
   {text:'إذا صح الإخلاص لله، كفاه الله كل شيء من أمر الدنيا والآخرة.',source:'ابن القيم — الفوائد'},
   {text:'طالما بكيت على ما فاتني من طاعة الله، فلا أبكي على ما فاتني من الدنيا.',source:'الحسن البصري'},
   {text:'اجعل للمطالعة وقتاً من يومك، فإن الكتاب أفضل مجالس الدنيا.',source:'ابن الجوزي — صيد الخاطر'},
-  {text:'الراحة الحقيقية في ذكر الله؛ فإن الذاكرَ يُحسّ بلذة لا يُحسّها سواه.',source:'ابن القيم'},
-  {text:'ليس للمؤمن أن يذلّ نفسه؛ عليه بالتوكل على الله والثقة بوعده.',source:'الإمام أحمد'},
+  {text:'الراحة الحقيقية في ذكر الله؛ فإن الذاكر يُحس بلذة لا يُحسها سواه.',source:'ابن القيم'},
+  {text:'ليس للمؤمن أن يذل نفسه؛ عليه بالتوكل على الله والثقة بوعده.',source:'الإمام أحمد'},
   {text:'أصل العبادة الخوف والرجاء والمحبة، وكمالها في الجمع بينها.',source:'ابن القيم — مدارج السالكين'},
+  {text:'إذا أظلمت عليك الأمور فاستضئ بنور الذكر والدعاء والاستغفار.',source:'ابن الجوزي'},
+  {text:'ازهد في مدح الناس لك، كما تزهد في ذمهم لك.',source:'الإمام الشافعي'},
+  {text:'الذنوب جراحات، ورب جرح في مقتل.',source:'ابن عطاء الله السكندري'},
+  {text:'قيمة كل امرئ ما يحسنه.',source:'الإمام علي بن أبي طالب — رضي الله عنه'},
+  {text:'صاحب الهوى لا يُؤمن غضبه ولا يُرجى صوابه.',source:'الإمام الشافعي'},
+  {text:'من علامات إقبال العبد على الله: انقطاع أمله من المخلوقين وتعلق قلبه بالخالق.',source:'ابن تيمية'},
+  {text:'إن الغفلة مرض القلب وشفاؤها في الذكر والفكر.',source:'الحسن البصري'},
+  {text:'وقتك هو عمرك، وعمرك رأس مالك.',source:'ابن القيم — الفوائد'},
+  {text:'لا تنظر إلى صغر الذنب، ولكن انظر إلى عظمة من عصيت.',source:'ابن عباس — رضي الله عنهما'},
+  {text:'من عرف نفسه أشغله ذلك عن عيوب الناس.',source:'بكر بن عبدالله المزني'},
+  {text:'العقل نعمة والعلم نعمة، لكن التوفيق للعمل بهما هو أعظم النعم.',source:'ابن رجب الحنبلي'},
 ];
 
-// FIX #2 APPLIED: each array uses a different salt so content differs
+// ===== RENDER INSPIRATION =====
 function renderInspiration(){
-  // Use inspoOverride if manually refreshed, else daily pick with unique salt per array
-  const hadith  = inspoOverride.hadith  !== undefined ? HADITHS[inspoOverride.hadith % HADITHS.length]       : pickByDay(HADITHS, 1);
-  const sinWarn = inspoOverride.sinWarn !== undefined ? SIN_WARNINGS[inspoOverride.sinWarn % SIN_WARNINGS.length] : pickByDay(SIN_WARNINGS, 37);
-  const salaf   = inspoOverride.salaf   !== undefined ? SALAF_QUOTES[inspoOverride.salaf % SALAF_QUOTES.length]  : pickByDay(SALAF_QUOTES, 71);
+  const hadith  = inspoOverride.hadith  !== undefined ? HADITHS[inspoOverride.hadith % HADITHS.length]               : pickByDay(HADITHS, 1);
+  const nahiy   = inspoOverride.nahiy   !== undefined ? NAHIY_HADITHS[inspoOverride.nahiy % NAHIY_HADITHS.length]     : pickByDay(NAHIY_HADITHS, 37);
+  const hath    = inspoOverride.hath    !== undefined ? HATH_HADITHS[inspoOverride.hath % HATH_HADITHS.length]        : pickByDay(HATH_HADITHS, 59);
+  const salaf   = inspoOverride.salaf   !== undefined ? SALAF_QUOTES[inspoOverride.salaf % SALAF_QUOTES.length]       : pickByDay(SALAF_QUOTES, 71);
 
   document.getElementById('inspiration-section').innerHTML=`
     <div class="inspo-card hadith">
@@ -1015,31 +1200,37 @@ function renderInspiration(){
       <div class="i-text">"${hadith.text}"</div>
       <div class="i-source">${hadith.source}</div>
     </div>
-    <div class="inspo-card sin-warn">
-      <button class="inspo-refresh-btn" onclick="refreshCard('sinWarn')" title="تغيير">↻</button>
-      <div class="i-label">⚠️ تحذير من المعصية</div>
-      <div class="i-text">${sinWarn.text}</div>
-      <div class="i-source">${sinWarn.type} — ${sinWarn.source}</div>
+    <div class="inspo-card nahiy">
+      <button class="inspo-refresh-btn" onclick="refreshCard('nahiy')" title="تغيير">↻</button>
+      <div class="i-label">🚫 حديث النهي</div>
+      <div class="i-text">"${nahiy.text}"</div>
+      <div class="i-source">${nahiy.source}</div>
+      <div class="i-practical">${nahiy.practical}</div>
+    </div>
+    <div class="inspo-card hath">
+      <button class="inspo-refresh-btn" onclick="refreshCard('hath')" title="تغيير">↻</button>
+      <div class="i-label">💚 حديث الحث</div>
+      <div class="i-text">"${hath.text}"</div>
+      <div class="i-source">${hath.source}</div>
+      <div class="i-practical">${hath.practical}</div>
     </div>
     <div class="inspo-card salaf">
       <button class="inspo-refresh-btn" onclick="refreshCard('salaf')" title="تغيير">↻</button>
-      <div class="i-label">🌿 لمحة من السلف</div>
+      <div class="i-label">🌿 من كلام السلف</div>
       <div class="i-text">"${salaf.text}"</div>
       <div class="i-source">${salaf.source}</div>
     </div>`;
 }
 
-// Manual refresh button for each card
 function refreshCard(type){
-  const arr = type==='hadith'?HADITHS : type==='sinWarn'?SIN_WARNINGS : SALAF_QUOTES;
-  const current = inspoOverride[type] !== undefined ? inspoOverride[type] : 
-    (type==='hadith' ? HADITHS.indexOf(pickByDay(HADITHS,1)) :
-     type==='sinWarn' ? SIN_WARNINGS.indexOf(pickByDay(SIN_WARNINGS,37)) :
-     SALAF_QUOTES.indexOf(pickByDay(SALAF_QUOTES,71)));
-  inspoOverride[type] = (current + 1) % arr.length;
+  const arr=type==='hadith'?HADITHS:type==='nahiy'?NAHIY_HADITHS:type==='hath'?HATH_HADITHS:SALAF_QUOTES;
+  const salts={hadith:1,nahiy:37,hath:59,salaf:71};
+  const current=inspoOverride[type]!==undefined?inspoOverride[type]:arr.indexOf(pickByDay(arr,salts[type]));
+  inspoOverride[type]=(current+1)%arr.length;
   renderInspiration();
 }
 
+// ===== MAIN RENDER =====
 function renderDashboard(){
   renderHijriBanner();
   renderInspiration();
@@ -1049,8 +1240,18 @@ function renderDashboard(){
   renderMoodHistory();
 }
 
+// ===== INIT =====
 document.getElementById('nav-date').textContent=formatDate(new Date());
 applyTheme();
+
+// Check gender preference
+if(currentGender){
+  document.getElementById('gender-overlay').style.display='none';
+  applyGender();
+} else {
+  // Show overlay
+}
+
 renderDashboard();
 </script>
 </body>
