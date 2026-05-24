@@ -5,93 +5,141 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>مُحاسِبة 🌸</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
 :root {
-  --rose:       #e8678a;
-  --rose-light: #f2a0b8;
-  --rose-pale:  #fdf0f4;
-  --rose-soft:  #fce8ef;
-  --lilac:      #b48fce;
-  --lilac-light:#d4b8e8;
-  --lilac-pale: #f5eefb;
-  --blush:      #f9d4e2;
-  --peach:      #fde8d8;
-  --mint:       #a8d8c8;
-  --mint-pale:  #eaf6f1;
-  --gold:       #d4956a;
-  --gold-pale:  #fdf0e6;
-  --bg:         #fdf7fa;
-  --bg2:        #f9f0f5;
-  --white:      #ffffff;
-  --ink:        #3a2535;
-  --ink-soft:   #6b4d5e;
-  --ink-muted:  #9e7a8e;
-  --ink-faint:  #c9adb9;
-  --red:        #e05577;
-  --red-pale:   #fdeef2;
-  --shadow:     0 4px 20px rgba(180,100,140,0.10);
-  --shadow-lg:  0 8px 40px rgba(180,100,140,0.16);
-  --radius:     18px;
-  --radius-sm:  12px;
-  --radius-xs:  8px;
+  --rose:        #ff6b9d;
+  --rose-dim:    #c94f7a;
+  --rose-glow:   rgba(255,107,157,0.18);
+  --rose-border: rgba(255,107,157,0.28);
+  --lilac:       #c084fc;
+  --lilac-dim:   #9b59c7;
+  --lilac-glow:  rgba(192,132,252,0.15);
+  --mint:        #34d399;
+  --mint-glow:   rgba(52,211,153,0.15);
+  --gold:        #fbbf24;
+  --gold-glow:   rgba(251,191,36,0.15);
+  --red:         #f87171;
+  --red-glow:    rgba(248,113,113,0.15);
+  --blue:        #60a5fa;
+
+  /* DARK surfaces */
+  --bg:          #0d0d14;
+  --bg2:         #12121e;
+  --surface:     #181828;
+  --surface2:    #1e1e32;
+  --surface3:    #242438;
+  --border:      rgba(255,255,255,0.07);
+  --border2:     rgba(255,255,255,0.12);
+
+  /* Text */
+  --ink:         #f0eaf6;
+  --ink-soft:    #c4b8d4;
+  --ink-muted:   #8a7a9e;
+  --ink-faint:   #4a3f5a;
+
+  --radius:      20px;
+  --radius-sm:   14px;
+  --radius-xs:   10px;
+  --shadow:      0 4px 24px rgba(0,0,0,0.4);
+  --shadow-lg:   0 8px 48px rgba(0,0,0,0.6);
+  --glow-rose:   0 0 20px rgba(255,107,157,0.25);
+}
+
+[data-theme="light"] {
+  --bg:          #faf5ff;
+  --bg2:         #f3eeff;
+  --surface:     #ffffff;
+  --surface2:    #fdf8ff;
+  --surface3:    #f5effe;
+  --border:      rgba(180,100,220,0.12);
+  --border2:     rgba(180,100,220,0.22);
+  --ink:         #1a0a2e;
+  --ink-soft:    #3d2260;
+  --ink-muted:   #7a5a9a;
+  --ink-faint:   #bba8d4;
+  --shadow:      0 4px 24px rgba(120,60,180,0.10);
+  --shadow-lg:   0 8px 48px rgba(120,60,180,0.16);
+  --glow-rose:   0 0 20px rgba(255,107,157,0.12);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html { scroll-behavior: smooth; }
 
 body {
   font-family: 'Tajawal', sans-serif;
   background: var(--bg);
   color: var(--ink);
-  min-height: 100vh;
+  min-height: 100dvh;
   direction: rtl;
   padding-bottom: 80px;
+  transition: background 0.3s, color 0.3s;
 }
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--rose-dim); border-radius: 4px; }
 
 /* ===== HEADER ===== */
 .header {
-  background: linear-gradient(135deg, #f7d6e8 0%, #e8d0f5 50%, #d0e8f5 100%);
-  padding: 20px 20px 16px;
+  background: var(--surface);
+  padding: 14px 20px 12px;
   position: sticky;
   top: 0;
   z-index: 100;
-  border-bottom: 1px solid rgba(228,150,180,0.2);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 .header-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 4px;
 }
 .brand {
   font-family: 'Amiri', serif;
-  font-size: 24px;
+  font-size: 22px;
   color: var(--rose);
   font-weight: 700;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
+  text-shadow: var(--glow-rose);
 }
 .brand .dot { color: var(--lilac); }
+.header-right { display: flex; align-items: center; gap: 10px; }
 .header-date {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--ink-muted);
-  background: rgba(255,255,255,0.6);
-  padding: 4px 10px;
+  background: var(--surface2);
+  padding: 5px 12px;
   border-radius: 20px;
-  backdrop-filter: blur(4px);
+  border: 1px solid var(--border);
 }
+.theme-toggle {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1px solid var(--border2);
+  background: var(--surface2);
+  color: var(--ink-soft);
+  font-size: 16px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.theme-toggle:hover { border-color: var(--rose-border); color: var(--rose); }
 
 /* ===== BOTTOM NAV ===== */
 .bottom-nav {
   position: fixed;
   bottom: 0; left: 0; right: 0;
-  background: rgba(255,255,255,0.92);
-  backdrop-filter: blur(16px);
-  border-top: 1px solid var(--blush);
+  background: var(--surface);
+  border-top: 1px solid var(--border);
   display: flex;
   z-index: 200;
   padding: 6px 0 env(safe-area-inset-bottom, 6px);
-  box-shadow: 0 -4px 20px rgba(180,100,140,0.10);
+  box-shadow: 0 -4px 30px rgba(0,0,0,0.3);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 .nav-item {
   flex: 1;
@@ -107,125 +155,139 @@ body {
   font-size: 10px;
   color: var(--ink-faint);
   transition: all 0.2s;
-  border-radius: var(--radius-xs);
 }
-.nav-item .nav-icon { font-size: 20px; line-height: 1; transition: transform 0.2s; }
+.nav-item .nav-icon { font-size: 20px; line-height: 1; transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1); }
 .nav-item.active { color: var(--rose); }
-.nav-item.active .nav-icon { transform: scale(1.15); }
-.nav-item:active { transform: scale(0.95); }
+.nav-item.active .nav-icon { transform: scale(1.2) translateY(-2px); }
+.nav-item:active { transform: scale(0.93); }
+.nav-dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--rose); margin: 0 auto;
+  opacity: 0; transition: opacity 0.2s;
+}
+.nav-item.active .nav-dot { opacity: 1; }
 
 /* ===== PAGES ===== */
-.page { display: none; padding: 16px; max-width: 700px; margin: 0 auto; }
-.page.active { display: block; animation: slideUp 0.3s ease; }
-@keyframes slideUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+.page { display: none; padding: 16px; max-width: 760px; margin: 0 auto; }
+.page.active { display: block; animation: fadeUp 0.3s ease; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
 
 /* ===== SECTION TITLE ===== */
 .sec-title {
   font-family: 'Amiri', serif;
-  font-size: 19px;
+  font-size: 20px;
   color: var(--rose);
   margin: 20px 0 14px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  text-shadow: var(--glow-rose);
 }
-.sec-title::before { content: '✦'; font-size: 14px; color: var(--lilac-light); }
+.sec-title::before { content: '✦'; font-size: 13px; color: var(--lilac); }
 
 /* ===== STATS ===== */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
+@media(max-width:600px){ .stats-grid { grid-template-columns: repeat(3,1fr); } }
+@media(max-width:360px){ .stats-grid { grid-template-columns: repeat(2,1fr); } }
+
 .stat-card {
-  background: var(--white);
-  border-radius: var(--radius);
-  padding: 14px 10px;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  padding: 14px 8px;
   text-align: center;
-  box-shadow: var(--shadow);
-  border: 1px solid rgba(228,150,180,0.15);
-  transition: transform 0.2s;
+  border: 1px solid var(--border);
+  transition: transform 0.2s, box-shadow 0.2s;
   position: relative;
   overflow: hidden;
 }
-.stat-card::before {
+.stat-card::after {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--rose-light), var(--lilac-light));
+  inset: 0;
+  background: linear-gradient(135deg, var(--rose-glow), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
 }
-.stat-card.s2::before { background: linear-gradient(90deg, var(--lilac), #a0c4e8); }
-.stat-card.s3::before { background: linear-gradient(90deg, var(--mint), var(--lilac-light)); }
-.stat-card.s4::before { background: linear-gradient(90deg, var(--gold), var(--rose-light)); }
-.stat-card.s5::before { background: linear-gradient(90deg, #f0a0b0, #e06080); }
-.stat-card:hover { transform: translateY(-2px); }
-.stat-card .val { font-size: 26px; font-weight: 700; color: var(--ink); line-height: 1.1; }
-.stat-card .lbl { font-size: 11px; color: var(--ink-muted); margin-top: 3px; }
+.stat-card:hover { transform: translateY(-3px); box-shadow: var(--glow-rose); }
+.stat-card:hover::after { opacity: 1; }
+.stat-card .accent-line {
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--rose), var(--lilac));
+}
+.stat-card.s2 .accent-line { background: linear-gradient(90deg, var(--lilac), var(--blue)); }
+.stat-card.s3 .accent-line { background: linear-gradient(90deg, var(--mint), var(--lilac)); }
+.stat-card.s4 .accent-line { background: linear-gradient(90deg, var(--gold), var(--rose)); }
+.stat-card.s5 .accent-line { background: linear-gradient(90deg, var(--red), #ff8888); }
+.stat-card .val { font-size: 24px; font-weight: 800; color: var(--ink); line-height: 1.1; position: relative; z-index: 1; }
+.stat-card .lbl { font-size: 10px; color: var(--ink-muted); margin-top: 4px; position: relative; z-index: 1; }
 
 /* ===== CHARTS ===== */
 .charts-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
-@media(max-width:500px){.charts-row{grid-template-columns:1fr;}}
+@media(max-width:500px){ .charts-row { grid-template-columns: 1fr; } }
 .chart-card {
-  background: var(--white);
-  border-radius: var(--radius);
-  padding: 14px;
-  box-shadow: var(--shadow);
-  border: 1px solid rgba(228,150,180,0.12);
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  border: 1px solid var(--border);
 }
-.chart-card h4 { font-size: 13px; color: var(--ink-muted); margin-bottom: 10px; }
+.chart-card h4 { font-size: 12px; color: var(--ink-muted); margin-bottom: 12px; font-weight: 600; }
 
-/* ===== HABIT CARDS (mobile friendly) ===== */
+/* ===== HABITS TABLE ===== */
 .habits-wrap {
-  background: var(--white);
+  background: var(--surface);
   border-radius: var(--radius);
-  box-shadow: var(--shadow);
   overflow: hidden;
   margin-bottom: 16px;
-  border: 1px solid rgba(228,150,180,0.12);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
 }
 .habits-header {
   padding: 14px 16px;
-  background: linear-gradient(135deg, var(--rose-soft), var(--lilac-pale));
+  background: var(--surface2);
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 8px;
-  border-bottom: 1px solid var(--blush);
+  border-bottom: 1px solid var(--border);
 }
-.habits-header h3 { font-size: 14px; color: var(--rose); font-weight: 600; }
+.habits-header h3 { font-size: 14px; color: var(--rose); font-weight: 700; }
 .filter-chips { display: flex; gap: 6px; flex-wrap: wrap; }
 .chip {
-  padding: 4px 12px;
+  padding: 5px 13px;
   border-radius: 20px;
-  border: 1px solid var(--blush);
-  background: white;
+  border: 1px solid var(--border2);
+  background: var(--surface3);
   font-family: 'Tajawal', sans-serif;
   font-size: 12px;
   color: var(--ink-muted);
   cursor: pointer;
   transition: all 0.2s;
 }
-.chip:hover, .chip.active { background: var(--rose); color: white; border-color: var(--rose); }
-.chip.lilac:hover, .chip.lilac.active { background: var(--lilac); border-color: var(--lilac); color: white; }
+.chip:hover { border-color: var(--rose-border); color: var(--rose); }
+.chip.active { background: var(--rose); color: white; border-color: var(--rose); }
+.chip.lilac.active { background: var(--lilac); border-color: var(--lilac); color: white; }
 
 .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-table { width: 100%; border-collapse: collapse; min-width: 420px; }
+table { width: 100%; border-collapse: collapse; min-width: 400px; }
 thead th {
-  padding: 9px 12px;
+  padding: 10px 12px;
   font-size: 11px;
   font-weight: 600;
   color: var(--ink-muted);
   text-align: center;
-  background: #fdf8fb;
-  border-bottom: 1px solid var(--blush);
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
   white-space: nowrap;
 }
 thead th.name-th { text-align: right; min-width: 160px; }
@@ -237,293 +299,412 @@ thead th.name-th { text-align: right; min-width: 160px; }
   background: none; border: none; padding: 2px;
 }
 .day-th:hover .del-day { opacity: 1; }
-
-tbody tr { border-bottom: 1px solid #fdf0f5; transition: background 0.12s; }
+tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
 tbody tr:last-child { border-bottom: none; }
-tbody tr:hover { background: #fdf8fb; }
-td { padding: 8px 12px; text-align: center; vertical-align: middle; }
+tbody tr:hover { background: var(--surface2); }
+td { padding: 9px 12px; text-align: center; vertical-align: middle; }
 td.name-td { text-align: right; }
 .habit-row-name { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
-.name-text { font-size: 13px; cursor: text; color: var(--ink-soft); }
+.name-text { font-size: 13px; cursor: text; color: var(--ink-soft); transition: color 0.15s; }
 .name-text:hover { color: var(--rose); }
 .cat-badge {
-  font-size: 10px; padding: 2px 7px; border-radius: 10px;
-  background: var(--rose-pale); color: var(--rose); white-space: nowrap; flex-shrink: 0;
+  font-size: 10px; padding: 3px 8px; border-radius: 10px;
+  background: var(--rose-glow); color: var(--rose); white-space: nowrap; flex-shrink: 0;
+  border: 1px solid var(--rose-border);
 }
-.cat-badge.ذكر    { background: var(--gold-pale);   color: var(--gold); }
-.cat-badge.دروس   { background: #eef0fe;             color: #5a6bd4; }
-.cat-badge.برمجة  { background: var(--lilac-pale);   color: var(--lilac); }
-.cat-badge.ذنوب   { background: var(--red-pale);     color: var(--red); }
-.cat-badge.أخرى   { background: var(--mint-pale);    color: #5aaa90; }
+.cat-badge.ذكر    { background: var(--gold-glow);   color: var(--gold);   border-color: rgba(251,191,36,0.3); }
+.cat-badge.دروس   { background: rgba(96,165,250,0.12); color: var(--blue);  border-color: rgba(96,165,250,0.3); }
+.cat-badge.برمجة  { background: var(--lilac-glow);  color: var(--lilac);  border-color: rgba(192,132,252,0.3); }
+.cat-badge.ذنوب   { background: var(--red-glow);    color: var(--red);    border-color: rgba(248,113,113,0.3); }
+.cat-badge.أخرى   { background: var(--mint-glow);   color: var(--mint);   border-color: rgba(52,211,153,0.3); }
 .row-del-btn {
   opacity: 0; border: none; background: none; cursor: pointer;
-  color: var(--ink-faint); font-size: 12px; padding: 2px 4px; transition: all 0.15s;
+  color: var(--ink-faint); font-size: 13px; padding: 2px 4px; transition: all 0.15s;
 }
 tr:hover .row-del-btn { opacity: 1; }
 .row-del-btn:hover { color: var(--red); }
 
-/* check buttons */
+/* CHECK BUTTONS */
 .chk {
-  width: 34px; height: 34px; border-radius: 50%;
-  border: 1.5px solid var(--blush); background: transparent;
-  cursor: pointer; font-size: 15px; transition: all 0.18s;
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1.5px solid var(--border2); background: transparent;
+  cursor: pointer; font-size: 15px; transition: all 0.2s;
   display: inline-flex; align-items: center; justify-content: center;
+  color: var(--ink-muted);
 }
-.chk:hover { border-color: var(--rose-light); background: var(--rose-pale); }
-.chk.done { background: linear-gradient(135deg, var(--rose), var(--rose-light)); border-color: var(--rose); color: white; box-shadow: 0 2px 8px rgba(232,103,138,0.35); }
-.chk.skip { background: var(--bg2); border-color: var(--blush); color: var(--ink-faint); font-size: 17px; }
-
+.chk:hover { border-color: var(--rose); background: var(--rose-glow); color: var(--rose); }
+.chk.done {
+  background: linear-gradient(135deg, var(--rose), var(--rose-dim));
+  border-color: var(--rose); color: white;
+  box-shadow: 0 0 12px rgba(255,107,157,0.4);
+}
+.chk.skip { background: var(--surface3); border-color: var(--border2); color: var(--ink-faint); }
 .pct-badge {
   display: inline-block; font-size: 11px; font-weight: 700;
-  padding: 3px 8px; border-radius: 10px;
-  background: var(--mint-pale); color: #4a9a7a;
+  padding: 3px 9px; border-radius: 10px;
+  background: var(--mint-glow); color: var(--mint);
+  border: 1px solid rgba(52,211,153,0.3);
 }
-.pct-badge.mid { background: var(--peach); color: var(--gold); }
-.pct-badge.low { background: var(--red-pale); color: var(--red); }
+.pct-badge.mid { background: var(--gold-glow); color: var(--gold); border-color: rgba(251,191,36,0.3); }
+.pct-badge.low { background: var(--red-glow); color: var(--red); border-color: rgba(248,113,113,0.3); }
 
 /* ===== ADD BAR ===== */
 .add-bar {
   display: flex; gap: 8px; padding: 12px 14px;
-  background: #fdf8fb; border-top: 1px solid var(--blush); flex-wrap: wrap; align-items: center;
+  background: var(--surface2); border-top: 1px solid var(--border);
+  flex-wrap: wrap; align-items: center;
 }
 .add-bar input, .add-bar select {
-  flex: 1; min-width: 100px; padding: 8px 12px;
-  border-radius: var(--radius-xs); border: 1.5px solid var(--blush);
-  background: white; font-family: 'Tajawal', sans-serif; font-size: 13px;
+  flex: 1; min-width: 100px; padding: 9px 13px;
+  border-radius: var(--radius-xs); border: 1px solid var(--border2);
+  background: var(--surface3); font-family: 'Tajawal', sans-serif; font-size: 13px;
   color: var(--ink); outline: none; transition: border-color 0.2s;
 }
-.add-bar input:focus, .add-bar select:focus { border-color: var(--rose-light); }
+.add-bar input:focus, .add-bar select:focus { border-color: var(--rose); box-shadow: 0 0 0 3px var(--rose-glow); }
+.add-bar select option { background: var(--surface3); color: var(--ink); }
 .btn-add {
-  padding: 8px 18px; border-radius: var(--radius-xs);
-  border: none; background: linear-gradient(135deg, var(--rose), var(--rose-light));
+  padding: 9px 18px; border-radius: var(--radius-xs);
+  border: none; background: linear-gradient(135deg, var(--rose), var(--rose-dim));
   color: white; font-family: 'Tajawal', sans-serif; font-size: 13px;
-  cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 8px rgba(232,103,138,0.3);
-  white-space: nowrap; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+  box-shadow: 0 2px 12px rgba(255,107,157,0.35);
+  white-space: nowrap; font-weight: 700;
 }
-.btn-add:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(232,103,138,0.4); }
+.btn-add:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(255,107,157,0.5); }
 .btn-add:active { transform: scale(0.97); }
-.btn-add.lilac-btn { background: linear-gradient(135deg, var(--lilac), var(--lilac-light)); box-shadow: 0 2px 8px rgba(180,143,206,0.3); }
+.btn-add.lilac-btn { background: linear-gradient(135deg, var(--lilac), var(--lilac-dim)); box-shadow: 0 2px 12px rgba(192,132,252,0.35); }
 
 /* ===== DHIKR ===== */
 .dhikr-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 12px; margin-bottom: 16px;
 }
 .dhikr-slot {
-  background: var(--white); border-radius: var(--radius); padding: 14px 16px;
-  box-shadow: var(--shadow); border: 1px solid rgba(228,150,180,0.12);
-  border-top: 3px solid var(--rose-light);
+  background: var(--surface);
+  border-radius: var(--radius-sm); padding: 16px;
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--rose);
 }
-.dhikr-slot.s-morning { border-top-color: #f5c84a; }
+.dhikr-slot.s-morning { border-top-color: var(--gold); }
 .dhikr-slot.s-fajr    { border-top-color: var(--mint); }
-.dhikr-slot.s-eve     { border-top-color: var(--lilac-light); }
-.dhikr-slot.s-night   { border-top-color: #8090d0; }
-.dhikr-slot h4 { font-size: 13px; color: var(--ink-soft); font-weight: 700; margin-bottom: 10px; }
+.dhikr-slot.s-eve     { border-top-color: var(--lilac); }
+.dhikr-slot.s-night   { border-top-color: var(--blue); }
+.dhikr-slot h4 { font-size: 13px; color: var(--ink-soft); font-weight: 700; margin-bottom: 12px; }
 .dhikr-item {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 6px 0; border-bottom: 1px solid var(--rose-soft); gap: 8px;
+  padding: 8px 0; border-bottom: 1px solid var(--border); gap: 8px;
 }
 .dhikr-item:last-child { border-bottom: none; }
-.dhikr-text { font-size: 13px; color: var(--ink-soft); flex: 1; }
+.dhikr-text { font-size: 13px; color: var(--ink-soft); flex: 1; line-height: 1.5; }
 .dhikr-counter { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
 .cnt-btn {
-  width: 26px; height: 26px; border-radius: 50%;
-  border: 1.5px solid var(--blush); background: var(--rose-pale);
-  color: var(--rose); font-size: 15px; cursor: pointer;
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 1px solid var(--border2); background: var(--surface2);
+  color: var(--rose); font-size: 16px; cursor: pointer;
   display: inline-flex; align-items: center; justify-content: center; transition: all 0.15s;
 }
-.cnt-btn:hover:not(:disabled) { background: var(--rose); color: white; }
-.cnt-btn:disabled { opacity: 0.35; cursor: default; }
-.cnt-num { font-size: 14px; font-weight: 700; min-width: 26px; text-align: center; color: var(--ink); }
+.cnt-btn:hover:not(:disabled) { background: var(--rose); color: white; box-shadow: 0 0 8px rgba(255,107,157,0.4); }
+.cnt-btn:disabled { opacity: 0.3; cursor: default; }
+.cnt-num { font-size: 14px; font-weight: 800; min-width: 28px; text-align: center; color: var(--ink); }
 .cnt-target { font-size: 10px; color: var(--ink-faint); }
 .done-pill {
-  font-size: 10px; padding: 2px 7px; border-radius: 10px;
-  background: var(--mint-pale); color: #4a9a7a; font-weight: 600;
+  font-size: 10px; padding: 3px 8px; border-radius: 10px;
+  background: var(--mint-glow); color: var(--mint); font-weight: 700;
+  border: 1px solid rgba(52,211,153,0.3);
 }
 
 /* ===== SINS ===== */
 .sins-wrap {
-  background: var(--white); border-radius: var(--radius);
-  box-shadow: var(--shadow); overflow: hidden; margin-bottom: 16px;
-  border: 1px solid rgba(224,85,119,0.12);
+  background: var(--surface); border-radius: var(--radius);
+  overflow: hidden; margin-bottom: 16px;
+  border: 1px solid rgba(248,113,113,0.15);
 }
 .sins-header {
   padding: 14px 16px;
-  background: linear-gradient(135deg, #fdeef2, #fdf5f8);
+  background: var(--surface2);
   display: flex; align-items: center; justify-content: space-between;
-  border-bottom: 1px solid #fde0e8;
+  border-bottom: 1px solid var(--border);
 }
-.sins-header h3 { font-size: 14px; color: var(--red); font-weight: 600; }
+.sins-header h3 { font-size: 14px; color: var(--red); font-weight: 700; }
 .sin-row {
-  display: flex; align-items: center; padding: 10px 16px;
-  border-bottom: 1px solid #fdeef2; gap: 12px;
+  display: flex; align-items: center; padding: 11px 16px;
+  border-bottom: 1px solid var(--border); gap: 12px;
 }
 .sin-row:last-child { border-bottom: none; }
 .sin-name { flex: 1; font-size: 13px; color: var(--ink-soft); }
 .sin-tally { display: flex; align-items: center; gap: 8px; }
-.tally-marks { font-size: 15px; color: var(--red); min-width: 50px; letter-spacing: 2px; }
-.sin-del { border: none; background: none; cursor: pointer; color: var(--ink-faint); font-size: 13px; }
+.tally-marks { font-size: 14px; color: var(--red); min-width: 50px; letter-spacing: 2px; }
+.sin-del { border: none; background: none; cursor: pointer; color: var(--ink-faint); font-size: 13px; transition: color 0.15s; }
 .sin-del:hover { color: var(--red); }
 
 /* ===== COURSES ===== */
 .courses-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr));
   gap: 12px; margin-bottom: 16px;
 }
 .course-card {
-  background: var(--white); border-radius: var(--radius); padding: 16px;
-  box-shadow: var(--shadow); border: 1px solid rgba(228,150,180,0.12);
-  border-top: 3px solid var(--rose-light); transition: transform 0.2s;
+  background: var(--surface); border-radius: var(--radius-sm); padding: 18px;
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--rose); transition: transform 0.2s, box-shadow 0.2s;
 }
-.course-card:hover { transform: translateY(-2px); }
+.course-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
 .course-card.برمجة { border-top-color: var(--lilac); }
 .course-card.ديني  { border-top-color: var(--mint); }
-.course-card h4 { font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 3px; }
-.course-type-lbl { font-size: 12px; color: var(--ink-muted); margin-bottom: 10px; }
-.prog-wrap { background: var(--bg2); border-radius: 10px; height: 7px; margin-bottom: 6px; }
-.prog-fill { height: 7px; border-radius: 10px; background: linear-gradient(90deg, var(--rose), var(--rose-light)); transition: width 0.4s ease; }
-.course-card.برمجة .prog-fill { background: linear-gradient(90deg, var(--lilac), var(--lilac-light)); }
-.course-card.ديني  .prog-fill { background: linear-gradient(90deg, var(--mint), #c8eee0); }
-.prog-label { font-size: 11px; color: var(--ink-muted); display: flex; justify-content: space-between; margin-bottom: 10px; }
+.course-card h4 { font-size: 15px; font-weight: 800; color: var(--ink); margin-bottom: 4px; }
+.course-type-lbl { font-size: 12px; color: var(--ink-muted); margin-bottom: 12px; }
+.prog-wrap { background: var(--surface3); border-radius: 10px; height: 6px; margin-bottom: 6px; overflow: hidden; }
+.prog-fill { height: 6px; border-radius: 10px; background: linear-gradient(90deg, var(--rose), var(--lilac)); transition: width 0.5s ease; }
+.course-card.برمجة .prog-fill { background: linear-gradient(90deg, var(--lilac), var(--blue)); }
+.course-card.ديني  .prog-fill { background: linear-gradient(90deg, var(--mint), var(--blue)); }
+.prog-label { font-size: 11px; color: var(--ink-muted); display: flex; justify-content: space-between; margin-bottom: 12px; }
 .course-controls { display: flex; gap: 6px; align-items: center; }
 .course-controls input {
-  width: 60px; padding: 5px 8px; border-radius: var(--radius-xs);
-  border: 1.5px solid var(--blush); font-size: 12px; font-family: 'Tajawal',sans-serif;
+  width: 60px; padding: 6px 8px; border-radius: var(--radius-xs);
+  border: 1px solid var(--border2); background: var(--surface2);
+  color: var(--ink);
+  font-size: 13px; font-family: 'Tajawal',sans-serif;
   text-align: center; outline: none;
 }
-.course-controls input:focus { border-color: var(--rose-light); }
+.course-controls input:focus { border-color: var(--rose); }
 .course-controls .cc-btn {
-  padding: 5px 12px; border-radius: var(--radius-xs); font-size: 12px;
+  padding: 6px 14px; border-radius: var(--radius-xs); font-size: 12px;
   font-family: 'Tajawal',sans-serif; cursor: pointer; transition: all 0.15s;
-  border: 1.5px solid var(--rose-light); color: var(--rose); background: white;
+  border: 1px solid var(--rose-border); color: var(--rose); background: var(--rose-glow);
 }
 .course-controls .cc-btn:hover { background: var(--rose); color: white; }
-.course-card.برمجة .cc-btn { border-color: var(--lilac); color: var(--lilac); }
+.course-card.برمجة .cc-btn { border-color: rgba(192,132,252,0.3); color: var(--lilac); background: var(--lilac-glow); }
 .course-card.برمجة .cc-btn:hover { background: var(--lilac); color: white; }
-.cc-del { margin-right: auto; border-color: var(--blush) !important; color: var(--ink-faint) !important; }
-.cc-del:hover { border-color: var(--red) !important; color: var(--red) !important; background: var(--red-pale) !important; }
+.cc-del { margin-right: auto; border-color: var(--border2) !important; color: var(--ink-muted) !important; background: transparent !important; }
+.cc-del:hover { border-color: rgba(248,113,113,0.4) !important; color: var(--red) !important; background: var(--red-glow) !important; }
 
 /* ===== TEMPLATE PAGE ===== */
 .hero-card {
   border-radius: var(--radius);
-  background: linear-gradient(135deg, #f5c8dc 0%, #e8c8f0 50%, #c8d8f5 100%);
-  padding: 36px 24px;
+  background: linear-gradient(135deg, #1a0d28 0%, #0d1a2e 50%, #0d1e1a 100%);
+  padding: 40px 24px;
   text-align: center;
   margin-bottom: 20px;
   position: relative;
   overflow: hidden;
+  border: 1px solid var(--border2);
+}
+[data-theme="light"] .hero-card {
+  background: linear-gradient(135deg, #f5e8ff 0%, #e8f0ff 50%, #e8fff5 100%);
 }
 .hero-card::before {
-  content: '✿ ✦ ✿';
-  position: absolute; top: 10px; right: 16px;
-  font-size: 14px; color: rgba(255,255,255,0.5); letter-spacing: 8px;
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(255,107,157,0.12), transparent 70%);
+  border-radius: 50%;
 }
-.hero-card h1 { font-family: 'Amiri',serif; font-size: 30px; color: var(--rose); margin-bottom: 8px; }
-.hero-card p { font-size: 14px; color: var(--ink-soft); margin-bottom: 20px; line-height: 1.7; }
+.hero-card::after {
+  content: '';
+  position: absolute;
+  bottom: -40px; left: -40px;
+  width: 160px; height: 160px;
+  background: radial-gradient(circle, rgba(192,132,252,0.10), transparent 70%);
+  border-radius: 50%;
+}
+.hero-card h1 { font-family: 'Amiri',serif; font-size: 32px; color: var(--rose); margin-bottom: 8px; position: relative; z-index: 1; text-shadow: var(--glow-rose); }
+.hero-card p { font-size: 14px; color: var(--ink-soft); margin-bottom: 24px; line-height: 1.8; position: relative; z-index: 1; }
 .btn-hero {
-  display: inline-block; padding: 12px 32px;
+  display: inline-block; padding: 13px 36px;
   background: linear-gradient(135deg, var(--rose), var(--lilac));
   color: white; border-radius: 30px; font-size: 15px;
   cursor: pointer; border: none; font-family: 'Tajawal',sans-serif;
-  font-weight: 700; transition: all 0.2s;
-  box-shadow: 0 4px 16px rgba(180,100,160,0.35);
+  font-weight: 800; transition: all 0.2s;
+  box-shadow: 0 4px 20px rgba(255,107,157,0.4);
+  position: relative; z-index: 1;
 }
-.btn-hero:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(180,100,160,0.45); }
+.btn-hero:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255,107,157,0.55); }
 
 .tmpl-grid {
   display: grid; grid-template-columns: repeat(auto-fit, minmax(180px,1fr));
   gap: 12px; margin-bottom: 20px;
 }
 .tmpl-opt {
-  background: var(--white); border-radius: var(--radius); padding: 18px;
-  box-shadow: var(--shadow); text-align: center; cursor: pointer;
-  border: 2px solid transparent; transition: all 0.2s;
+  background: var(--surface); border-radius: var(--radius-sm); padding: 20px;
+  border: 1px solid var(--border); text-align: center; cursor: pointer;
+  transition: all 0.25s;
 }
-.tmpl-opt:hover { border-color: var(--rose-light); transform: translateY(-2px); }
-.tmpl-opt .t-icon { font-size: 26px; margin-bottom: 8px; }
-.tmpl-opt h4 { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
-.tmpl-opt p { font-size: 11px; color: var(--ink-muted); line-height: 1.5; }
+.tmpl-opt:hover { border-color: var(--rose-border); transform: translateY(-3px); box-shadow: var(--glow-rose); }
+.tmpl-opt .t-icon { font-size: 28px; margin-bottom: 10px; }
+.tmpl-opt h4 { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 5px; }
+.tmpl-opt p { font-size: 11px; color: var(--ink-muted); line-height: 1.6; }
 
 .settings-card {
-  background: var(--white); border-radius: var(--radius);
-  padding: 16px; box-shadow: var(--shadow); margin-bottom: 16px;
+  background: var(--surface); border-radius: var(--radius-sm);
+  padding: 16px; border: 1px solid var(--border); margin-bottom: 16px;
 }
-.settings-card .s-title { font-size: 13px; color: var(--ink-muted); font-weight: 600; margin-bottom: 12px; }
+.settings-card .s-title { font-size: 13px; color: var(--ink-muted); font-weight: 700; margin-bottom: 12px; }
 .settings-btns { display: flex; gap: 8px; flex-wrap: wrap; }
 .s-btn {
-  padding: 7px 14px; border-radius: var(--radius-xs);
-  border: 1.5px solid var(--blush); background: white;
+  padding: 8px 16px; border-radius: var(--radius-xs);
+  border: 1px solid var(--border2); background: var(--surface2);
   font-family: 'Tajawal',sans-serif; font-size: 12px;
-  color: var(--ink-muted); cursor: pointer; transition: all 0.2s;
+  color: var(--ink-soft); cursor: pointer; transition: all 0.2s;
 }
-.s-btn:hover { border-color: var(--rose-light); color: var(--rose); }
-.s-btn.danger { border-color: #fcc; color: var(--red); }
-.s-btn.danger:hover { background: var(--red-pale); }
+.s-btn:hover { border-color: var(--rose-border); color: var(--rose); }
+.s-btn.danger { border-color: rgba(248,113,113,0.3); color: var(--red); background: var(--red-glow); }
+.s-btn.danger:hover { background: var(--red); color: white; }
+
+/* ===== QUOTE ===== */
+.quote-card {
+  background: var(--surface);
+  border-radius: var(--radius-sm); padding: 18px 20px; margin-top: 16px;
+  border: 1px solid var(--border);
+  border-right: 3px solid var(--lilac);
+}
+.quote-card .q-head { font-size: 13px; color: var(--lilac); font-weight: 700; margin-bottom: 8px; }
+.quote-card p { font-size: 13px; color: var(--ink-soft); line-height: 2; }
 
 /* ===== MODAL ===== */
 .modal-bg {
   display: none; position: fixed; inset: 0;
-  background: rgba(60,20,40,0.35); z-index: 300;
+  background: rgba(0,0,0,0.6); z-index: 300;
   align-items: flex-end; justify-content: center;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(8px);
 }
 .modal-bg.open { display: flex; }
 .modal {
-  background: white; border-radius: var(--radius) var(--radius) 0 0;
-  padding: 24px 20px 32px; width: 100%; max-width: 480px;
-  box-shadow: var(--shadow-lg); animation: slideUp 0.25s ease;
+  background: var(--surface); border-radius: var(--radius) var(--radius) 0 0;
+  padding: 24px 20px 36px; width: 100%; max-width: 480px;
+  box-shadow: var(--shadow-lg); animation: fadeUp 0.25s ease;
+  border: 1px solid var(--border2); border-bottom: none;
 }
 .modal-handle {
-  width: 40px; height: 4px; background: var(--blush);
-  border-radius: 4px; margin: 0 auto 20px;
+  width: 40px; height: 4px; background: var(--border2);
+  border-radius: 4px; margin: 0 auto 22px;
 }
 .modal h3 {
   font-family: 'Amiri',serif; font-size: 20px;
-  color: var(--rose); margin-bottom: 16px; text-align: center;
+  color: var(--rose); margin-bottom: 18px; text-align: center;
+  text-shadow: var(--glow-rose);
 }
-.modal label { font-size: 13px; color: var(--ink-muted); display: block; margin-bottom: 5px; }
+.modal label { font-size: 13px; color: var(--ink-muted); display: block; margin-bottom: 6px; }
 .modal input, .modal select {
-  width: 100%; padding: 10px 14px; border-radius: var(--radius-xs);
-  border: 1.5px solid var(--blush); font-family: 'Tajawal',sans-serif;
-  font-size: 14px; color: var(--ink); margin-bottom: 14px; outline: none;
+  width: 100%; padding: 11px 14px; border-radius: var(--radius-xs);
+  border: 1px solid var(--border2); background: var(--surface2);
+  font-family: 'Tajawal',sans-serif; font-size: 14px;
+  color: var(--ink); margin-bottom: 16px; outline: none;
   transition: border-color 0.2s;
 }
-.modal input:focus, .modal select:focus { border-color: var(--rose-light); }
+.modal input:focus, .modal select:focus { border-color: var(--rose); box-shadow: 0 0 0 3px var(--rose-glow); }
 .modal-actions { display: flex; gap: 10px; }
 .btn-confirm {
-  flex: 1; padding: 11px; border-radius: var(--radius-xs);
-  border: none; background: linear-gradient(135deg, var(--rose), var(--rose-light));
+  flex: 1; padding: 12px; border-radius: var(--radius-xs);
+  border: none; background: linear-gradient(135deg, var(--rose), var(--rose-dim));
   color: white; font-family: 'Tajawal',sans-serif; font-size: 15px;
-  cursor: pointer; font-weight: 700; box-shadow: 0 3px 10px rgba(232,103,138,0.3);
+  cursor: pointer; font-weight: 800;
+  box-shadow: 0 3px 14px rgba(255,107,157,0.35);
 }
 .btn-cancel {
-  padding: 11px 18px; border-radius: var(--radius-xs);
-  border: 1.5px solid var(--blush); background: transparent;
-  font-family: 'Tajawal',sans-serif; font-size: 14px; cursor: pointer; color: var(--ink-muted);
+  padding: 12px 20px; border-radius: var(--radius-xs);
+  border: 1px solid var(--border2); background: var(--surface2);
+  font-family: 'Tajawal',sans-serif; font-size: 14px;
+  cursor: pointer; color: var(--ink-muted);
 }
 
 /* ===== MISC ===== */
-.empty-state { text-align: center; padding: 28px; color: var(--ink-faint); font-size: 14px; }
-.quote-card {
-  background: linear-gradient(135deg, var(--lilac-pale), var(--rose-pale));
-  border-radius: var(--radius); padding: 16px 20px; margin-top: 16px;
-  border: 1px solid var(--blush);
-}
-.quote-card .q-head { font-size: 13px; color: var(--lilac); font-weight: 700; margin-bottom: 8px; }
-.quote-card p { font-size: 13px; color: var(--ink-soft); line-height: 1.9; }
-
+.empty-state { text-align: center; padding: 32px; color: var(--ink-faint); font-size: 14px; }
 .btn-sm-outline {
-  padding: 5px 12px; border-radius: 20px;
-  border: 1.5px solid var(--blush); background: white;
+  padding: 5px 13px; border-radius: 20px;
+  border: 1px solid var(--border2); background: var(--surface2);
   font-family: 'Tajawal',sans-serif; font-size: 12px;
   color: var(--ink-muted); cursor: pointer; transition: all 0.2s;
 }
-.btn-sm-outline:hover { border-color: var(--rose); color: var(--rose); }
-.btn-sm-outline.red-outline:hover { border-color: var(--red); color: var(--red); }
+.btn-sm-outline:hover { border-color: var(--rose-border); color: var(--rose); }
+.btn-sm-outline.red-outline:hover { border-color: rgba(248,113,113,0.4); color: var(--red); }
 
-@media(max-width:400px){
-  .stats-grid { grid-template-columns: repeat(2,1fr); }
-  .brand { font-size: 20px; }
+/* ===== DAILY INSPIRATION ===== */
+.inspiration-section {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+@media(min-width:600px){ .inspiration-section { grid-template-columns: 1fr 1fr; } }
+@media(min-width:900px){ .inspiration-section { grid-template-columns: 1fr 1fr 1fr; } }
+
+.inspo-card {
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  animation: fadeUp 0.4s ease;
+}
+.inspo-card.hadith {
+  background: linear-gradient(135deg, rgba(251,191,36,0.08), rgba(255,107,157,0.05));
+  border-color: rgba(251,191,36,0.2);
+  border-right: 3px solid var(--gold);
+}
+.inspo-card.sin-warn {
+  background: linear-gradient(135deg, rgba(248,113,113,0.08), rgba(192,132,252,0.05));
+  border-color: rgba(248,113,113,0.2);
+  border-right: 3px solid var(--red);
+}
+.inspo-card.salaf {
+  background: linear-gradient(135deg, rgba(52,211,153,0.08), rgba(96,165,250,0.05));
+  border-color: rgba(52,211,153,0.2);
+  border-right: 3px solid var(--mint);
+}
+.inspo-card .i-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+  margin-bottom: 8px; display: flex; align-items: center; gap: 6px;
+}
+.inspo-card.hadith  .i-label { color: var(--gold); }
+.inspo-card.sin-warn .i-label { color: var(--red); }
+.inspo-card.salaf   .i-label { color: var(--mint); }
+.inspo-card .i-text {
+  font-size: 13px; color: var(--ink-soft); line-height: 1.9;
+  font-family: 'Amiri', serif;
+}
+.inspo-card .i-source {
+  font-size: 11px; color: var(--ink-faint); margin-top: 8px;
+  font-family: 'Tajawal', sans-serif;
+}
+
+/* ===== DATE PICKER ROW ===== */
+.date-row {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 14px; flex-wrap: wrap;
+}
+.date-row label { font-size: 13px; color: var(--ink-muted); white-space: nowrap; }
+.date-picker-input {
+  padding: 7px 12px; border-radius: var(--radius-xs);
+  border: 1px solid var(--border2); background: var(--surface2);
+  color: var(--ink); font-family: 'Tajawal', sans-serif; font-size: 13px;
+  outline: none; cursor: pointer; transition: border-color 0.2s;
+}
+.date-picker-input:focus { border-color: var(--rose); }
+.btn-add-date {
+  padding: 7px 16px; border-radius: var(--radius-xs);
+  border: none; background: linear-gradient(135deg, var(--rose), var(--rose-dim));
+  color: white; font-family: 'Tajawal', sans-serif; font-size: 13px;
+  cursor: pointer; font-weight: 700; white-space: nowrap;
+  box-shadow: 0 2px 10px rgba(255,107,157,0.3); transition: all 0.2s;
+}
+.btn-add-date:hover { transform: translateY(-1px); }
+
+/* Tablet optimizations */
+@media(min-width:600px) and (max-width:900px) {
+  .stats-grid { grid-template-columns: repeat(5,1fr); }
+  .page { padding: 20px; }
+}
+@media(min-width:900px) {
+  body { padding-bottom: 0; }
+  .bottom-nav { top: 0; bottom: auto; border-top: none; border-bottom: 1px solid var(--border); flex-direction: row; justify-content: center; gap: 4px; padding: 8px 20px; }
+  .header { top: 57px; }
+  .page { padding: 24px 28px; }
+  .nav-item { flex-direction: row; gap: 8px; padding: 8px 16px; border-radius: var(--radius-xs); font-size: 13px; }
+  .nav-item .nav-icon { font-size: 18px; }
+  .nav-item.active { background: var(--rose-glow); border-radius: var(--radius-xs); }
+  .nav-item.active .nav-icon { transform: none; }
+  .nav-dot { display: none; }
+  body { padding-top: 57px; }
 }
 </style>
 </head>
@@ -533,12 +714,23 @@ tr:hover .row-del-btn { opacity: 1; }
 <div class="header">
   <div class="header-top">
     <div class="brand">مُحاسِبة <span class="dot">🌸</span></div>
-    <div class="header-date" id="nav-date"></div>
+    <div class="header-right">
+      <div class="header-date" id="nav-date"></div>
+      <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()" title="تغيير المظهر">🌙</button>
+    </div>
   </div>
 </div>
 
 <!-- PAGES -->
 <div class="page active" id="page-dashboard">
+  <!-- Date picker row -->
+  <div class="date-row">
+    <label>📅 أضيفي يوم:</label>
+    <input type="date" class="date-picker-input" id="date-picker-input" />
+    <button class="btn-add-date" onclick="addDayFromPicker()">+ أضيفي اليوم</button>
+  </div>
+  <!-- Daily inspiration cards -->
+  <div class="inspiration-section" id="inspiration-section"></div>
   <div class="stats-grid" id="stats-grid"></div>
   <div class="charts-row">
     <div class="chart-card"><h4>📊 إنجاز الأسبوع</h4><canvas id="weekChart" height="140"></canvas></div>
@@ -553,7 +745,7 @@ tr:hover .row-del-btn { opacity: 1; }
         <button class="chip" onclick="filterCat(this,'ذكر')">ذكر</button>
         <button class="chip lilac" onclick="filterCat(this,'دروس')">دروس</button>
         <button class="chip lilac" onclick="filterCat(this,'برمجة')">برمجة</button>
-        <button class="chip" onclick="openAddDay()" style="border-color:var(--rose-light);color:var(--rose)">+ يوم</button>
+        <button class="chip" onclick="document.getElementById('date-picker-input').focus()" style="border-color:var(--rose-border);color:var(--rose)">📅 يوم</button>
       </div>
     </div>
     <div class="table-scroll">
@@ -600,7 +792,7 @@ tr:hover .row-del-btn { opacity: 1; }
     <div id="sins-list"></div>
     <div class="add-bar">
       <input type="text" id="new-sin-name" placeholder="سجل الذنب / المعصية..." />
-      <button class="btn-add" style="background:linear-gradient(135deg,#e05577,#f08090)" onclick="addSin()">+ تسجيل</button>
+      <button class="btn-add" style="background:linear-gradient(135deg,var(--red),#c05060)" onclick="addSin()">+ تسجيل</button>
     </div>
   </div>
   <div class="quote-card">
@@ -636,23 +828,19 @@ tr:hover .row-del-btn { opacity: 1; }
   <div class="sec-title">اختاري نموذج</div>
   <div class="tmpl-grid">
     <div class="tmpl-opt" onclick="loadTemplate('salah')">
-      <div class="t-icon">🕌</div>
-      <h4>الصلوات والأذكار</h4>
+      <div class="t-icon">🕌</div><h4>الصلوات والأذكار</h4>
       <p>نموذج كامل للصلوات اليومية والأذكار</p>
     </div>
     <div class="tmpl-opt" onclick="loadTemplate('full')">
-      <div class="t-icon">📋</div>
-      <h4>نموذج مريم الكامل</h4>
+      <div class="t-icon">📋</div><h4>النموذج الكامل</h4>
       <p>كل العبادات من الفجر للعشاء مع الأذكار</p>
     </div>
     <div class="tmpl-opt" onclick="loadTemplate('student')">
-      <div class="t-icon">📚</div>
-      <h4>طالبة</h4>
+      <div class="t-icon">📚</div><h4>طالبة</h4>
       <p>عبادات + مذاكرة + برمجة + عادات صحية</p>
     </div>
     <div class="tmpl-opt" onclick="loadTemplate('empty')">
-      <div class="t-icon">✏️</div>
-      <h4>فاضي تماماً</h4>
+      <div class="t-icon">✏️</div><h4>فاضي تماماً</h4>
       <p>ابدأي من الصفر بعاداتك الخاصة</p>
     </div>
   </div>
@@ -670,19 +858,19 @@ tr:hover .row-del-btn { opacity: 1; }
 <!-- BOTTOM NAV -->
 <nav class="bottom-nav">
   <button class="nav-item active" id="tab-dashboard" onclick="showPage('dashboard')">
-    <span class="nav-icon">🏠</span><span>لوحتي</span>
+    <span class="nav-icon">🏠</span><span>لوحتي</span><div class="nav-dot"></div>
   </button>
   <button class="nav-item" id="tab-dhikr" onclick="showPage('dhikr')">
-    <span class="nav-icon">📿</span><span>الأذكار</span>
+    <span class="nav-icon">📿</span><span>الأذكار</span><div class="nav-dot"></div>
   </button>
   <button class="nav-item" id="tab-sins" onclick="showPage('sins')">
-    <span class="nav-icon">🔴</span><span>محاسبة</span>
+    <span class="nav-icon">🔴</span><span>محاسبة</span><div class="nav-dot"></div>
   </button>
   <button class="nav-item" id="tab-courses" onclick="showPage('courses')">
-    <span class="nav-icon">📚</span><span>الدروس</span>
+    <span class="nav-icon">📚</span><span>الدروس</span><div class="nav-dot"></div>
   </button>
   <button class="nav-item" id="tab-template" onclick="showPage('template')">
-    <span class="nav-icon">⚙️</span><span>إعدادات</span>
+    <span class="nav-icon">⚙️</span><span>إعدادات</span><div class="nav-dot"></div>
   </button>
 </nav>
 
@@ -745,10 +933,23 @@ const DEFAULT_STATE={
   ]
 };
 
-let S=JSON.parse(localStorage.getItem('muhassib_v3')||'null')||JSON.parse(JSON.stringify(DEFAULT_STATE));
+let S=JSON.parse(localStorage.getItem('muhassib_v4')||'null')||JSON.parse(JSON.stringify(DEFAULT_STATE));
 let currentCat='';
 let weekChart,catChart;
-function save(){localStorage.setItem('muhassib_v3',JSON.stringify(S));}
+let isDark=localStorage.getItem('muhassib_theme')!=='light';
+
+function save(){localStorage.setItem('muhassib_v4',JSON.stringify(S));}
+
+function toggleTheme(){
+  isDark=!isDark;
+  applyTheme();
+  localStorage.setItem('muhassib_theme',isDark?'dark':'light');
+}
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme',isDark?'dark':'light');
+  document.getElementById('theme-btn').textContent=isDark?'🌙':'☀️';
+  if(weekChart||catChart){renderCharts();}
+}
 
 function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -829,32 +1030,35 @@ function renderStats(){
   const streak=calcStreak();
   const sinTotal=S.sins.reduce((a,s)=>a+(s.count||0),0);
   document.getElementById('stats-grid').innerHTML=`
-    <div class="stat-card"><div class="val">${pct}%</div><div class="lbl">الإنجاز الكلي</div></div>
-    <div class="stat-card s2"><div class="val">${streak}🔥</div><div class="lbl">السلسلة</div></div>
-    <div class="stat-card s3"><div class="val">${perfect}</div><div class="lbl">أيام مثالية</div></div>
-    <div class="stat-card s4"><div class="val">${S.habits.length}</div><div class="lbl">عدد العادات</div></div>
-    <div class="stat-card s5"><div class="val">${sinTotal}</div><div class="lbl">ذنوب اليوم</div></div>`;
+    <div class="stat-card"><div class="accent-line"></div><div class="val">${pct}%</div><div class="lbl">الإنجاز الكلي</div></div>
+    <div class="stat-card s2"><div class="accent-line"></div><div class="val">${streak}🔥</div><div class="lbl">السلسلة</div></div>
+    <div class="stat-card s3"><div class="accent-line"></div><div class="val">${perfect}</div><div class="lbl">أيام مثالية</div></div>
+    <div class="stat-card s4"><div class="accent-line"></div><div class="val">${S.habits.length}</div><div class="lbl">عدد العادات</div></div>
+    <div class="stat-card s5"><div class="accent-line"></div><div class="val">${sinTotal}</div><div class="lbl">ذنوب اليوم</div></div>`;
 }
 
 function calcStreak(){let s=0;for(let i=S.days.length-1;i>=0;i--){const d=S.days[i];if(!S.habits.length)break;let all=true;S.habits.forEach(h=>{if(getCheck(h.id,d)!==1)all=false;});if(all)s++;else break;}return s;}
 
 function renderCharts(){
+  const dark=isDark;
+  const gridColor=dark?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.06)';
+  const tickColor=dark?'#8a7a9e':'#7a5a9a';
   const wl=S.days.slice(-7);
   const wd=wl.map(d=>{if(!S.habits.length)return 0;let dn=0;S.habits.forEach(h=>{if(getCheck(h.id,d)===1)dn++;});return Math.round(dn/S.habits.length*100);});
   const ctx1=document.getElementById('weekChart').getContext('2d');
   if(weekChart)weekChart.destroy();
-  weekChart=new Chart(ctx1,{type:'bar',data:{labels:wl,datasets:[{data:wd,backgroundColor:wd.map(v=>v>=70?'#e8678a':v>=40?'#b48fce':'#f0a0b0'),borderRadius:8,borderSkipped:false}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{max:100,ticks:{callback:v=>v+'%'},grid:{color:'#fde8f0'}},x:{grid:{display:false},ticks:{font:{size:10}}}}}});
+  weekChart=new Chart(ctx1,{type:'bar',data:{labels:wl,datasets:[{data:wd,backgroundColor:wd.map(v=>v>=70?'#ff6b9d':v>=40?'#c084fc':'#f87171'),borderRadius:8,borderSkipped:false}]},options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{max:100,ticks:{callback:v=>v+'%',color:tickColor,font:{family:'Tajawal'}},grid:{color:gridColor}},x:{grid:{display:false},ticks:{color:tickColor,font:{family:'Tajawal',size:9}}}}}});
   const cats=['عبادة','ذكر','دروس','برمجة','أخرى'];
-  const catColors=['#e8678a','#d4956a','#5a6bd4','#b48fce','#a8d8c8'];
+  const catColors=['#ff6b9d','#fbbf24','#60a5fa','#c084fc','#34d399'];
   const catData=cats.map(cat=>{let dn=0;S.habits.filter(h=>h.cat===cat).forEach(h=>{S.days.forEach(d=>{if(getCheck(h.id,d)===1)dn++;});});return dn;});
   const ctx2=document.getElementById('catChart').getContext('2d');
   if(catChart)catChart.destroy();
-  catChart=new Chart(ctx2,{type:'doughnut',data:{labels:cats,datasets:[{data:catData,backgroundColor:catColors,borderWidth:2,borderColor:'#fdf7fa'}]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{family:'Tajawal',size:11},boxWidth:12}}}}});
+  catChart=new Chart(ctx2,{type:'doughnut',data:{labels:cats,datasets:[{data:catData,backgroundColor:catColors,borderWidth:2,borderColor:dark?'#181828':'#ffffff'}]},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{color:tickColor,font:{family:'Tajawal',size:11},boxWidth:12}}}}});
 }
 
-function dhikrCount(id){const d=new Date();const k=d.toDateString();const item=S.dhikr.find(x=>x.id===id);return item?(item.counts[k]||0):0;}
-function incDhikr(id){const d=new Date();const k=d.toDateString();const item=S.dhikr.find(x=>x.id===id);if(!item)return;if(!item.counts)item.counts={};item.counts[k]=(item.counts[k]||0)+1;save();renderDhikr();}
-function resetDhikr(id){const d=new Date();const k=d.toDateString();const item=S.dhikr.find(x=>x.id===id);if(item){item.counts[k]=0;save();renderDhikr();}}
+function dhikrCount(id){const k=new Date().toDateString();const item=S.dhikr.find(x=>x.id===id);return item?(item.counts[k]||0):0;}
+function incDhikr(id){const k=new Date().toDateString();const item=S.dhikr.find(x=>x.id===id);if(!item)return;if(!item.counts)item.counts={};item.counts[k]=(item.counts[k]||0)+1;save();renderDhikr();}
+function resetDhikr(id){const k=new Date().toDateString();const item=S.dhikr.find(x=>x.id===id);if(item){item.counts[k]=0;save();renderDhikr();}}
 function removeDhikr(id){if(!confirm('حذف هذا الذكر؟'))return;S.dhikr=S.dhikr.filter(d=>d.id!==id);save();renderDhikr();}
 
 function renderDhikr(){
@@ -903,7 +1107,7 @@ function renderSins(){
       <div class="sin-tally">
         <span class="tally-marks">${marks}</span>
         <span style="font-size:12px;color:var(--ink-muted)">${sin.count}×</span>
-        <button class="cnt-btn" style="border-color:#f0a0b0;background:var(--red-pale);color:var(--red)" onclick="incSin(${i})">+</button>
+        <button class="cnt-btn" style="border-color:rgba(248,113,113,0.3);background:var(--red-glow);color:var(--red)" onclick="incSin(${i})">+</button>
         <button class="sin-del" onclick="removeSin(${i})">✕</button>
       </div>
     </div>`;
@@ -962,8 +1166,131 @@ function closeModal(id){document.getElementById(id).classList.remove('open');}
 document.querySelectorAll('.modal-bg').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');});});
 document.getElementById('modal-day-input').addEventListener('keydown',e=>{if(e.key==='Enter')confirmAddDay();});
 
-function renderDashboard(){renderStats();renderTable();renderCharts();}
+// ===== DAILY INSPIRATION DATA =====
+const HADITHS = [
+  {text:'إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى.', source:'متفق عليه'},
+  {text:'خير الناس أنفعهم للناس.', source:'رواه الطبراني'},
+  {text:'من كان يؤمن بالله واليوم الآخر فليقل خيراً أو ليصمت.', source:'متفق عليه'},
+  {text:'لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه.', source:'متفق عليه'},
+  {text:'أحب الأعمال إلى الله أدومها وإن قل.', source:'متفق عليه'},
+  {text:'من سلك طريقاً يلتمس فيه علماً سهّل الله له به طريقاً إلى الجنة.', source:'رواه مسلم'},
+  {text:'المسلم من سلم المسلمون من لسانه ويده.', source:'متفق عليه'},
+  {text:'اتق الله حيثما كنت، وأتبع السيئة الحسنة تمحها، وخالق الناس بخلق حسن.', source:'رواه الترمذي'},
+  {text:'إن الله يحب إذا عمل أحدكم عملاً أن يتقنه.', source:'رواه البيهقي'},
+  {text:'الطهور شطر الإيمان، والحمد لله تملأ الميزان.', source:'رواه مسلم'},
+  {text:'أفضل الصيام بعد رمضان شهر الله المحرم.', source:'رواه مسلم'},
+  {text:'من قرأ حرفاً من كتاب الله فله به حسنة والحسنة بعشر أمثالها.', source:'رواه الترمذي'},
+  {text:'الدنيا سجن المؤمن وجنة الكافر.', source:'رواه مسلم'},
+  {text:'صلة الرحم تزيد في العمر وتوسع في الرزق.', source:'رواه أحمد'},
+  {text:'من صلى الفجر في جماعة فهو في ذمة الله.', source:'رواه مسلم'},
+  {text:'كلمتان خفيفتان على اللسان ثقيلتان في الميزان: سبحان الله وبحمده سبحان الله العظيم.', source:'متفق عليه'},
+  {text:'ما نقصت صدقة من مال.', source:'رواه مسلم'},
+  {text:'استعينوا على إنجاح الحوائج بالكتمان.', source:'رواه الطبراني'},
+  {text:'من أحب أن يُبسط له في رزقه وأن يُنسأ له في أثره فليصل رحمه.', source:'متفق عليه'},
+  {text:'التائب من الذنب كمن لا ذنب له.', source:'رواه ابن ماجه'},
+  {text:'البر حسن الخلق، والإثم ما حاك في نفسك وكرهت أن يطلع عليه الناس.', source:'رواه مسلم'},
+  {text:'من تواضع لله رفعه الله.', source:'رواه ابن ماجه'},
+  {text:'اللهم لا سهل إلا ما جعلته سهلاً، وأنت تجعل الحزن إذا شئت سهلاً.', source:'رواه ابن حبان'},
+  {text:'أكثروا من ذكر هادم اللذات: الموت.', source:'رواه الترمذي'},
+  {text:'من أصبح منكم آمناً في سربه، معافىً في جسده، عنده قوت يومه، فكأنما حيزت له الدنيا.', source:'رواه الترمذي'},
+  {text:'إن الله جميل يحب الجمال.', source:'رواه مسلم'},
+  {text:'الحياء لا يأتي إلا بخير.', source:'متفق عليه'},
+  {text:'المؤمن القوي خير وأحب إلى الله من المؤمن الضعيف.', source:'رواه مسلم'},
+  {text:'خيركم من تعلم القرآن وعلّمه.', source:'رواه البخاري'},
+  {text:'من حسن إسلام المرء تركه ما لا يعنيه.', source:'رواه الترمذي'},
+];
+
+const SIN_WARNINGS = [
+  {text:'وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا وَيَرْزُقْهُ مِنْ حَيْثُ لَا يَحْتَسِبُ', source:'الطلاق: ٢-٣', type:'آية'},
+  {text:'إِنَّ الَّذِينَ اتَّقَوا إِذَا مَسَّهُمْ طَائِفٌ مِّنَ الشَّيْطَانِ تَذَكَّرُوا فَإِذَا هُم مُّبْصِرُونَ', source:'الأعراف: ٢٠١', type:'آية'},
+  {text:'إن العبد ليذنب الذنب فيُحرم به قيام الليل.', source:'رواه ابن ماجه — الإمام أحمد', type:'حديث'},
+  {text:'وَالَّذِينَ إِذَا فَعَلُوا فَاحِشَةً أَوْ ظَلَمُوا أَنفُسَهُمْ ذَكَرُوا اللَّهَ فَاسْتَغْفَرُوا لِذُنُوبِهِمْ', source:'آل عمران: ١٣٥', type:'آية'},
+  {text:'إن الذنوب إذا تكاثرت على القلب أظلمته.', source:'ابن القيم — الجواب الكافي', type:'أثر'},
+  {text:'مَن يَعْمَلْ سُوءًا يُجْزَ بِهِ وَلَا يَجِدْ لَهُ مِن دُونِ اللَّهِ وَلِيًّا وَلَا نَصِيرًا', source:'النساء: ١٢٣', type:'آية'},
+  {text:'ما أصاب العبدَ قط همٌّ ولا غمٌّ ولا أذى حتى الشوكة يُشاكها إلا كفّر الله بها من خطاياه.', source:'متفق عليه', type:'حديث'},
+  {text:'وَأَقِمِ الصَّلَاةَ إِنَّ الصَّلَاةَ تَنْهَىٰ عَنِ الْفَحْشَاءِ وَالْمُنكَرِ', source:'العنكبوت: ٤٥', type:'آية'},
+  {text:'الذنوب جراحات، وربّ جرح في مقتل.', source:'ابن عطاء الله السكندري', type:'أثر'},
+  {text:'يَا أَيُّهَا الَّذِينَ آمَنُوا تُوبُوا إِلَى اللَّهِ تَوْبَةً نَّصُوحًا', source:'التحريم: ٨', type:'آية'},
+  {text:'ما استُقيت الذنوب بمثل الاستغفار، ولا نُوديت رحمة الله بمثل التوبة.', source:'ابن القيم', type:'أثر'},
+  {text:'وَمَا أَصَابَكُم مِّن مُّصِيبَةٍ فَبِمَا كَسَبَتْ أَيْدِيكُمْ وَيَعْفُو عَن كَثِيرٍ', source:'الشورى: ٣٠', type:'آية'},
+  {text:'إن الإيمان يزيد وينقص؛ يزيد بالطاعة وينقص بالمعصية.', source:'الإمام أحمد', type:'أثر'},
+  {text:'اتقوا الدنيا واتقوا النساء، فإن أول فتنة بني إسرائيل كانت في النساء.', source:'رواه مسلم', type:'حديث'},
+  {text:'قُلْ يَا عِبَادِيَ الَّذِينَ أَسْرَفُوا عَلَىٰ أَنفُسِهِمْ لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ', source:'الزمر: ٥٣', type:'آية'},
+];
+
+const SALAF_QUOTES = [
+  {text:'ازهد في الدنيا يحبك الله، وازهد فيما في أيدي الناس يحبك الناس.', source:'سهل بن سعد — رواه ابن ماجه'},
+  {text:'إذا أردت أن تعرف قدرك عند الله فانظر في ماذا يستعملك.', source:'ابن عطاء الله السكندري'},
+  {text:'ما جلس قوم يذكرون الله إلا حفّتهم الملائكة وغشيتهم الرحمة.', source:'رواه مسلم — عن أبي هريرة'},
+  {text:'علامة المحبة لله: أن تتبع النبي ﷺ في أقواله وأعماله وأحواله.', source:'ابن كثير — تفسير آل عمران ٣١'},
+  {text:'القلوب أوعية، فخيرها أوعاها للخير.', source:'الإمام الشافعي'},
+  {text:'لا تحقرن من المعروف شيئاً، ولو أن تلقى أخاك بوجه طلق.', source:'رواه مسلم'},
+  {text:'من أراد أن يعلم قيمته عند الله فليرَ ماذا يُشغله الله به من عبادته.', source:'ابن القيم — مدارج السالكين'},
+  {text:'إن الله يُحب العبد المؤمن المُفتَّن التواب.', source:'رواه ابن حبان'},
+  {text:'المعرفة بالله هي أصل كل خير، والجهل بالله أصل كل شر.', source:'ابن القيم'},
+  {text:'الأنس بالله لا يحصل إلا بانقطاع القلب عن كل ما سواه.', source:'ابن رجب الحنبلي'},
+  {text:'من كانت له إلى الله حاجة فليُلحّ في الدعاء؛ فإن الله يحب الملحّين في الدعاء.', source:'رواه الطبراني'},
+  {text:'كن لله كما يريد يكن لك فوق ما تريد.', source:'ابن عطاء الله السكندري'},
+  {text:'ما أُعطي عبد عطاءً خير وأوسع من الصبر.', source:'رواه البخاري'},
+  {text:'الله أكبر من كل شيء، وأرحم بعباده من أنفسهم بأنفسهم.', source:'ابن تيمية'},
+  {text:'إذا صح الإخلاص لله، كفاه الله كل شيء من أمر الدنيا والآخرة.', source:'ابن القيم — الفوائد'},
+  {text:'طالما بكيت على ما فاتني من طاعة الله، فلا أبكي على ما فاتني من الدنيا.', source:'الحسن البصري'},
+  {text:'اجعل للمطالعة وقتاً من يومك، فإن الكتاب أفضل مجالس الدنيا.', source:'ابن الجوزي — صيد الخاطر'},
+  {text:'الراحة الحقيقية في ذكر الله؛ فإن الذاكرَ يُحسّ بلذة لا يُحسّها سواه.', source:'ابن القيم'},
+  {text:'ليس للمؤمن أن يذلّ نفسه؛ عليه بالتوكل على الله والثقة بوعده.', source:'الإمام أحمد'},
+  {text:'أصل العبادة الخوف والرجاء والمحبة، وكمالها في الجمع بينها.', source:'ابن القيم — مدارج السالكين'},
+];
+
+function pickByDay(arr) {
+  const d = new Date();
+  const idx = (d.getFullYear()*1000 + d.getMonth()*31 + d.getDate()) % arr.length;
+  return arr[idx];
+}
+
+function renderInspiration() {
+  const hadith   = pickByDay(HADITHS);
+  const sinWarn  = pickByDay(SIN_WARNINGS);
+  const salaf    = pickByDay(SALAF_QUOTES);
+  document.getElementById('inspiration-section').innerHTML = `
+    <div class="inspo-card hadith">
+      <div class="i-label">📖 حديث اليوم</div>
+      <div class="i-text">"${hadith.text}"</div>
+      <div class="i-source">${hadith.source}</div>
+    </div>
+    <div class="inspo-card sin-warn">
+      <div class="i-label">⚠️ تحذير من المعصية</div>
+      <div class="i-text">${sinWarn.text}</div>
+      <div class="i-source">${sinWarn.type} — ${sinWarn.source}</div>
+    </div>
+    <div class="inspo-card salaf">
+      <div class="i-label">🌿 لمحة من السلف</div>
+      <div class="i-text">"${salaf.text}"</div>
+      <div class="i-source">${salaf.source}</div>
+    </div>`;
+}
+
+// ===== DATE PICKER =====
+function addDayFromPicker() {
+  const input = document.getElementById('date-picker-input');
+  const val = input.value;
+  if (!val) { input.focus(); return; }
+  const d = new Date(val);
+  const label = DAYS_AR[d.getDay()] + ' ' + d.getDate() + '/' + (d.getMonth()+1);
+  if (S.days.includes(label)) { alert('هذا اليوم موجود بالفعل!'); return; }
+  S.days.push(label);
+  save(); renderTable(); renderStats(); renderCharts();
+  input.value = '';
+}
+// Set today as default in picker
+(function(){
+  const t=new Date();
+  const pad=n=>String(n).padStart(2,'0');
+  document.getElementById('date-picker-input').value=`${t.getFullYear()}-${pad(t.getMonth()+1)}-${pad(t.getDate())}`;
+})();
+
+function renderDashboard(){renderInspiration();renderStats();renderTable();renderCharts();}
 document.getElementById('nav-date').textContent=formatDate(new Date());
+applyTheme();
 renderDashboard();
 </script>
 </body>
